@@ -1,0 +1,50 @@
+.bento-input,
+.bento-textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-strong);
+  background: var(--surface);
+  font-size: 14px;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.bento-input:focus,
+.bento-textarea:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+  outline: none;
+}
+
+.bento-textarea {
+  min-height: 80px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.bento-field {
+  display: grid;
+  gap: 8px;
+}
+
+.bento-field-label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 760;
+  text-transform: uppercase;
+}
+
+.bento-field-error {
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.field-label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 760;
+  text-transform: uppercase;
+}

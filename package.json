@@ -1,0 +1,68 @@
+{
+  "name": "base-themes",
+  "private": false,
+  "version": "0.1.0",
+  "description": "Themeable Base UI React components with Bento, shadcn, and neo brutalism styles.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist/base-themes.js",
+    "dist/base-themes.css",
+    "dist/types",
+    "public/previews",
+    "registry",
+    "skills/base-themes/SKILL.md",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/types/lib.d.ts",
+      "import": "./dist/base-themes.js"
+    },
+    "./styles.css": "./dist/base-themes.css",
+    "./registry.json": "./registry/registry.json",
+    "./skill": "./skills/base-themes/SKILL.md"
+  },
+  "types": "./dist/types/lib.d.ts",
+  "module": "./dist/base-themes.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:docs && npm run build:types && npm run build:lib",
+    "build:docs": "tsc -b && vite build",
+    "build:types": "tsc -p tsconfig.lib.json",
+    "build:lib": "vite build --config vite.lib.config.ts",
+    "lint": "eslint .",
+    "registry:check": "node scripts/validate-registry.mjs",
+    "prepack": "npm run registry:check && npm run lint && npm run build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "@base-ui/react": "^1.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@base-ui/react": "^1.5.0",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.12",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
+}

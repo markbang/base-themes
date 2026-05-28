@@ -1,0 +1,42 @@
+.bento-scroll-area {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.bento-scroll-area-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.bento-scroll-area-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.bento-scroll-area-scrollbar {
+  display: flex;
+  padding: 2px;
+  background: transparent;
+  touch-action: none;
+}
+
+.bento-scroll-area-scrollbar[data-vertical] {
+  width: 10px;
+}
+
+.bento-scroll-area-thumb {
+  flex: 1;
+  border-radius: 999px;
+  background: var(--line-strong);
+  transition: background 140ms ease;
+}
+
+.bento-scroll-area-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.bento-scroll-area-corner {
+  background: transparent;
+}

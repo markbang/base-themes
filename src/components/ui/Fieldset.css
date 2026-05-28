@@ -1,0 +1,16 @@
+.bento-fieldset {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.bento-fieldset-legend {
+  padding: 0 4px;
+  color: var(--text-strong);
+  font-size: 14px;
+  font-weight: 760;
+}

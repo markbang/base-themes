@@ -1,0 +1,26 @@
+.bento-menubar {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.bento-menubar-trigger {
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.bento-menubar-trigger:hover,
+.bento-menubar-trigger[data-open] {
+  color: var(--text-strong);
+  background: var(--surface-muted);
+}

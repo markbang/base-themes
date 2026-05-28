@@ -1,0 +1,25 @@
+.bento-popover-popup {
+  width: 250px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.bento-popover-arrow {
+  fill: #fff;
+}
+
+.bento-popover-title {
+  color: var(--text-strong);
+  font-size: 20px;
+  font-weight: 780;
+  margin: 0;
+}
+
+.bento-popover-description {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}

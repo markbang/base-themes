@@ -1,0 +1,35 @@
+.bento-toggle-group {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--group-bg);
+}
+
+.bento-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 680;
+  font-size: 14px;
+  transition: color 140ms ease, background 140ms ease;
+}
+
+.bento-toggle[data-pressed] {
+  color: var(--text-strong);
+  background: var(--surface);
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.1);
+}
+
+.bento-toggle:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.32);
+  outline-offset: 2px;
+}

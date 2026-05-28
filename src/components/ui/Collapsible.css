@@ -1,0 +1,34 @@
+.bento-collapsible {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--group-bg);
+  overflow: hidden;
+}
+
+.bento-collapsible-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  padding: 0 14px;
+  color: var(--text-strong);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 760;
+}
+
+.bento-collapsible-trigger svg {
+  transition: transform 160ms ease;
+}
+
+.bento-collapsible[data-open] .bento-collapsible-trigger svg {
+  transform: rotate(180deg);
+}
+
+.bento-collapsible-panel {
+  padding: 0 14px 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}

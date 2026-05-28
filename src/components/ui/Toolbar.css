@@ -1,0 +1,60 @@
+.bento-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.bento-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bento-toolbar-button {
+  display: inline-grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  background: transparent;
+  cursor: pointer;
+}
+
+.bento-toolbar-button:hover,
+.bento-toolbar-button[data-pressed] {
+  color: var(--text-strong);
+  background: var(--surface-muted);
+}
+
+.bento-toolbar-separator {
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  background: var(--line);
+}
+
+.bento-toolbar-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+
+.bento-toolbar-input {
+  width: 150px;
+  border: 0;
+  color: var(--text-strong);
+  background: transparent;
+  outline: 0;
+}

@@ -1,0 +1,146 @@
+[data-style='neo-brutalism'] {
+  --neo-shadow: 5px 5px 0 var(--line-strong);
+  --neo-shadow-sm: 3px 3px 0 var(--line-strong);
+  --neo-active-offset: translate(2px, 2px);
+}
+
+[data-style='neo-brutalism'] :where(button, a, [role='button'], [tabindex]):focus-visible,
+[data-style='neo-brutalism'] [data-base-ui-trigger]:focus-visible,
+[data-style='neo-brutalism'] [data-base-ui-item]:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+[data-style='neo-brutalism'] .bento-button,
+[data-style='neo-brutalism'] .bento-select-trigger,
+[data-style='neo-brutalism'] .bento-combobox-input,
+[data-style='neo-brutalism'] .bento-input,
+[data-style='neo-brutalism'] .bento-textarea,
+[data-style='neo-brutalism'] .bento-number-field-group,
+[data-style='neo-brutalism'] .bento-otp-input,
+[data-style='neo-brutalism'] .bento-checkbox,
+[data-style='neo-brutalism'] .bento-radio,
+[data-style='neo-brutalism'] .bento-switch,
+[data-style='neo-brutalism'] .bento-toggle-group,
+[data-style='neo-brutalism'] .bento-tabs-list,
+[data-style='neo-brutalism'] .bento-toolbar,
+[data-style='neo-brutalism'] .bento-menubar,
+[data-style='neo-brutalism'] .bento-fieldset,
+[data-style='neo-brutalism'] .bento-context-menu-trigger,
+[data-style='neo-brutalism'] .demo-card,
+[data-style='neo-brutalism'] .api-table-wrap,
+[data-style='neo-brutalism'] .interaction-list li,
+[data-style='neo-brutalism'] .block-preview,
+[data-style='neo-brutalism'] .theme-swatch {
+  border-width: 2px;
+  border-color: var(--line-strong);
+  box-shadow: var(--neo-shadow-sm);
+}
+
+[data-style='neo-brutalism'] .bento-button {
+  color: #000;
+  background: var(--surface-muted);
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+[data-style='neo-brutalism'] .bento-button:hover,
+[data-style='neo-brutalism'] .bento-button:active {
+  transform: var(--neo-active-offset);
+  box-shadow: 2px 2px 0 var(--line-strong);
+}
+
+[data-style='neo-brutalism'] .bento-button.accent {
+  background: var(--accent);
+}
+
+[data-style='neo-brutalism'] .bento-button.teal,
+[data-style='neo-brutalism'] .bento-checkbox[data-checked],
+[data-style='neo-brutalism'] .bento-radio[data-checked],
+[data-style='neo-brutalism'] .bento-switch[data-checked] {
+  background: var(--teal);
+}
+
+[data-style='neo-brutalism'] .bento-button.outline,
+[data-style='neo-brutalism'] .bento-button.ghost,
+[data-style='neo-brutalism'] .bento-button.icon {
+  color: var(--text-strong);
+  background: var(--surface);
+}
+
+[data-style='neo-brutalism'] .bento-checkbox[data-checked],
+[data-style='neo-brutalism'] .bento-radio[data-checked],
+[data-style='neo-brutalism'] .bento-switch[data-checked] {
+  border-color: var(--line-strong);
+}
+
+[data-style='neo-brutalism'] .bento-radio-indicator,
+[data-style='neo-brutalism'] .bento-slider-indicator,
+[data-style='neo-brutalism'] .bento-slider-thumb,
+[data-style='neo-brutalism'] .bento-meter-indicator,
+[data-style='neo-brutalism'] .bento-meter-mid,
+[data-style='neo-brutalism'] .bento-progress-indicator {
+  background: var(--accent);
+}
+
+[data-style='neo-brutalism'] .bento-slider-thumb {
+  border: 2px solid var(--line-strong);
+  box-shadow: var(--neo-shadow-sm);
+}
+
+[data-style='neo-brutalism'] .bento-menu-popup,
+[data-style='neo-brutalism'] .bento-select-popup,
+[data-style='neo-brutalism'] .bento-combobox-popup,
+[data-style='neo-brutalism'] .bento-nav-menu-popup,
+[data-style='neo-brutalism'] .bento-popover-popup,
+[data-style='neo-brutalism'] .bento-preview-card,
+[data-style='neo-brutalism'] .bento-tooltip-popup,
+[data-style='neo-brutalism'] .bento-toast,
+[data-style='neo-brutalism'] .bento-dialog-popup,
+[data-style='neo-brutalism'] .bento-alert-popup,
+[data-style='neo-brutalism'] .bento-drawer-popup {
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
+  box-shadow: var(--neo-shadow);
+}
+
+[data-style='neo-brutalism'] .bento-menu-item[data-highlighted],
+[data-style='neo-brutalism'] .bento-combobox-item[data-highlighted],
+[data-style='neo-brutalism'] .bento-select-item[data-highlighted],
+[data-style='neo-brutalism'] .bento-select-item[data-selected][data-highlighted],
+[data-style='neo-brutalism'] .bento-nav-menu-item[data-highlighted],
+[data-style='neo-brutalism'] .bento-toolbar-button:hover,
+[data-style='neo-brutalism'] .bento-number-field-button:hover,
+[data-style='neo-brutalism'] .bento-toast-close:hover,
+[data-style='neo-brutalism'] .bento-tabs-indicator,
+[data-style='neo-brutalism'] .bento-toggle[data-pressed],
+[data-style='neo-brutalism'] .bento-toolbar-button[data-pressed],
+[data-style='neo-brutalism'] .bento-menubar-trigger[data-open] {
+  color: #000;
+  background: var(--surface-muted);
+}
+
+[data-style='neo-brutalism'] .bento-select-item[data-selected] {
+  color: var(--text-strong);
+}
+
+[data-style='neo-brutalism'] .bento-popover-arrow,
+[data-style='neo-brutalism'] .bento-preview-card-arrow,
+[data-style='neo-brutalism'] .bento-tooltip-arrow {
+  fill: var(--surface);
+}
+
+[data-style='neo-brutalism'] .topbar,
+[data-style='neo-brutalism'] .sidebar {
+  border-color: var(--line-strong);
+  border-width: 2px;
+}
+
+[data-style='neo-brutalism'] .topbar-brand-mark,
+[data-style='neo-brutalism'] .component-status-dot.ready {
+  background: var(--accent);
+}
+
+[data-style='neo-brutalism'] .demo-code-block {
+  border-top-width: 2px;
+}

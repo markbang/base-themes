@@ -1,0 +1,37 @@
+.bento-checkbox {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  color: #fff;
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease;
+}
+
+.bento-checkbox[data-checked] {
+  border-color: var(--teal);
+  background: var(--teal);
+}
+
+.bento-checkbox:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.32);
+  outline-offset: 2px;
+}
+
+.bento-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--text-strong);
+  font-weight: 680;
+  cursor: pointer;
+}
+
+.bento-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}

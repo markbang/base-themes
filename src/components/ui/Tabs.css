@@ -1,0 +1,70 @@
+.bento-tabs {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bento-tabs-list {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--group-bg);
+}
+
+.bento-tabs-list.cols-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.bento-tabs-list.cols-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.bento-tabs-tab {
+  z-index: 1;
+  min-height: 36px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 760;
+}
+
+.bento-tabs-tab[data-selected] {
+  color: var(--text-strong);
+}
+
+.bento-tabs-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.1);
+  transition: left 180ms ease, width 180ms ease;
+}
+
+.bento-tabs-panel {
+  flex: 1;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--group-bg);
+}
+
+.bento-tabs-panel-title {
+  display: block;
+  color: var(--text-strong);
+  font-size: 20px;
+  font-weight: 750;
+  margin-bottom: 10px;
+}
+
+.bento-tabs-panel p {
+  color: var(--text-muted);
+  margin: 0;
+}

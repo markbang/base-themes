@@ -1,0 +1,5 @@
+.bento-form {
+  display: grid;
+  gap: 16px;
+  width: min(100%, 420px);
+}

@@ -1,0 +1,38 @@
+.bento-number-field {
+  display: grid;
+  gap: 8px;
+  width: 220px;
+}
+
+.bento-number-field-group {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  height: 40px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.bento-number-field-button,
+.bento-number-field-input {
+  border: 0;
+  color: var(--text-strong);
+  background: transparent;
+}
+
+.bento-number-field-button {
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.bento-number-field-button:hover {
+  background: var(--surface-muted);
+}
+
+.bento-number-field-input {
+  min-width: 0;
+  text-align: center;
+  outline: 0;
+}

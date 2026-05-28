@@ -1,0 +1,42 @@
+.bento-accordion {
+  display: grid;
+  gap: 8px;
+}
+
+.bento-accordion-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--group-bg);
+}
+
+.bento-accordion-header {
+  margin: 0;
+}
+
+.bento-accordion-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  padding: 0 14px;
+  color: var(--text-strong);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 760;
+}
+
+.bento-accordion-trigger svg {
+  transition: transform 160ms ease;
+}
+
+.bento-accordion-item[data-open] .bento-accordion-trigger svg {
+  transform: rotate(180deg);
+}
+
+.bento-accordion-panel {
+  padding: 0 14px 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}

@@ -1,0 +1,19 @@
+.bento-field {
+  display: grid;
+  gap: 8px;
+  width: min(100%, 360px);
+}
+
+.bento-field-description,
+.bento-field-error {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.bento-field-description {
+  color: var(--text-muted);
+}
+
+.bento-field-error {
+  color: var(--accent-strong);
+}

@@ -1,0 +1,14 @@
+.bento-separator {
+  flex-shrink: 0;
+  background: var(--line);
+}
+
+.bento-separator[data-orientation='horizontal'] {
+  width: 100%;
+  height: 1px;
+}
+
+.bento-separator[data-orientation='vertical'] {
+  width: 1px;
+  height: 28px;
+}

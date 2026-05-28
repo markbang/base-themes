@@ -1,0 +1,39 @@
+.bento-slider {
+  width: min(100%, 420px);
+  padding: 12px 0;
+}
+
+.bento-slider-control {
+  display: flex;
+  height: 24px;
+  align-items: center;
+}
+
+.bento-slider-track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--track-bg);
+}
+
+.bento-slider-indicator {
+  position: absolute;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.bento-slider-thumb {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #fff;
+  border-radius: 999px;
+  background: var(--accent-strong);
+  box-shadow: 0 5px 14px rgba(234, 88, 12, 0.28);
+}
+
+.bento-slider-thumb:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.32);
+  outline-offset: 2px;
+}

@@ -1,0 +1,33 @@
+.bento-preview-card {
+  width: 280px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.bento-preview-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.bento-preview-card-title {
+  color: var(--text-strong);
+  font-size: 16px;
+  font-weight: 760;
+  margin: 0;
+}
+
+.bento-preview-card-description {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.bento-preview-card-arrow {
+  fill: #fff;
+}

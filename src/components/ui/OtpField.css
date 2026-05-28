@@ -1,0 +1,28 @@
+.bento-otp-field {
+  display: grid;
+  gap: 8px;
+}
+
+.bento-otp-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bento-otp-input {
+  width: 40px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text-strong);
+  background: var(--surface);
+  text-align: center;
+  font-size: 18px;
+  font-weight: 760;
+  outline: 0;
+}
+
+.bento-otp-input:focus-visible {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
