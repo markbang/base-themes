@@ -1,10 +1,18 @@
 {
   "name": "base-themes",
   "private": false,
-  "version": "0.1.0",
-  "description": "Themeable Base UI React components with Bento, shadcn, and neo brutalism styles.",
+  "version": "0.1.1",
+  "description": "Themeable Base UI React components with Bento, shadcn, neo brutalism, and expressive product UI styles.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markbang/base-themes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/markbang/base-themes/issues"
+  },
+  "homepage": "https://github.com/markbang/base-themes#readme",
   "sideEffects": [
     "**/*.css"
   ],
@@ -36,6 +44,8 @@
     "build:lib": "vite build --config vite.lib.config.ts",
     "lint": "eslint .",
     "registry:check": "node scripts/validate-registry.mjs",
+    "previews:generate": "node scripts/generate-theme-previews.mjs",
+    "themes:e2e": "node scripts/verify-themes-e2e.mjs",
     "prepack": "npm run registry:check && npm run lint && npm run build",
     "preview": "vite preview"
   },

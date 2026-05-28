@@ -34,7 +34,9 @@
   font-weight: 760;
 }
 
-.bento-tabs-tab[data-selected] {
+.bento-tabs-tab[data-selected],
+.bento-tabs-tab[data-active],
+.bento-tabs-tab[aria-selected='true'] {
   color: var(--text-strong);
 }
 

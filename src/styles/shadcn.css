@@ -130,6 +130,8 @@
 }
 
 [data-style='shadcn'] .bento-tabs-tab[data-selected],
+[data-style='shadcn'] .bento-tabs-tab[data-active],
+[data-style='shadcn'] .bento-tabs-tab[aria-selected='true'],
 [data-style='shadcn'] .bento-toggle[data-pressed],
 [data-style='shadcn'] .bento-toolbar-button[data-pressed],
 [data-style='shadcn'] .bento-menubar-trigger[data-open] {

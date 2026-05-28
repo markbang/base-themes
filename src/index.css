@@ -1,4 +1,7 @@
 @import './styles/tokens.css';
+@import './styles/themes.css';
+@import './styles/shadcn.css';
+@import './styles/neo-brutalism.css';
 
 :root {
   color: var(--text);

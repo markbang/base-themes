@@ -1,10 +1,13 @@
 import { useState, useCallback, useEffect } from 'react'
+import { themeStyles, type ThemeStyle } from '../styles/themeList'
 
 type Theme = 'light' | 'dark' | 'system'
-type ThemeStyle = 'bento' | 'shadcn' | 'neo-brutalism'
+const themeStyleSet = new Set<string>(themeStyles)
 
 function getStoredTheme(): Theme {
   if (typeof window === 'undefined') return 'system'
+  const queryTheme = new URLSearchParams(window.location.search).get('theme')
+  if (queryTheme === 'light' || queryTheme === 'dark' || queryTheme === 'system') return queryTheme
   const stored = localStorage.getItem('bento-theme')
   if (stored === 'light' || stored === 'dark' || stored === 'system') return stored
   return 'system'
@@ -12,8 +15,10 @@ function getStoredTheme(): Theme {
 
 function getStoredStyle(): ThemeStyle {
   if (typeof window === 'undefined') return 'bento'
+  const queryStyle = new URLSearchParams(window.location.search).get('style')
+  if (queryStyle && themeStyleSet.has(queryStyle)) return queryStyle as ThemeStyle
   const stored = localStorage.getItem('bento-style')
-  if (stored === 'bento' || stored === 'shadcn' || stored === 'neo-brutalism') return stored
+  if (stored && themeStyleSet.has(stored)) return stored as ThemeStyle
   return 'bento'
 }
 

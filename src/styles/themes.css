@@ -1,0 +1,366 @@
+:root {
+  --theme-primary: var(--accent);
+  --theme-primary-hover: var(--accent-strong);
+  --theme-primary-foreground: #ffffff;
+  --theme-control-bg: var(--surface);
+  --theme-control-hover: var(--surface-muted);
+  --theme-control-active: color-mix(in srgb, var(--accent), var(--surface) 86%);
+  --theme-control-active-text: var(--text-strong);
+  --theme-popup-bg: var(--surface);
+  --theme-popup-text: var(--text-strong);
+  --theme-focus: color-mix(in srgb, var(--accent), transparent 62%);
+  --theme-danger: #dc2626;
+}
+
+[data-theme='dark'] {
+  --theme-primary-foreground: var(--bg);
+  --theme-control-active: color-mix(in srgb, var(--accent), var(--surface) 78%);
+  --theme-danger: #f87171;
+}
+
+[data-style='terminal'],
+[data-style='cyberpunk'],
+[data-style='luxury'],
+[data-style='bauhaus'][data-theme='dark'],
+[data-style='mono'][data-theme='dark'] {
+  --theme-primary-foreground: var(--bg);
+}
+
+[data-style='neo-brutalism'],
+[data-style='retro'],
+[data-style='bauhaus'] {
+  --theme-primary-foreground: #000000;
+  --theme-control-active: var(--surface-muted);
+}
+
+[data-style='mono'] {
+  --theme-primary-foreground: var(--bg);
+  --theme-control-active: var(--surface-strong);
+  --theme-control-active-text: var(--bg);
+}
+
+[data-style='glass'] .topbar,
+[data-style='glass'] .sidebar,
+[data-style='glass'] .bento-menu-popup,
+[data-style='glass'] .bento-select-popup,
+[data-style='glass'] .bento-combobox-popup,
+[data-style='glass'] .bento-nav-menu-popup,
+[data-style='glass'] .bento-popover-popup,
+[data-style='glass'] .bento-preview-card,
+[data-style='glass'] .bento-tooltip-popup,
+[data-style='glass'] .bento-toast,
+[data-style='glass'] .bento-dialog-popup,
+[data-style='glass'] .bento-alert-popup,
+[data-style='glass'] .bento-drawer-popup,
+[data-style='fluent'] .topbar,
+[data-style='fluent'] .sidebar,
+[data-style='fluent'] .bento-menu-popup,
+[data-style='fluent'] .bento-select-popup,
+[data-style='fluent'] .bento-combobox-popup,
+[data-style='fluent'] .bento-nav-menu-popup,
+[data-style='fluent'] .bento-popover-popup,
+[data-style='fluent'] .bento-preview-card,
+[data-style='fluent'] .bento-tooltip-popup,
+[data-style='fluent'] .bento-toast,
+[data-style='fluent'] .bento-dialog-popup,
+[data-style='fluent'] .bento-alert-popup,
+[data-style='fluent'] .bento-drawer-popup {
+  backdrop-filter: blur(18px) saturate(1.25);
+}
+
+[data-style='terminal'] body,
+[data-style='terminal'] .bento-button,
+[data-style='terminal'] .bento-input,
+[data-style='terminal'] .bento-textarea,
+[data-style='terminal'] .bento-select-trigger,
+[data-style='terminal'] .bento-combobox-input,
+[data-style='terminal'] .topbar-icon-btn,
+[data-style='terminal'] .topbar-nav a,
+[data-style='terminal'] code,
+[data-style='data-dense'] .bento-button,
+[data-style='data-dense'] .bento-input,
+[data-style='data-dense'] .bento-textarea,
+[data-style='data-dense'] .bento-select-trigger,
+[data-style='data-dense'] .bento-combobox-input {
+  font-family: var(--font-mono);
+}
+
+[data-style='editorial'] h1,
+[data-style='editorial'] h2,
+[data-style='editorial'] h3,
+[data-style='luxury'] h1,
+[data-style='luxury'] h2,
+[data-style='luxury'] h3 {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+[data-style='data-dense'] {
+  --topbar-h: 52px;
+  --sidebar-w: 240px;
+  --content-max: 920px;
+}
+
+[data-style='data-dense'] .component-page,
+[data-style='data-dense'] .doc-section,
+[data-style='data-dense'] .bento-tabs,
+[data-style='data-dense'] .bento-field,
+[data-style='data-dense'] .bento-fieldset {
+  gap: 12px;
+}
+
+[data-style='data-dense'] .bento-button,
+[data-style='data-dense'] .topbar-icon-btn,
+[data-style='data-dense'] .bento-select-trigger,
+[data-style='data-dense'] .bento-input,
+[data-style='data-dense'] .bento-combobox-input {
+  min-height: 34px;
+  font-size: 13px;
+}
+
+[data-style='data-dense'] .bento-button {
+  padding-inline: 12px;
+}
+
+[data-style='playful'] .topbar-brand-mark,
+[data-style='playful'] .bento-avatar,
+[data-style='calm'] .topbar-brand-mark,
+[data-style='glass'] .topbar-brand-mark,
+[data-style='soft-ui'] .topbar-brand-mark {
+  border-radius: 999px;
+}
+
+[data-style='bauhaus'] .topbar-brand-mark,
+[data-style='retro'] .topbar-brand-mark,
+[data-style='mono'] .topbar-brand-mark,
+[data-style='terminal'] .topbar-brand-mark {
+  border-radius: var(--radius-sm);
+}
+
+[data-style] :where(button, a, [role='button'], [tabindex]):focus-visible,
+[data-style] [data-base-ui-trigger]:focus-visible,
+[data-style] [data-base-ui-item]:focus-visible,
+[data-style] .bento-input:focus,
+[data-style] .bento-textarea:focus,
+[data-style] .bento-combobox-input:focus {
+  outline-color: var(--theme-focus);
+}
+
+[data-style] .bento-input:focus,
+[data-style] .bento-textarea:focus,
+[data-style] .bento-combobox-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent), transparent 82%);
+}
+
+[data-style] .bento-button {
+  color: var(--theme-primary-foreground);
+  background: var(--theme-primary);
+}
+
+[data-style] .bento-button:hover {
+  color: var(--theme-primary-foreground);
+  background: var(--theme-primary-hover);
+}
+
+[data-style] .bento-button.outline,
+[data-style] .bento-button.icon {
+  border-color: var(--line);
+  color: var(--text-strong);
+  background: var(--theme-control-bg);
+}
+
+[data-style] .bento-button.outline:hover,
+[data-style] .bento-button.icon:hover,
+[data-style] .bento-button.ghost:hover {
+  border-color: var(--line-strong);
+  color: var(--text-strong);
+  background: var(--theme-control-hover);
+}
+
+[data-style] .bento-button.ghost {
+  color: var(--text-strong);
+  background: transparent;
+}
+
+[data-style] .bento-button.accent {
+  color: var(--theme-primary-foreground);
+  background: var(--accent);
+}
+
+[data-style] .bento-button.accent:hover {
+  color: var(--theme-primary-foreground);
+  background: var(--accent-strong);
+}
+
+[data-style] .bento-button.teal {
+  color: var(--theme-primary-foreground);
+  background: var(--teal);
+}
+
+[data-style] .bento-button.teal:hover {
+  color: var(--theme-primary-foreground);
+  background: color-mix(in srgb, var(--teal), var(--text-strong) 16%);
+}
+
+[data-style] .bento-button:disabled,
+[data-style] .bento-button[data-disabled],
+[data-style] .bento-menu-item[data-disabled],
+[data-style] .bento-select-item[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+[data-style] .bento-checkbox[data-checked],
+[data-style] .bento-radio[data-checked],
+[data-style] .bento-switch[data-checked] {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+[data-style] .bento-checkbox,
+[data-style] .bento-checkbox[data-checked],
+[data-style] .bento-radio-indicator {
+  color: var(--theme-primary-foreground);
+}
+
+[data-style] .bento-radio-indicator,
+[data-style] .bento-slider-indicator,
+[data-style] .bento-slider-thumb,
+[data-style] .bento-meter-indicator,
+[data-style] .bento-meter-mid,
+[data-style] .bento-progress-indicator {
+  background: var(--accent);
+}
+
+[data-style] .bento-slider-thumb {
+  border-color: var(--surface);
+}
+
+[data-style] .bento-menu-popup,
+[data-style] .bento-select-popup,
+[data-style] .bento-combobox-popup,
+[data-style] .bento-nav-menu-popup,
+[data-style] .bento-popover-popup,
+[data-style] .bento-preview-card,
+[data-style] .bento-tooltip-popup,
+[data-style] .bento-toast,
+[data-style] .bento-dialog-popup,
+[data-style] .bento-alert-popup,
+[data-style] .bento-drawer-popup {
+  border-color: var(--line);
+  color: var(--theme-popup-text);
+  background: var(--theme-popup-bg);
+  box-shadow: var(--shadow);
+}
+
+[data-theme='dark'] .bento-menu-popup,
+[data-theme='dark'] .bento-select-popup,
+[data-theme='dark'] .bento-combobox-popup {
+  background: var(--theme-popup-bg);
+}
+
+[data-style] .bento-popover-arrow,
+[data-style] .bento-preview-card-arrow,
+[data-style] .bento-tooltip-arrow {
+  fill: var(--theme-popup-bg);
+}
+
+[data-style] .bento-menu-item[data-highlighted],
+[data-style] .bento-combobox-item[data-highlighted],
+[data-style] .bento-select-item[data-highlighted],
+[data-style] .bento-nav-menu-item[data-highlighted],
+[data-style] .bento-toolbar-button:hover,
+[data-style] .bento-number-field-button:hover,
+[data-style] .bento-toast-close:hover,
+[data-style] .topbar-nav a:hover,
+[data-style] .topbar-nav a.active,
+[data-style] .sidebar-link:hover,
+[data-style] .sidebar-link.active {
+  color: var(--theme-control-active-text);
+  background: var(--theme-control-hover);
+}
+
+[data-style] .bento-select-item[data-selected],
+[data-style] .bento-combobox-item[data-selected] {
+  color: var(--accent);
+  font-weight: 760;
+}
+
+[data-style] .bento-select-item[data-selected][data-highlighted],
+[data-style] .bento-combobox-item[data-selected][data-highlighted] {
+  color: var(--theme-control-active-text);
+  background: var(--theme-control-active);
+}
+
+[data-style] .bento-tabs-tab[data-selected],
+[data-style] .bento-tabs-tab[data-active],
+[data-style] .bento-tabs-tab[aria-selected='true'],
+[data-style] .bento-toggle[data-pressed],
+[data-style] .bento-toolbar-button[data-pressed],
+[data-style] .bento-menubar-trigger[data-open] {
+  color: var(--theme-control-active-text);
+}
+
+[data-style] .bento-tabs-indicator,
+[data-style] .bento-toggle[data-pressed],
+[data-style] .bento-toolbar-button[data-pressed],
+[data-style] .bento-menubar-trigger[data-open],
+[data-style] .style-switcher button.active {
+  background: var(--theme-control-active);
+  box-shadow: var(--shadow-strong);
+}
+
+[data-style] .bento-field-error,
+[data-style] .bento-input + .bento-field-error,
+[data-style] .bento-meter-low {
+  color: var(--theme-danger);
+}
+
+[data-style] .bento-meter-low {
+  background: var(--theme-danger);
+}
+
+[data-style] .bento-avatar-group .bento-avatar {
+  border-color: var(--surface);
+}
+
+[data-style='soft-ui'] .bento-button,
+[data-style='soft-ui'] .bento-select-trigger,
+[data-style='soft-ui'] .bento-combobox-input,
+[data-style='soft-ui'] .bento-input,
+[data-style='soft-ui'] .bento-textarea,
+[data-style='soft-ui'] .bento-number-field-group,
+[data-style='soft-ui'] .bento-checkbox,
+[data-style='soft-ui'] .bento-radio,
+[data-style='soft-ui'] .bento-switch,
+[data-style='soft-ui'] .bento-tabs-list,
+[data-style='soft-ui'] .bento-toggle-group,
+[data-style='soft-ui'] .bento-toolbar,
+[data-style='soft-ui'] .demo-card,
+[data-style='soft-ui'] .block-preview,
+[data-style='soft-ui'] .theme-swatch {
+  border-color: transparent;
+  box-shadow: var(--shadow);
+}
+
+[data-style='soft-ui'] .bento-button:active,
+[data-style='soft-ui'] .bento-toggle[data-pressed],
+[data-style='soft-ui'] .bento-tabs-indicator,
+[data-style='soft-ui'] .style-switcher button.active {
+  box-shadow: var(--shadow-strong);
+}
+
+[data-style='minimal'] .bento-button,
+[data-style='mono'] .bento-button,
+[data-style='data-dense'] .bento-button {
+  box-shadow: none;
+}
+
+[data-style='minimal'] .bento-button.outline:hover,
+[data-style='mono'] .bento-button.outline:hover,
+[data-style='data-dense'] .bento-button.outline:hover,
+[data-style='minimal'] .bento-button.icon:hover,
+[data-style='mono'] .bento-button.icon:hover,
+[data-style='data-dense'] .bento-button.icon:hover {
+  box-shadow: none;
+}

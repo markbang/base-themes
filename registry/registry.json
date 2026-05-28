@@ -7,7 +7,7 @@
     "tokens": "src/styles/tokens.css",
     "global": "src/index.css",
     "default": "bento",
-    "variants": ["bento", "shadcn", "neo-brutalism"]
+    "variants": ["bento", "shadcn", "neo-brutalism", "minimal", "enterprise", "linear", "glass", "terminal", "material", "fluent", "retro", "cyberpunk", "editorial", "calm", "data-dense", "playful", "luxury", "soft-ui", "bauhaus", "mono"]
   },
   "components": [
     { "name": "accordion", "title": "Accordion", "files": ["src/components/ui/Accordion.tsx", "src/components/ui/Accordion.css"] },

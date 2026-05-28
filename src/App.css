@@ -481,7 +481,8 @@
 }
 
 .style-switcher {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   margin-bottom: 18px;
   padding: 4px;
@@ -491,7 +492,7 @@
 }
 
 .style-switcher button {
-  height: 32px;
+  min-height: 32px;
   padding: 0 12px;
   border: 0;
   border-radius: var(--radius-sm);
@@ -500,6 +501,13 @@
   cursor: pointer;
   font-size: 13px;
   font-weight: 720;
+}
+
+.theme-description {
+  max-width: 720px;
+  margin: -6px 0 20px;
+  color: var(--text-muted);
+  font-size: 14px;
 }
 
 .style-switcher button.active {

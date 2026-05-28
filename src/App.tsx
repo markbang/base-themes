@@ -74,9 +74,8 @@ import {
 import { ComponentDemo } from './components/ComponentDemo'
 import { useLocale, useT } from './i18n'
 import { useTheme } from './hooks/useTheme'
+import { themeStyleDescriptions, themeStyleLabels, themeStyles } from './styles/themeList'
 import './App.css'
-import './styles/shadcn.css'
-import './styles/neo-brutalism.css'
 
 type ApiProp = {
   name: string
@@ -964,8 +963,9 @@ function Topbar({ activeId, page }: { activeId: string; page: string }) {
   const t = useT()
   const { setTheme, resolved, style, setStyle } = useTheme()
   const { locale, setLocale } = useLocale()
-  const nextStyle = style === 'bento' ? 'shadcn' : style === 'shadcn' ? 'neo-brutalism' : 'bento'
-  const styleLabel = style === 'neo-brutalism' ? 'Neo' : style === 'shadcn' ? 'Shadcn' : 'Bento'
+  const currentStyleIndex = themeStyles.indexOf(style)
+  const nextStyle = themeStyles[(currentStyleIndex + 1) % themeStyles.length]
+  const styleLabel = themeStyleLabels[style]
 
   return (
     <header className="topbar">
@@ -1053,14 +1053,23 @@ function ThemesPage() {
     <article className="component-page">
       <div className="page-hero component-hero">
         <div className="doc-kicker">Themes</div>
-        <h1>Custom Theme</h1>
-        <p>Theme tokens are centralized CSS variables. Use Bento as the default style, shadcn for neutral product UI, or neo brutalism for high-contrast chunky interfaces.</p>
+        <h1>Theme System</h1>
+        <p>Theme tokens are centralized CSS variables. Choose from practical product styles, expressive visual systems, and dense operational modes.</p>
       </div>
       <div className="style-switcher" aria-label="Theme style">
-        <button className={style === 'bento' ? 'active' : ''} type="button" onClick={() => setStyle('bento')}>Bento</button>
-        <button className={style === 'shadcn' ? 'active' : ''} type="button" onClick={() => setStyle('shadcn')}>Shadcn</button>
-        <button className={style === 'neo-brutalism' ? 'active' : ''} type="button" onClick={() => setStyle('neo-brutalism')}>Neo Brutalism</button>
+        {themeStyles.map((themeStyle) => (
+          <button
+            className={style === themeStyle ? 'active' : ''}
+            key={themeStyle}
+            type="button"
+            onClick={() => setStyle(themeStyle)}
+            title={themeStyleDescriptions[themeStyle]}
+          >
+            {themeStyleLabels[themeStyle]}
+          </button>
+        ))}
       </div>
+      <div className="theme-description" role="status">{themeStyleDescriptions[style]}</div>
       <div className="theme-grid">
         {swatches.map((token) => <div className="theme-swatch" key={token}><span style={{ background: `var(${token})` }} /> <code>{token}</code></div>)}
       </div>
@@ -1096,6 +1105,11 @@ function ThemesPage() {
   --text-strong: #000000;
   --accent: #ff4d6d;
   --teal: #00d1b2;
+}
+
+[data-style='terminal'] {
+  --font-sans: 'SFMono-Regular', Consolas, monospace;
+  --accent: #22c55e;
 }`} />
     </article>
   )
