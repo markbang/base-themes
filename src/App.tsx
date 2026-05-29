@@ -1121,30 +1121,36 @@ function InstallationPage() {
       <div className="page-hero component-hero">
         <div className="doc-kicker">Installation</div>
         <h1>Install Base Themes</h1>
-        <p>Copy the wrappers into your app, install Base UI and icons, then import the token and component styles.</p>
+        <p>Install the npm package, import the bundled CSS once, then use the packaged Base UI wrappers directly.</p>
       </div>
       <ComponentDemo
-        title="Create a React project"
+        title="Install from npm"
         preview={<span className="muted">Works with Vite, Next.js, Remix, or any React app.</span>}
-        code={`npm create vite@latest my-app -- --template react-ts
-cd my-app
-npm install @base-ui/react lucide-react clsx`} />
+        code={`npm install base-themes @base-ui/react react react-dom`} />
       <ComponentDemo
-        title="Copy components"
-        preview={<span className="muted">Copy only the primitives you need, or copy the full ui folder.</span>}
-        code={`cp -R src/components/ui ./my-app/src/components/ui
-cp -R src/styles ./my-app/src/styles
-
-/* main CSS */
-@import './styles/tokens.css';`} />
+        title="Import styles"
+        preview={<span className="muted">Load the theme tokens and component styles once at app startup.</span>}
+        code={`import 'base-themes/styles.css'`} />
       <ComponentDemo
         title="Use a component"
         preview={<Button>Installed</Button>}
-        code={`import { Button } from './components/ui'
+        code={`import { Button } from 'base-themes'
 
 export function App() {
-  return <Button>Installed</Button>
+  return (
+    <main data-style="bento" data-theme="light">
+      <Button>Installed</Button>
+    </main>
+  )
 }`} />
+      <ComponentDemo
+        title="Use the registry or skill"
+        preview={<span className="muted">The npm package also exposes registry metadata and the bundled agent skill.</span>}
+        code={`import registry from 'base-themes/registry.json'
+
+// Agent skill markdown is available at:
+// node_modules/base-themes/skills/base-themes/SKILL.md
+// or via the package export: base-themes/skill`} />
     </article>
   )
 }

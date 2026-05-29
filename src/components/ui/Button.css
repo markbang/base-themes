@@ -21,7 +21,7 @@
 }
 
 .bento-button:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.32);
+  outline: 3px solid var(--theme-focus, rgba(37, 99, 235, 0.32));
   outline-offset: 2px;
 }
 
@@ -59,19 +59,21 @@
 }
 
 .bento-button.accent {
-  color: #fff;
+  color: var(--theme-primary-foreground);
   background: var(--accent);
 }
 
 .bento-button.accent:hover {
+  color: var(--theme-primary-foreground);
   background: var(--accent-strong);
 }
 
 .bento-button.teal {
-  color: #fff;
+  color: var(--theme-teal-foreground);
   background: var(--teal);
 }
 
 .bento-button.teal:hover {
-  background: #0d5c55;
+  color: var(--theme-teal-foreground);
+  background: color-mix(in srgb, var(--teal), var(--text-strong) 16%);
 }

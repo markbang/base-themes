@@ -29,5 +29,5 @@
 }
 
 .bento-preview-card-arrow {
-  fill: #fff;
+  fill: var(--theme-popup-bg, var(--surface));
 }

@@ -14,7 +14,7 @@
 .bento-input:focus,
 .bento-textarea:focus {
   border-color: var(--teal);
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent), transparent 82%);
   outline: none;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .bento-field-error {
-  color: #dc2626;
+  color: var(--theme-danger);
   font-size: 13px;
   font-weight: 600;
 }

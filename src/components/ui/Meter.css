@@ -27,7 +27,7 @@
 }
 
 .bento-meter-low {
-  background: #dc2626;
+  background: var(--theme-danger);
 }
 
 .bento-meter-label {

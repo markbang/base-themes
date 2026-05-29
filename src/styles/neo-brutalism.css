@@ -44,6 +44,11 @@
   text-transform: uppercase;
 }
 
+[data-style='neo-brutalism'][data-theme='dark'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal) {
+  color: #000;
+  background: var(--surface-strong);
+}
+
 [data-style='neo-brutalism'] .bento-button:hover,
 [data-style='neo-brutalism'] .bento-button:active {
   transform: var(--neo-active-offset);
@@ -112,12 +117,40 @@
 [data-style='neo-brutalism'] .bento-toolbar-button:hover,
 [data-style='neo-brutalism'] .bento-number-field-button:hover,
 [data-style='neo-brutalism'] .bento-toast-close:hover,
+[data-style='neo-brutalism'] .bento-tabs-tab[data-selected],
+[data-style='neo-brutalism'] .bento-tabs-tab[data-active],
+[data-style='neo-brutalism'] .bento-tabs-tab[aria-selected='true'],
 [data-style='neo-brutalism'] .bento-tabs-indicator,
 [data-style='neo-brutalism'] .bento-toggle[data-pressed],
 [data-style='neo-brutalism'] .bento-toolbar-button[data-pressed],
-[data-style='neo-brutalism'] .bento-menubar-trigger[data-open] {
+[data-style='neo-brutalism'] .bento-menubar-trigger[data-open],
+[data-style='neo-brutalism'] .bento-nav-menu-trigger[data-expanded],
+[data-style='neo-brutalism'] .bento-nav-menu-trigger[data-open],
+[data-style='neo-brutalism'] .style-switcher button.active {
   color: #000;
   background: var(--surface-muted);
+}
+
+[data-style='neo-brutalism'][data-theme='dark'] .bento-menu-item[data-highlighted],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-combobox-item[data-highlighted],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-select-item[data-highlighted],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-select-item[data-selected][data-highlighted],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-nav-menu-item[data-highlighted],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-toolbar-button:hover,
+[data-style='neo-brutalism'][data-theme='dark'] .bento-number-field-button:hover,
+[data-style='neo-brutalism'][data-theme='dark'] .bento-toast-close:hover,
+[data-style='neo-brutalism'][data-theme='dark'] .bento-tabs-tab[data-selected],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-tabs-tab[data-active],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-tabs-tab[aria-selected='true'],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-tabs-indicator,
+[data-style='neo-brutalism'][data-theme='dark'] .bento-toggle[data-pressed],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-toolbar-button[data-pressed],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-menubar-trigger[data-open],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-nav-menu-trigger[data-expanded],
+[data-style='neo-brutalism'][data-theme='dark'] .bento-nav-menu-trigger[data-open],
+[data-style='neo-brutalism'][data-theme='dark'] .style-switcher button.active {
+  color: #000;
+  background: var(--surface-strong);
 }
 
 [data-style='neo-brutalism'] .bento-select-item[data-selected] {

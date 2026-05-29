@@ -83,6 +83,6 @@ a {
 :where(button, a, [role='button'], [tabindex]):focus-visible,
 [data-base-ui-trigger]:focus-visible,
 [data-base-ui-item]:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.32);
+  outline: 3px solid var(--theme-focus, rgba(37, 99, 235, 0.32));
   outline-offset: 2px;
 }

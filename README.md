@@ -35,7 +35,7 @@ Themeable React components built on [Base UI](https://base-ui.com/), with ready-
 npm install base-themes @base-ui/react react react-dom
 ```
 
-Import the component CSS once:
+Import the bundled CSS once at app startup:
 
 ```tsx
 import 'base-themes/styles.css'
@@ -198,7 +198,13 @@ npm pack --dry-run
 
 ## Agent Skill
 
-An agent skill is included at [skills/base-themes/SKILL.md](./skills/base-themes/SKILL.md). It describes how to install components, add blocks, customize themes, and verify the registry.
+An agent skill is included in the npm package and in this repo at [skills/base-themes/SKILL.md](./skills/base-themes/SKILL.md). After installing the package, the same markdown is available at:
+
+```text
+node_modules/base-themes/skills/base-themes/SKILL.md
+```
+
+The package also exposes it as `base-themes/skill` for tools that read package exports. It describes how to install from npm, add blocks, customize themes, and verify registry-driven changes.
 
 ## License
 

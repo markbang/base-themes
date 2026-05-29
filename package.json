@@ -1,7 +1,7 @@
 {
   "name": "base-themes",
   "private": false,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Themeable Base UI React components with Bento, shadcn, neo brutalism, and expressive product UI styles.",
   "type": "module",
   "license": "MIT",

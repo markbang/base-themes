@@ -30,6 +30,6 @@
 }
 
 .bento-toggle:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.32);
+  outline: 3px solid var(--theme-focus, rgba(37, 99, 235, 0.32));
   outline-offset: 2px;
 }

@@ -7,7 +7,7 @@ description: Install and extend the Base Themes React component kit built on Bas
 
 ## Quick Start
 
-Install the package and peer dependencies in the target React app:
+Install the package and peer dependencies in the target React app. Prefer this npm package flow for normal usage:
 
 ```bash
 npm install base-themes @base-ui/react react react-dom
@@ -39,7 +39,15 @@ export function Example() {
 }
 ```
 
-For source-copy installs, copy the component wrappers and styles:
+Registry metadata is available from the package when an agent or script needs to inspect components, blocks, dependencies, or required files:
+
+```ts
+import registry from 'base-themes/registry.json'
+```
+
+This skill markdown is included in the installed package at `node_modules/base-themes/skills/base-themes/SKILL.md` and exposed as `base-themes/skill` for tools that read package exports.
+
+For source-copy installs only, copy the component wrappers and styles:
 
 ```bash
 cp -R src/components/ui ./target-app/src/components/ui
@@ -56,11 +64,12 @@ Import the tokens once from app CSS:
 
 ### Add A Component
 
-1. Check `registry/registry.json` for the component entry.
-2. Copy every file listed in the entry's `files` array.
-3. Ensure `src/styles/tokens.css`, `src/styles/shadcn.css`, and `src/styles/neo-brutalism.css` are imported by the target app when source-copying.
-4. Install dependencies from the registry `dependencies` array.
-5. Import the component from `src/components/ui`.
+1. For package installs, import the component from `base-themes` and import `base-themes/styles.css` once.
+2. For source-copy installs, check `registry/registry.json` or `base-themes/registry.json` for the component entry.
+3. Copy every file listed in the entry's `files` array.
+4. Ensure `src/styles/tokens.css`, `src/styles/shadcn.css`, `src/styles/neo-brutalism.css`, and `src/styles/themes.css` are imported by the target app when source-copying.
+5. Install dependencies from the registry `dependencies` array.
+6. Import the component from `src/components/ui`.
 
 ### Add A Block
 

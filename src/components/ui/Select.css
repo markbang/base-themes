@@ -22,7 +22,7 @@
 }
 
 .bento-select-trigger:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.32);
+  outline: 3px solid var(--theme-focus, rgba(37, 99, 235, 0.32));
   outline-offset: 2px;
 }
 
@@ -77,8 +77,8 @@
 }
 
 [data-theme='dark'] .bento-select-popup {
-  background: #111827;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.02);
+  background: var(--theme-popup-bg, var(--surface));
+  box-shadow: var(--shadow);
 }
 
 [data-theme='dark'] .bento-select-item[data-selected][data-highlighted] {

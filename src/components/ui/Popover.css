@@ -8,7 +8,7 @@
 }
 
 .bento-popover-arrow {
-  fill: #fff;
+  fill: var(--theme-popup-bg, var(--surface));
 }
 
 .bento-popover-title {

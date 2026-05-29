@@ -54,7 +54,7 @@ export const themeStyleDescriptions: Record<ThemeStyle, string> = {
   enterprise: 'Dense operational UI with blue actions and explicit boundaries.',
   linear: 'Developer-tool polish with subtle gradients and refined dark mode.',
   glass: 'Translucent surfaces, blur, and luminous focus states.',
-  terminal: 'Monospace command-line interface with phosphor and amber accents.',
+  terminal: 'Monospace command-line interface with phosphor green command surfaces.',
   material: 'Layered Google-style surfaces with blue primary actions and soft elevation.',
   fluent: 'Microsoft-style acrylic surfaces, soft blue accents, and gentle borders.',
   retro: 'Early desktop UI cues with chunky controls and saturated classic colors.',

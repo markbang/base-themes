@@ -5,7 +5,7 @@
   place-items: center;
   border: 1px solid var(--line-strong);
   border-radius: 5px;
-  color: #fff;
+  color: var(--theme-primary-foreground);
   background: var(--surface);
   cursor: pointer;
   transition: border-color 140ms ease, background 140ms ease;
@@ -17,7 +17,7 @@
 }
 
 .bento-checkbox:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.32);
+  outline: 3px solid var(--theme-focus, rgba(37, 99, 235, 0.32));
   outline-offset: 2px;
 }
 
