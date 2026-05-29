@@ -1,4 +1,6 @@
-import { useMemo, useSyncExternalStore, type FC, type ReactNode } from 'react'
+import { useMemo, useRef, useSyncExternalStore, type FC, type ReactNode } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import {
   AlignJustify,
   Bell,
@@ -77,6 +79,8 @@ import { useTheme } from './hooks/useTheme'
 import { themeStyleDescriptions, themeStyleLabels, themeStyles } from './styles/themeList'
 import './App.css'
 
+gsap.registerPlugin(useGSAP)
+
 type ApiProp = {
   name: string
   type: string
@@ -134,6 +138,7 @@ function getCurrentId(pathname: string, fallback: string) {
 }
 
 function getPage(pathname: string) {
+  if (pathname === '/') return 'landing'
   if (pathname === '/blocks') return 'blocks'
   if (pathname === '/themes') return 'themes'
   if (pathname === '/docs/installation') return 'installation'
@@ -969,7 +974,7 @@ function Topbar({ activeId, page }: { activeId: string; page: string }) {
 
   return (
     <header className="topbar">
-      <a className="topbar-brand" href={toComponentPath('button')} onClick={(event) => { event.preventDefault(); navigateTo(toComponentPath('button')) }}>
+      <a className="topbar-brand" href="/" onClick={(event) => { event.preventDefault(); navigateTo('/') }}>
         <span className="topbar-brand-mark"><Blocks size={16} /></span>
         Base Themes
       </a>
@@ -1041,6 +1046,109 @@ export function DashboardBlock() {
           </Fieldset>
         </section>
       </div>
+    </article>
+  )
+}
+
+const landingPreviews = [
+  { style: 'bento', label: 'Bento', src: '/previews/base-themes-bento.png' },
+  { style: 'shadcn', label: 'shadcn', src: '/previews/base-themes-shadcn.png' },
+  { style: 'neo', label: 'Neo Brutalism', src: '/previews/base-themes-neo-brutalism.png' },
+  { style: 'data', label: 'Data Dense', src: '/previews/base-themes-data-dense.png' },
+]
+
+function LandingPage() {
+  const landingRef = useRef<HTMLElement>(null)
+
+  useGSAP(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) return
+
+    const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+    timeline
+      .from('.landing-eyebrow, .landing-title, .landing-copy, .landing-actions, .landing-install', {
+        y: 18,
+        opacity: 0,
+        duration: 0.72,
+        stagger: 0.08,
+      })
+      .from('.landing-preview-card', {
+        y: 38,
+        rotate: -2,
+        opacity: 0,
+        duration: 0.84,
+        stagger: 0.08,
+      }, '-=0.42')
+      .from('.landing-stat', {
+        y: 14,
+        opacity: 0,
+        duration: 0.48,
+        stagger: 0.05,
+      }, '-=0.32')
+
+    gsap.to('.landing-preview-card', {
+      y: (index) => (index % 2 === 0 ? -10 : 10),
+      rotate: (index) => (index % 2 === 0 ? 1.4 : -1.4),
+      duration: 3.8,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      stagger: 0.2,
+    })
+
+    gsap.to('.landing-orbit-dot', {
+      x: (index) => (index % 2 === 0 ? 18 : -18),
+      y: (index) => (index % 2 === 0 ? -14 : 14),
+      duration: 4.5,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      stagger: 0.25,
+    })
+  }, { scope: landingRef })
+
+  const copyInstallCommand = () => {
+    void navigator.clipboard?.writeText('npm install base-themes @base-ui/react')
+  }
+
+  return (
+    <article className="landing-page" ref={landingRef}>
+      <section className="landing-hero" aria-labelledby="landing-title">
+        <div className="landing-copy-wrap">
+          <div className="landing-eyebrow"><Sparkles size={15} /> Themeable Base UI for React</div>
+          <h1 className="landing-title" id="landing-title">Base Themes</h1>
+          <p className="landing-copy">Typed Base UI wrappers, production theme tokens, registry metadata, and ready-to-use visual styles in one npm package.</p>
+          <div className="landing-actions">
+            <Button onClick={() => navigateTo('/docs/installation')}><Package size={16} /> Install</Button>
+            <Button variant="outline" onClick={() => navigateTo('/themes')}><Eye size={16} /> View themes</Button>
+          </div>
+          <div className="landing-install" aria-label="Install command">
+            <code>npm install base-themes @base-ui/react</code>
+            <button type="button" aria-label="Copy install command" onClick={copyInstallCommand}><Copy size={15} /></button>
+          </div>
+          <div className="landing-stats" aria-label="Project stats">
+            <div className="landing-stat"><strong>40</strong><span>components</span></div>
+            <div className="landing-stat"><strong>20</strong><span>themes</span></div>
+            <div className="landing-stat"><strong>2</strong><span>blocks</span></div>
+          </div>
+        </div>
+        <div className="landing-stage" aria-label="Theme preview gallery">
+          <span className="landing-orbit-dot dot-a" />
+          <span className="landing-orbit-dot dot-b" />
+          <span className="landing-orbit-dot dot-c" />
+          {landingPreviews.map((preview) => (
+            <figure className={`landing-preview-card ${preview.style}`} key={preview.style}>
+              <img src={preview.src} alt={`${preview.label} theme preview`} />
+              <figcaption>{preview.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+      <section className="landing-band" aria-label="Feature summary">
+        <div><strong>Package-first install</strong><span>Import components and CSS directly from npm.</span></div>
+        <div><strong>Theme audit coverage</strong><span>Contrast checks cover buttons, popups, code tokens, and muted text.</span></div>
+        <div><strong>Agent-ready registry</strong><span>Components, blocks, dependencies, and skill guidance ship with the package.</span></div>
+      </section>
     </article>
   )
 }
@@ -1232,7 +1340,8 @@ export default function App() {
     <Tooltip.Provider>
       <Topbar activeId={doc.id} page={page} />
       {page === 'components' && <Sidebar docs={docs} activeId={doc.id} />}
-      <main className={`main-content${page !== 'components' ? ' no-sidebar' : ''}`}>
+      <main className={`main-content${page !== 'components' ? ' no-sidebar' : ''}${page === 'landing' ? ' landing-main' : ''}`}>
+        {page === 'landing' && <LandingPage />}
         {page === 'blocks' && <BlocksPage />}
         {page === 'themes' && <ThemesPage />}
         {page === 'installation' && <InstallationPage />}
