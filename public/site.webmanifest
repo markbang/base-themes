@@ -1,0 +1,18 @@
+{
+  "name": "Base Themes",
+  "short_name": "Base Themes",
+  "description": "Themeable Base UI React components with production tokens and 20 visual styles.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f8f5ef",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

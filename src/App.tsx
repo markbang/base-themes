@@ -1,4 +1,4 @@
-import { useMemo, useRef, useSyncExternalStore, type FC, type ReactNode } from 'react'
+import { useEffect, useMemo, useRef, useSyncExternalStore, type FC, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import {
@@ -49,6 +49,7 @@ import {
   Fieldset,
   Form,
   Input,
+  Textarea,
   Menu,
   Menubar,
   Meter,
@@ -88,6 +89,13 @@ type ApiProp = {
   description: string
 }
 
+type ComponentExample = {
+  title: string
+  description?: string
+  preview: ReactNode
+  code: string
+}
+
 type ComponentDoc = {
   id: string
   title: string
@@ -96,6 +104,7 @@ type ComponentDoc = {
   icon: FC<{ size?: number }>
   preview: ReactNode
   code: string
+  examples?: ComponentExample[]
   api: ApiProp[]
   interactions: string[]
 }
@@ -103,6 +112,107 @@ type ComponentDoc = {
 type SidebarGroup = {
   title: string
   items: ComponentDoc[]
+}
+
+type SeoPage = {
+  title: string
+  description: string
+  path: string
+  image?: string
+  type?: 'website' | 'article'
+  keywords?: string[]
+}
+
+const siteUrl = import.meta.env.VITE_SITE_URL ?? 'https://base-themes.bangwu.me'
+const siteName = 'Base Themes'
+const defaultSeoImage = '/previews/base-themes-bento.png'
+const defaultKeywords = [
+  'Base UI React components',
+  'React component library',
+  'themeable React components',
+  'Bento UI components',
+  'shadcn themes',
+  'accessible React components',
+]
+
+const staticSeoPages: Record<string, SeoPage> = {
+  landing: {
+    title: 'Base Themes — Themeable Base UI React Components',
+    description: 'Typed Base UI React component wrappers with production CSS tokens, 20 visual themes, registry metadata, and ready-to-use product UI blocks.',
+    path: '/',
+  },
+  blocks: {
+    title: 'Application Blocks — Base Themes',
+    description: 'Composable dashboard and settings blocks built from accessible Base UI React primitives and themeable product UI tokens.',
+    path: '/blocks',
+  },
+  themes: {
+    title: 'Theme System — Base Themes',
+    description: 'Explore Bento, shadcn, neo brutalism, minimal, enterprise, glass, terminal, and other token-based React UI themes.',
+    path: '/themes',
+  },
+  installation: {
+    title: 'Install Base Themes for React',
+    description: 'Install base-themes from npm, import the bundled styles, and use typed Base UI React wrappers in Vite, Next.js, Remix, or any React app.',
+    path: '/docs/installation',
+  },
+}
+
+function absoluteUrl(path: string) {
+  return new URL(path, siteUrl).toString()
+}
+
+function setMetaAttribute(selector: string, attr: 'content' | 'href', value: string) {
+  let element = document.head.querySelector<HTMLMetaElement | HTMLLinkElement>(selector)
+  if (!element) {
+    element = selector.startsWith('link') ? document.createElement('link') : document.createElement('meta')
+
+    const nameMatch = selector.match(/name="([^"]+)"/)
+    const propertyMatch = selector.match(/property="([^"]+)"/)
+    const relMatch = selector.match(/rel="([^"]+)"/)
+    if (nameMatch) element.setAttribute('name', nameMatch[1])
+    if (propertyMatch) element.setAttribute('property', propertyMatch[1])
+    if (relMatch) element.setAttribute('rel', relMatch[1])
+    document.head.appendChild(element)
+  }
+  element.setAttribute(attr, value)
+}
+
+function useSeo(page: SeoPage) {
+  useEffect(() => {
+    const canonical = absoluteUrl(page.path)
+    const image = absoluteUrl(page.image ?? defaultSeoImage)
+    const keywords = [...defaultKeywords, ...(page.keywords ?? [])].join(', ')
+
+    document.title = page.title
+    setMetaAttribute('meta[name="description"]', 'content', page.description)
+    setMetaAttribute('meta[name="keywords"]', 'content', keywords)
+    setMetaAttribute('link[rel="canonical"]', 'href', canonical)
+    setMetaAttribute('meta[property="og:site_name"]', 'content', siteName)
+    setMetaAttribute('meta[property="og:type"]', 'content', page.type ?? 'website')
+    setMetaAttribute('meta[property="og:title"]', 'content', page.title)
+    setMetaAttribute('meta[property="og:description"]', 'content', page.description)
+    setMetaAttribute('meta[property="og:url"]', 'content', canonical)
+    setMetaAttribute('meta[property="og:image"]', 'content', image)
+    setMetaAttribute('meta[property="og:image:alt"]', 'content', `${siteName} theme preview`)
+    setMetaAttribute('meta[name="twitter:title"]', 'content', page.title)
+    setMetaAttribute('meta[name="twitter:description"]', 'content', page.description)
+    setMetaAttribute('meta[name="twitter:image"]', 'content', image)
+  }, [page])
+}
+
+function getSeoPage(page: string, doc: ComponentDoc): SeoPage {
+  const seoPage = page === 'components'
+    ? {
+        title: `${doc.title} React Component — Base Themes`,
+        description: `${doc.summary} Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.`,
+        path: toComponentPath(doc.id),
+        type: 'article' as const,
+        keywords: [doc.title, `${doc.title} React component`, `${doc.title} Base UI`, `${doc.group} component`],
+      }
+    : staticSeoPages[page] ?? staticSeoPages.landing
+
+  return seoPage
 }
 
 const docsRoot = '/components'
@@ -157,6 +267,23 @@ function ToastDemoContent() {
       <Button variant="accent" onClick={() => toast.add(t.extended.toastDeleted, t.extended.toastDeletedDesc)}>
         <Sparkles size={15} />{t.extended.actionToast}
       </Button>
+    </div>
+  )
+}
+
+function ExampleGrid({ children }: { children: ReactNode }) {
+  return <div className="example-grid">{children}</div>
+}
+
+function ExampleStack({ children }: { children: ReactNode }) {
+  return <div className="example-stack">{children}</div>
+}
+
+function ExamplePanel({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div className="example-panel">
+      <span>{title}</span>
+      {children}
     </div>
   )
 }
@@ -256,6 +383,58 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'children', type: 'ReactNode', description: 'Button label or icon content.' },
       ],
       interactions: ['Press Space or Enter to activate.', 'Use the icon variant with an aria-label.', 'All variants preserve focus-visible styling.'],
+      examples: [
+        {
+          title: 'States',
+          description: 'Common enabled, disabled, icon, and loading-like button treatments.',
+          preview: (
+            <ExampleStack>
+              <div className="action-row">
+                <Button>Default</Button>
+                <Button disabled>Disabled</Button>
+                <Button variant="outline"><Package size={15} /> With icon</Button>
+                <Button variant="accent"><Sparkles size={15} /> Publish</Button>
+              </div>
+              <div className="action-row">
+                <Button variant="ghost">Ghost</Button>
+                <Button variant="teal">Teal action</Button>
+                <Button variant="icon" aria-label="Copy"><Copy size={16} /></Button>
+              </div>
+            </ExampleStack>
+          ),
+          code: `import { Button } from './components/ui'
+
+<Button>Default</Button>
+<Button disabled>Disabled</Button>
+<Button variant="outline">
+  <Package size={15} /> With icon
+</Button>
+<Button variant="accent">
+  <Sparkles size={15} /> Publish
+</Button>
+<Button variant="icon" aria-label="Copy">
+  <Copy size={16} />
+</Button>`,
+        },
+        {
+          title: 'Toolbar composition',
+          description: 'Buttons are intended to compose inside dense product rows.',
+          preview: (
+            <div className="example-toolbar-row">
+              <Button variant="outline">Cancel</Button>
+              <Button variant="ghost">Save draft</Button>
+              <Button>Deploy</Button>
+            </div>
+          ),
+          code: `import { Button } from './components/ui'
+
+<div className="action-row">
+  <Button variant="outline">Cancel</Button>
+  <Button variant="ghost">Save draft</Button>
+  <Button>Deploy</Button>
+</div>`,
+        },
+      ],
     },
     {
       id: 'checkbox', title: 'Checkbox', group: 'Inputs', summary: 'A labeled boolean control with checked and unchecked visual states.', icon: Check,
@@ -270,6 +449,18 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'id', type: 'string', description: 'Connects the label to the checkbox root.' },
       ],
       interactions: ['Click the label or square to toggle.', 'Press Space while focused to toggle.', 'Disabled state is inherited from Base UI props.'],
+      examples: [
+        {
+          title: 'States',
+          preview: <ExampleStack><Checkbox id="cb-state-a" defaultChecked label="Checked" /><Checkbox id="cb-state-b" label="Unchecked" /><Checkbox id="cb-state-c" disabled label="Disabled" /><Checkbox id="cb-state-d" disabled defaultChecked label="Disabled checked" /></ExampleStack>,
+          code: `import { Checkbox } from './components/ui'
+
+<Checkbox id="checked" defaultChecked label="Checked" />
+<Checkbox id="unchecked" label="Unchecked" />
+<Checkbox id="disabled" disabled label="Disabled" />
+<Checkbox id="disabled-checked" disabled defaultChecked label="Disabled checked" />`,
+        },
+      ],
     },
     {
       id: 'switch', title: 'Switch', group: 'Inputs', summary: 'A binary setting control for immediate on/off preferences.', icon: ToggleLeft,
@@ -284,6 +475,17 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'onCheckedChange', type: '(checked: boolean) => void', description: 'Receives state changes from Base UI.' },
       ],
       interactions: ['Click to toggle.', 'Use Space to toggle while focused.', 'Track and thumb styles respond to data-checked.'],
+      examples: [
+        {
+          title: 'Settings list',
+          preview: <ExampleStack><Switch id="sw-state-a" defaultChecked label="Email notifications" /><Switch id="sw-state-b" label="Product updates" /><Switch id="sw-state-c" disabled label="Disabled setting" /></ExampleStack>,
+          code: `import { Switch } from './components/ui'
+
+<Switch id="email" defaultChecked label="Email notifications" />
+<Switch id="updates" label="Product updates" />
+<Switch id="disabled" disabled label="Disabled setting" />`,
+        },
+      ],
     },
     {
       id: 'slider', title: 'Slider', group: 'Inputs', summary: 'A range input with Base UI keyboard handling and tokenized track styling.', icon: Gauge,
@@ -297,6 +499,17 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'step', type: 'number', defaultValue: '1', description: 'Value increment for drag and keyboard interaction.' },
       ],
       interactions: ['Drag the thumb to change value.', 'Use arrow keys while focused.', 'Home and End jump to range limits.'],
+      examples: [
+        {
+          title: 'Ranges',
+          preview: <ExampleStack><Slider defaultValue={25} min={0} max={100} aria-label="Brightness" /><Slider defaultValue={75} min={0} max={100} step={5} aria-label="Contrast" /><Slider defaultValue={[20, 80]} min={0} max={100} aria-label="Range" /></ExampleStack>,
+          code: `import { Slider } from './components/ui'
+
+<Slider defaultValue={25} aria-label="Brightness" />
+<Slider defaultValue={75} step={5} aria-label="Contrast" />
+<Slider defaultValue={[20, 80]} aria-label="Range" />`,
+        },
+      ],
     },
     {
       id: 'select', title: 'Select', group: 'Inputs', summary: 'A popover-backed single choice control with keyboard navigation and positioned content.', icon: ListFilter,
@@ -315,6 +528,27 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'placeholder', type: 'string', description: 'Fallback text when no value is selected.' },
       ],
       interactions: ['Open with mouse down, Enter, Space, or ArrowDown.', 'Move through options with arrow keys.', 'Escape closes the popup without changing selection.'],
+      examples: [
+        {
+          title: 'Placeholders and disabled state',
+          preview: <ExampleGrid><Select id="select-density-placeholder" items={densityItems} placeholder="Choose density" label="Placeholder" /><Select id="select-density-disabled" items={densityItems} defaultValue="compact" label="Disabled" disabled /></ExampleGrid>,
+          code: `import { Select } from './components/ui'
+
+<Select
+  id="density"
+  items={{ compact: 'Compact', comfortable: 'Comfortable', spacious: 'Spacious' }}
+  placeholder="Choose density"
+  label="Placeholder"
+/>
+<Select
+  id="density-disabled"
+  items={{ compact: 'Compact', comfortable: 'Comfortable', spacious: 'Spacious' }}
+  defaultValue="compact"
+  label="Disabled"
+  disabled
+/>`,
+        },
+      ],
     },
     {
       id: 'radiogroup', title: 'Radio Group', group: 'Inputs', summary: 'A grouped set of mutually exclusive choices.', icon: Circle,
@@ -389,6 +623,29 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'type', type: 'string', defaultValue: `'text'`, description: 'Native input type passed through to Base UI.' },
       ],
       interactions: ['Focus with Tab.', 'Type directly into the field.', 'Use native validation props when needed.'],
+      examples: [
+        {
+          title: 'Input types',
+          preview: <ExampleGrid><Input id="input-email" label="Email" type="email" placeholder="you@example.com" /><Input id="input-password" label="Password" type="password" placeholder="••••••••" /><Input id="input-disabled" label="Disabled" placeholder="Read only" disabled /></ExampleGrid>,
+          code: `import { Input } from './components/ui'
+
+<Input id="email" label="Email" type="email" placeholder="you@example.com" />
+<Input id="password" label="Password" type="password" placeholder="••••••••" />
+<Input id="disabled" label="Disabled" placeholder="Read only" disabled />`,
+        },
+        {
+          title: 'Textarea composition',
+          preview: <Textarea id="input-message" label="Message" placeholder="Write a short note..." rows={4} />,
+          code: `import { Textarea } from './components/ui'
+
+<Textarea
+  id="message"
+  label="Message"
+  placeholder="Write a short note..."
+  rows={4}
+/>`,
+        },
+      ],
     },
     {
       id: 'autocomplete', title: 'Autocomplete', group: 'Inputs', summary: 'A text input with filtered suggestions and inline selection behavior.', icon: Search,
@@ -479,6 +736,29 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'children', type: 'ReactNode', description: 'Fields and submit actions.' },
       ],
       interactions: ['Press Enter to submit.', 'Native required validation works.', 'Use Field components for validation messaging.'],
+      examples: [
+        {
+          title: 'Profile form',
+          preview: (
+            <Form className="example-form" onSubmit={(event) => event.preventDefault()}>
+              <Field label="Display name"><input className="bento-input" required placeholder="Jane Doe" /></Field>
+              <Field label="Bio" description="Keep it short."><textarea className="bento-textarea" rows={3} placeholder="Product designer..." /></Field>
+              <div className="action-row"><Button type="submit">Save profile</Button><Button type="reset" variant="outline">Reset</Button></div>
+            </Form>
+          ),
+          code: `import { Button, Field, Form } from './components/ui'
+
+<Form onSubmit={(event) => event.preventDefault()}>
+  <Field label="Display name">
+    <input className="bento-input" required placeholder="Jane Doe" />
+  </Field>
+  <Field label="Bio" description="Keep it short.">
+    <textarea className="bento-textarea" rows={3} />
+  </Field>
+  <Button type="submit">Save profile</Button>
+</Form>`,
+        },
+      ],
     },
     {
       id: 'numberfield', title: 'Number Field', group: 'Inputs', summary: 'A numeric input with increment and decrement controls.', icon: Gauge,
@@ -644,6 +924,22 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'description', type: 'string', description: 'Supporting copy announced to assistive tech.' },
       ],
       interactions: ['Click trigger to open.', 'Escape or close button dismisses.', 'Focus is trapped while open.'],
+      examples: [
+        {
+          title: 'Confirmation flow',
+          preview: <Dialog trigger={<Button>Invite teammate</Button>} title="Invite teammate" description="Send an invitation to join this workspace."><ExampleStack><Input id="dialog-email" type="email" label="Email" placeholder="teammate@example.com" /><div className="action-row"><Button variant="outline">Cancel</Button><Button variant="teal">Send invite</Button></div></ExampleStack></Dialog>,
+          code: `import { Button, Dialog, Input } from './components/ui'
+
+<Dialog
+  trigger={<Button>Invite teammate</Button>}
+  title="Invite teammate"
+  description="Send an invitation to join this workspace."
+>
+  <Input id="email" type="email" label="Email" />
+  <Button variant="teal">Send invite</Button>
+</Dialog>`,
+        },
+      ],
     },
     {
       id: 'alertdialog', title: 'Alert Dialog', group: 'Disclosure', summary: 'A confirmation modal for actions that need explicit acknowledgement.', icon: Bell,
@@ -681,6 +977,24 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'children', type: 'ReactNode', description: 'Interactive drawer body content.' },
       ],
       interactions: ['Slides in from the side.', 'Backdrop click and Escape close it.', 'Nested controls remain keyboard reachable.'],
+      examples: [
+        {
+          title: 'Drawer sides',
+          preview: <div className="action-row"><Drawer side="left" trigger={<Button variant="outline">Left</Button>} title="Navigation" description="Useful for app menus." /><Drawer side="bottom" trigger={<Button variant="outline">Bottom</Button>} title="Command drawer" description="Useful on mobile screens." /></div>,
+          code: `import { Button, Drawer } from './components/ui'
+
+<Drawer
+  side="left"
+  trigger={<Button variant="outline">Left</Button>}
+  title="Navigation"
+/>
+<Drawer
+  side="bottom"
+  trigger={<Button variant="outline">Bottom</Button>}
+  title="Command drawer"
+/>`,
+        },
+      ],
     },
     {
       id: 'popover', title: 'Popover', group: 'Disclosure', summary: 'A lightweight positioned layer for contextual content.', icon: Image,
@@ -698,6 +1012,22 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'children', type: 'ReactNode', description: 'Custom body content.' },
       ],
       interactions: ['Click trigger to open.', 'Click outside or Escape to close.', 'Positioner keeps content aligned to trigger.'],
+      examples: [
+        {
+          title: 'Rich content',
+          preview: <Popover trigger={<Button variant="outline">Open details</Button>} title="Deployment" description="Ship the current branch to preview."><div className="control-stack"><Select id="popover-env" items={{ preview: 'Preview', staging: 'Staging' }} defaultValue="preview" label="Environment" /><Button>Deploy</Button></div></Popover>,
+          code: `import { Button, Popover, Select } from './components/ui'
+
+<Popover
+  trigger={<Button variant="outline">Open details</Button>}
+  title="Deployment"
+  description="Ship the current branch to preview."
+>
+  <Select id="env" items={{ preview: 'Preview', staging: 'Staging' }} />
+  <Button>Deploy</Button>
+</Popover>`,
+        },
+      ],
     },
     {
       id: 'previewcard', title: 'Preview Card', group: 'Disclosure', summary: 'A hover or focus preview surface for linked resources.', icon: Eye,
@@ -749,6 +1079,21 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'orientation', type: `'horizontal' | 'vertical'`, defaultValue: `'horizontal'`, description: 'Passed through to Base UI Tabs.' },
       ],
       interactions: ['Click tabs to switch panels.', 'Use arrow keys across the tablist.', 'Selected state is exposed through data attributes.'],
+      examples: [
+        {
+          title: 'Three panels',
+          preview: <Tabs panels={[{ value: 'account', label: 'Account', title: 'Account', content: 'Manage workspace profile and billing email.' }, { value: 'password', label: 'Password', title: 'Password', content: 'Update credentials and recovery methods.' }, { value: 'notifications', label: 'Notifications', title: 'Notifications', content: 'Choose product and security alerts.' }]} defaultValue="account" />,
+          code: `import { Tabs } from './components/ui'
+
+<Tabs
+  panels={[
+    { value: 'account', label: 'Account', title: 'Account', content: '...' },
+    { value: 'password', label: 'Password', title: 'Password', content: '...' },
+    { value: 'notifications', label: 'Notifications', title: 'Notifications', content: '...' },
+  ]}
+/>`,
+        },
+      ],
     },
     {
       id: 'menu', title: 'Menu', group: 'Navigation', summary: 'A command menu for grouped actions and disabled items.', icon: AlignJustify,
@@ -769,6 +1114,23 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'disabled', type: 'boolean', description: 'Per-item flag that blocks activation.' },
       ],
       interactions: ['Open with pointer or keyboard.', 'Arrow keys move active item.', 'Disabled items stay visible but cannot activate.'],
+      examples: [
+        {
+          title: 'Destructive menu',
+          preview: <Menu trigger={<Button variant="outline">Project actions</Button>} items={[{ label: 'Rename', icon: <Type size={15} /> }, { label: 'Duplicate', icon: <Copy size={15} /> }, 'separator', { label: 'Delete project', icon: <Code2 size={15} /> }]} />,
+          code: `import { Button, Menu } from './components/ui'
+
+<Menu
+  trigger={<Button variant="outline">Project actions</Button>}
+  items={[
+    { label: 'Rename' },
+    { label: 'Duplicate' },
+    'separator',
+    { label: 'Delete project' },
+  ]}
+/>`,
+        },
+      ],
     },
     {
       id: 'contextmenu', title: 'Context Menu', group: 'Navigation', summary: 'A menu opened from a contextual right-click or keyboard context action.', icon: AlignJustify,
@@ -844,6 +1206,17 @@ function useComponentDocs(): ComponentDoc[] {
         { name: 'showValue', type: 'boolean', defaultValue: 'false', description: 'Displays the numeric percentage beside the bar.' },
       ],
       interactions: ['Update value from app state.', 'Use aria-label for screen readers.', 'Visual fill follows value changes.'],
+      examples: [
+        {
+          title: 'Progress states',
+          preview: <ExampleStack><Progress value={24} showValue aria-label="Uploading" /><Progress value={68} showValue aria-label="Processing" /><Progress value={100} showValue aria-label="Complete" /></ExampleStack>,
+          code: `import { Progress } from './components/ui'
+
+<Progress value={24} showValue aria-label="Uploading" />
+<Progress value={68} showValue aria-label="Processing" />
+<Progress value={100} showValue aria-label="Complete" />`,
+        },
+      ],
     },
     {
       id: 'meter', title: 'Meter', group: 'Feedback', summary: 'A semantic gauge for bounded measurements like storage or quota usage.', icon: Gauge,
@@ -885,6 +1258,23 @@ function YourApp() {
         { name: 'description', type: 'string', description: 'Optional supporting text in a toast.' },
       ],
       interactions: ['Click an action to enqueue a toast.', 'Multiple toasts stack in the viewport.', 'Toasts dismiss automatically after their timeout.'],
+      examples: [
+        {
+          title: 'Multiple actions',
+          preview: <ToastProvider><ToastDemoContent /></ToastProvider>,
+          code: `import { Button, ToastProvider, useToastManager } from './components/ui'
+
+function ToastActions() {
+  const toast = useToastManager()
+  return (
+    <>
+      <Button onClick={() => toast.add('Saved', 'Settings updated.')}>Saved</Button>
+      <Button onClick={() => toast.add('Deleted', 'Item removed.')}>Deleted</Button>
+    </>
+  )
+}`,
+        },
+      ],
     },
     {
       id: 'scrollarea', title: 'Scroll Area', group: 'Feedback', summary: 'A custom scroll container with consistent scrollbar styling across the site.', icon: PanelRight,
@@ -1138,7 +1528,7 @@ function LandingPage() {
           <span className="landing-orbit-dot dot-c" />
           {landingPreviews.map((preview) => (
             <figure className={`landing-preview-card ${preview.style}`} key={preview.style}>
-              <img src={preview.src} alt={`${preview.label} theme preview`} />
+              <img src={preview.src} alt={`${preview.label} theme preview`} width="1280" height="720" loading="eager" decoding="async" />
               <figcaption>{preview.label}</figcaption>
             </figure>
           ))}
@@ -1263,6 +1653,174 @@ export function App() {
   )
 }
 
+function getCatalogExamples(doc: ComponentDoc): ComponentExample[] {
+  const fallback: ComponentExample = {
+    title: 'Composition checklist',
+    description: `Baseline ${doc.title} states to verify before shipping a product surface.`,
+    preview: <ExamplePanel title="Default composition">{doc.preview}</ExamplePanel>,
+    code: `// ${doc.title} checklist:\n// - Default interaction\n// - Disabled or read-only state\n// - Keyboard focus and escape behavior\n// - Composition with surrounding controls`,
+  }
+
+  const examples: Partial<Record<string, ComponentExample[]>> = {
+    radiogroup: [{
+      title: 'Preference cards',
+      preview: <RadioGroup options={[{ value: 'daily', label: 'Daily summary' }, { value: 'weekly', label: 'Weekly digest' }, { value: 'never', label: 'Never' }]} defaultValue="weekly" />,
+      code: `import { RadioGroup } from './components/ui'\n\n<RadioGroup\n  options={[\n    { value: 'daily', label: 'Daily summary' },\n    { value: 'weekly', label: 'Weekly digest' },\n    { value: 'never', label: 'Never' },\n  ]}\n  defaultValue="weekly"\n/>`,
+    }],
+    togglegroup: [{
+      title: 'Text formatting',
+      preview: <ToggleGroup options={[{ value: 'bold', label: 'B' }, { value: 'italic', label: 'I' }, { value: 'code', label: '</>' }]} defaultValue={['bold', 'code']} />,
+      code: `import { ToggleGroup } from './components/ui'\n\n<ToggleGroup\n  options={[\n    { value: 'bold', label: 'B' },\n    { value: 'italic', label: 'I' },\n    { value: 'code', label: '</>' },\n  ]}\n  defaultValue={['bold', 'code']}\n/>`,
+    }],
+    combobox: [{
+      title: 'Command search',
+      preview: <Combobox label="Jump to" placeholder="Search pages..." options={[{ value: 'overview', label: 'Overview' }, { value: 'billing', label: 'Billing' }, { value: 'members', label: 'Members' }]} />,
+      code: `import { Combobox } from './components/ui'\n\n<Combobox\n  label="Jump to"\n  placeholder="Search pages..."\n  options={[\n    { value: 'overview', label: 'Overview' },\n    { value: 'billing', label: 'Billing' },\n    { value: 'members', label: 'Members' },\n  ]}\n/>`,
+    }],
+    autocomplete: [{
+      title: 'People picker',
+      preview: <Autocomplete label="Assignee" placeholder="Search teammates..." openOnInputClick options={[{ value: 'ada', label: 'Ada Lovelace' }, { value: 'grace', label: 'Grace Hopper' }, { value: 'alan', label: 'Alan Turing' }]} />,
+      code: `import { Autocomplete } from './components/ui'\n\n<Autocomplete\n  label="Assignee"\n  placeholder="Search teammates..."\n  openOnInputClick\n  options={[\n    { value: 'ada', label: 'Ada Lovelace' },\n    { value: 'grace', label: 'Grace Hopper' },\n    { value: 'alan', label: 'Alan Turing' },\n  ]}\n/>`,
+    }],
+    checkboxgroup: [{
+      title: 'Notification channels',
+      preview: <CheckboxGroup defaultValue={['email', 'push']} options={[{ value: 'email', label: 'Email' }, { value: 'sms', label: 'SMS' }, { value: 'push', label: 'Push' }]} />,
+      code: `import { CheckboxGroup } from './components/ui'\n\n<CheckboxGroup\n  defaultValue={['email', 'push']}\n  options={[\n    { value: 'email', label: 'Email' },\n    { value: 'sms', label: 'SMS' },\n    { value: 'push', label: 'Push' },\n  ]}\n/>`,
+    }],
+    field: [{
+      title: 'Validation states',
+      preview: <ExampleStack><Field label="Email" description="Used for receipts."><input className="bento-input" placeholder="you@example.com" /></Field><Field label="Workspace slug" error="Only lowercase letters and hyphens are allowed."><input className="bento-input" defaultValue="Base Themes" /></Field></ExampleStack>,
+      code: `import { Field } from './components/ui'\n\n<Field label="Email" description="Used for receipts.">\n  <input className="bento-input" placeholder="you@example.com" />\n</Field>\n<Field label="Workspace slug" error="Only lowercase letters and hyphens are allowed.">\n  <input className="bento-input" defaultValue="Base Themes" />\n</Field>`,
+    }],
+    fieldset: [{
+      title: 'Billing details',
+      preview: <Fieldset legend="Billing details"><ExampleStack><Input id="billing-name" label="Name" placeholder="Jane Doe" /><Input id="billing-email" label="Email" placeholder="jane@example.com" /></ExampleStack></Fieldset>,
+      code: `import { Fieldset, Input } from './components/ui'\n\n<Fieldset legend="Billing details">\n  <Input id="name" label="Name" />\n  <Input id="email" label="Email" />\n</Fieldset>`,
+    }],
+    numberfield: [{
+      title: 'Bounded values',
+      preview: <ExampleGrid><NumberField label="Seats" defaultValue={4} min={1} max={20} /><NumberField label="Retries" defaultValue={2} min={0} max={5} /></ExampleGrid>,
+      code: `import { NumberField } from './components/ui'\n\n<NumberField label="Seats" defaultValue={4} min={1} max={20} />\n<NumberField label="Retries" defaultValue={2} min={0} max={5} />`,
+    }],
+    otpfield: [{
+      title: 'Verification variants',
+      preview: <ExampleGrid><OtpField label="Six digits" length={6} /><OtpField label="Four digits" length={4} /></ExampleGrid>,
+      code: `import { OtpField } from './components/ui'\n\n<OtpField label="Six digits" length={6} />\n<OtpField label="Four digits" length={4} />`,
+    }],
+    radio: [{
+      title: 'Inside a custom group',
+      preview: <RadioGroup options={[{ value: 'one', label: 'Option one' }, { value: 'two', label: 'Option two' }]} defaultValue="one" />,
+      code: `import { RadioGroup } from './components/ui'\n\n<RadioGroup\n  options={[\n    { value: 'one', label: 'Option one' },\n    { value: 'two', label: 'Option two' },\n  ]}\n/>`,
+    }],
+    separator: [{
+      title: 'Toolbar separators',
+      preview: <div className="action-row"><Button variant="ghost">Bold</Button><Separator orientation="vertical" style={{ height: 28 }} /><Button variant="ghost">Italic</Button><Separator orientation="vertical" style={{ height: 28 }} /><Button variant="outline">Save</Button></div>,
+      code: `import { Button, Separator } from './components/ui'\n\n<div className="action-row">\n  <Button variant="ghost">Bold</Button>\n  <Separator orientation="vertical" />\n  <Button variant="ghost">Italic</Button>\n</div>`,
+    }],
+    toggle: [{
+      title: 'Pressed states',
+      preview: <div className="action-row"><Toggle defaultPressed>Bold</Toggle><Toggle>Italic</Toggle><Toggle disabled>Disabled</Toggle></div>,
+      code: `import { Toggle } from './components/ui'\n\n<Toggle defaultPressed>Bold</Toggle>\n<Toggle>Italic</Toggle>\n<Toggle disabled>Disabled</Toggle>`,
+    }],
+    toolbar: [{
+      title: 'Without search',
+      preview: <Toolbar showSearch={false} />,
+      code: `import { Toolbar } from './components/ui'\n\n<Toolbar showSearch={false} />`,
+    }],
+    cspprovider: [{
+      title: 'App root wrapper',
+      preview: <CspProvider nonce="request-nonce"><ExamplePanel title="Nonce scope"><Button variant="outline">Protected subtree</Button></ExamplePanel></CspProvider>,
+      code: `import { CspProvider } from './components/ui'\n\n<CspProvider nonce={nonceFromServer}>\n  <App />\n</CspProvider>`,
+    }],
+    directionprovider: [{
+      title: 'RTL form controls',
+      preview: <DirectionProvider direction="rtl"><ExampleStack><Input id="rtl-name" label="الاسم" placeholder="اكتب الاسم" /><Select id="rtl-status" items={{ draft: 'مسودة', live: 'منشور' }} defaultValue="draft" label="الحالة" /></ExampleStack></DirectionProvider>,
+      code: `import { DirectionProvider, Input, Select } from './components/ui'\n\n<DirectionProvider direction="rtl">\n  <Input id="name" label="الاسم" />\n  <Select id="status" items={{ draft: 'مسودة', live: 'منشور' }} />\n</DirectionProvider>`,
+    }],
+    accordion: [{
+      title: 'FAQ list',
+      preview: <Accordion items={[{ value: 'billing', label: 'Can I change plans?', content: 'Yes, plan changes are prorated automatically.' }, { value: 'security', label: 'Is SSO supported?', content: 'Enterprise workspaces can enable SSO.' }, { value: 'export', label: 'Can I export data?', content: 'Exports are available from workspace settings.' }]} defaultValue={['billing']} />,
+      code: `import { Accordion } from './components/ui'\n\n<Accordion\n  items={[\n    { value: 'billing', label: 'Can I change plans?', content: 'Yes.' },\n    { value: 'security', label: 'Is SSO supported?', content: 'Enterprise only.' },\n  ]}\n/>`,
+    }],
+    collapsible: [{
+      title: 'Inline details',
+      preview: <ExampleStack><Collapsible label="Advanced settings"><p className="muted">Expose rarely used configuration without leaving the current form.</p></Collapsible><Collapsible label="Open by default" defaultOpen><p className="muted">Use defaultOpen when the content is important but still collapsible.</p></Collapsible></ExampleStack>,
+      code: `import { Collapsible } from './components/ui'\n\n<Collapsible label="Advanced settings">\n  <p>Expose rarely used configuration.</p>\n</Collapsible>\n<Collapsible label="Open by default" defaultOpen>\n  <p>Important but collapsible content.</p>\n</Collapsible>`,
+    }],
+    alertdialog: [{
+      title: 'Destructive confirmation',
+      preview: <AlertDialog trigger={<Button variant="accent">Delete project</Button>} title="Delete project?" description="This action cannot be undone." confirmLabel="Delete" cancelLabel="Cancel" />,
+      code: `import { AlertDialog, Button } from './components/ui'\n\n<AlertDialog\n  trigger={<Button variant="accent">Delete project</Button>}\n  title="Delete project?"\n  description="This action cannot be undone."\n  confirmLabel="Delete"\n/>`,
+    }],
+    previewcard: [{
+      title: 'Link preview',
+      preview: <PreviewCard trigger={<a href="https://base-ui.com" onClick={(event) => event.preventDefault()}>Base UI docs</a>} title="Base UI" description="Unstyled accessible primitives for React apps." imageUrl="/previews/base-themes-shadcn.png" imageAlt="Theme preview" />,
+      code: `import { PreviewCard } from './components/ui'\n\n<PreviewCard\n  trigger={<a href="https://base-ui.com">Base UI docs</a>}\n  title="Base UI"\n  description="Unstyled accessible primitives for React apps."\n  imageUrl="/previews/base-themes-shadcn.png"\n/>`,
+    }],
+    tooltip: [{
+      title: 'Icon hints',
+      preview: <div className="action-row"><Tooltip content="Copy to clipboard"><Button variant="icon" aria-label="Copy"><Copy size={16} /></Button></Tooltip><Tooltip content="Open settings"><Button variant="icon" aria-label="Settings"><Sparkles size={16} /></Button></Tooltip></div>,
+      code: `import { Button, Tooltip } from './components/ui'\n\n<Tooltip content="Copy to clipboard">\n  <Button variant="icon" aria-label="Copy"><Copy size={16} /></Button>\n</Tooltip>`,
+    }],
+    contextmenu: [{
+      title: 'Canvas actions',
+      preview: <ContextMenu items={[{ label: 'Rename', icon: <Type size={15} /> }, { label: 'Duplicate', icon: <Copy size={15} /> }, 'separator', { label: 'Delete', icon: <Code2 size={15} /> }]}><div className="example-context-target">Right-click this surface</div></ContextMenu>,
+      code: `import { ContextMenu } from './components/ui'\n\n<ContextMenu\n  items={[\n    { label: 'Rename' },\n    { label: 'Duplicate' },\n    'separator',\n    { label: 'Delete' },\n  ]}\n>\n  <div>Right-click this surface</div>\n</ContextMenu>`,
+    }],
+    menubar: [{
+      title: 'Editor menubar',
+      preview: <Menubar menus={[{ label: 'File', items: [{ label: 'New' }, { label: 'Export' }] }, { label: 'Edit', items: [{ label: 'Undo' }, { label: 'Redo', disabled: true }] }, { label: 'View', items: [{ label: 'Command palette' }] }]} />,
+      code: `import { Menubar } from './components/ui'\n\n<Menubar\n  menus={[\n    { label: 'File', items: [{ label: 'New' }, { label: 'Export' }] },\n    { label: 'Edit', items: [{ label: 'Undo' }, { label: 'Redo', disabled: true }] },\n  ]}\n/>`,
+    }],
+    navmenu: [{
+      title: 'Marketing navigation',
+      preview: <NavigationMenu items={[{ label: 'Product', children: [{ label: 'Components', href: toComponentPath('button') }, { label: 'Themes', href: '/themes' }] }, { label: 'Pricing', href: '#' }, { label: 'Docs', href: '/docs/installation' }]} />,
+      code: `import { NavigationMenu } from './components/ui'\n\n<NavigationMenu\n  items={[\n    { label: 'Product', children: [\n      { label: 'Components', href: '/components/button' },\n      { label: 'Themes', href: '/themes' },\n    ] },\n    { label: 'Pricing', href: '#' },\n  ]}\n/>`,
+    }],
+    meter: [{
+      title: 'Health thresholds',
+      preview: <ExampleStack><Meter value={18} showValue aria-label="Low usage" /><Meter value={58} showValue aria-label="Healthy usage" /><Meter value={91} showValue aria-label="High usage" /></ExampleStack>,
+      code: `import { Meter } from './components/ui'\n\n<Meter value={18} showValue aria-label="Low usage" />\n<Meter value={58} showValue aria-label="Healthy usage" />\n<Meter value={91} showValue aria-label="High usage" />`,
+    }],
+    scrollarea: [{
+      title: 'Long activity list',
+      preview: <ScrollArea style={{ height: 190, width: 360 }}><div className="example-scroll-list">{['Created workspace', 'Invited teammate', 'Updated billing', 'Published theme', 'Generated preview', 'Synced registry'].map((item) => <span key={item}>{item}</span>)}</div></ScrollArea>,
+      code: `import { ScrollArea } from './components/ui'\n\n<ScrollArea style={{ height: 190, width: 360 }}>\n  <ActivityList />\n</ScrollArea>`,
+    }],
+    avatar: [{
+      title: 'Team stack',
+      preview: <ExampleGrid><ExamplePanel title="Sizes"><div className="action-row"><Avatar fallback="SM" size="sm" /><Avatar fallback="MD" /><Avatar fallback="LG" size="lg" /></div></ExamplePanel><ExamplePanel title="Group"><AvatarGroup><Avatar fallback="AL" size="sm" /><Avatar fallback="GH" size="sm" /><Avatar fallback="AT" size="sm" /></AvatarGroup></ExamplePanel></ExampleGrid>,
+      code: `import { Avatar, AvatarGroup } from './components/ui'\n\n<Avatar fallback="SM" size="sm" />\n<Avatar fallback="MD" />\n<Avatar fallback="LG" size="lg" />\n<AvatarGroup>\n  <Avatar fallback="AL" size="sm" />\n  <Avatar fallback="GH" size="sm" />\n</AvatarGroup>`,
+    }],
+  }
+
+  return examples[doc.id] ?? [fallback]
+}
+
+function getChecklistExample(doc: ComponentDoc): ComponentExample {
+  return {
+    title: 'Implementation checklist',
+    description: 'A final integration pass for accessibility, disabled states, and layout composition.',
+    preview: (
+      <ExampleGrid>
+        <ExamplePanel title="Component">{doc.preview}</ExamplePanel>
+        <ExamplePanel title="Accessibility"><span className="muted">Verify label, focus order, keyboard interaction, and screen reader copy.</span></ExamplePanel>
+        <ExamplePanel title="State coverage"><span className="muted">Test default, disabled, empty, loading, and long-content states where applicable.</span></ExamplePanel>
+      </ExampleGrid>
+    ),
+    code: `// ${doc.title} implementation checklist:\n// - Label or aria-label is present\n// - Keyboard interaction matches the interaction notes\n// - Disabled/empty/loading states are covered\n// - Layout works in narrow containers and dense forms`,
+  }
+}
+
+function getExamples(doc: ComponentDoc) {
+  const examples = [...(doc.examples ?? []), ...getCatalogExamples(doc)]
+  return examples.length >= 2 ? examples : [...examples, getChecklistExample(doc)]
+}
+
+function slugify(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+}
+
 function ApiTable({ rows }: { rows: ApiProp[] }) {
   return (
     <div className="api-table-wrap">
@@ -1291,6 +1849,8 @@ function ApiTable({ rows }: { rows: ApiProp[] }) {
 }
 
 function ComponentPage({ doc }: { doc: ComponentDoc }) {
+  const examples = getExamples(doc)
+
   return (
     <article className="component-page">
       <div className="page-hero component-hero">
@@ -1305,6 +1865,30 @@ function ComponentPage({ doc }: { doc: ComponentDoc }) {
           <p>Interactive example using the local Base UI wrapper and selected visual layer.</p>
         </div>
         <ComponentDemo title="Interactive Demo" preview={doc.preview} code={doc.code} />
+      </section>
+
+      <section className="doc-section">
+        <div className="section-heading">
+          <h2>Examples</h2>
+          <p>Variants, states, and product compositions to test before using this component in an app.</p>
+        </div>
+        <nav className="example-nav" aria-label={`${doc.title} examples`}>
+          {examples.map((example, index) => (
+            <a href={`#${doc.id}-${slugify(example.title)}`} key={example.title}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              {example.title}
+            </a>
+          ))}
+        </nav>
+        {examples.map((example, index) => (
+          <div className="component-example" id={`${doc.id}-${slugify(example.title)}`} key={example.title}>
+            <div className="example-meta">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              {example.description && <p className="example-description">{example.description}</p>}
+            </div>
+            <ComponentDemo title={example.title} preview={example.preview} code={example.code} />
+          </div>
+        ))}
       </section>
 
       <section className="doc-section">
@@ -1335,6 +1919,8 @@ export default function App() {
   const firstId = docs[0]?.id ?? 'button'
   const activeId = getCurrentId(pathname, firstId)
   const doc = useMemo(() => docs.find((item) => item.id === activeId) ?? docs[0], [activeId, docs])
+  const seo = useMemo(() => getSeoPage(page, doc), [doc, page])
+  useSeo(seo)
 
   return (
     <Tooltip.Provider>
@@ -1351,4 +1937,4 @@ export default function App() {
   )
 }
 
-export { Accordion, AlertDialog, Autocomplete, Avatar, AvatarGroup, Button, Checkbox, CheckboxGroup, Collapsible, Combobox, ContextMenu, CspProvider, Dialog, DirectionProvider, Drawer, Field, Fieldset, Form, Input, Menu, Menubar, Meter, NavigationMenu, NumberField, OtpField, Popover, PreviewCard, Progress, Radio, RadioGroup, ScrollArea, Select, Separator, Slider, Switch, Tabs, ToastProvider, Toggle, ToggleGroup, Toolbar, Tooltip }
+export { Accordion, AlertDialog, Autocomplete, Avatar, AvatarGroup, Button, Checkbox, CheckboxGroup, Collapsible, Combobox, ContextMenu, CspProvider, Dialog, DirectionProvider, Drawer, Field, Fieldset, Form, Input, Textarea, Menu, Menubar, Meter, NavigationMenu, NumberField, OtpField, Popover, PreviewCard, Progress, Radio, RadioGroup, ScrollArea, Select, Separator, Slider, Switch, Tabs, ToastProvider, Toggle, ToggleGroup, Toolbar, Tooltip }

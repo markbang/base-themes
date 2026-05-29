@@ -31,7 +31,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = 'Input'
 
-type TextareaProps = ComponentPropsWithoutRef<'textarea'> & {
+export type TextareaProps = ComponentPropsWithoutRef<'textarea'> & {
   label?: string
 }
 

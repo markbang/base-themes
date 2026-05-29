@@ -39,7 +39,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run build:docs && npm run build:types && npm run build:lib",
-    "build:docs": "tsc -b && vite build",
+    "build:docs": "tsc -b && vite build && node scripts/generate-seo.mjs",
     "build:types": "tsc -p tsconfig.lib.json",
     "build:lib": "vite build --config vite.lib.config.ts",
     "lint": "eslint .",
