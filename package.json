@@ -47,7 +47,8 @@
     "previews:generate": "node scripts/generate-theme-previews.mjs",
     "themes:e2e": "node scripts/verify-themes-e2e.mjs",
     "prepack": "npm run registry:check && npm run lint && npm run build",
-    "preview": "vite preview"
+    "preview": "npm run build:docs && wrangler dev",
+    "deploy": "npm run build:docs && wrangler deploy"
   },
   "peerDependencies": {
     "@base-ui/react": "^1.5.0",
@@ -59,20 +60,22 @@
     "lucide-react": "^1.16.0"
   },
   "devDependencies": {
+    "@base-ui/react": "^1.5.0",
+    "@cloudflare/vite-plugin": "^1.39.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "@base-ui/react": "^1.5.0",
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "wrangler": "^4.95.0"
   }
 }
