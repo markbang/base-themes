@@ -343,7 +343,7 @@ function BlocksPage({ selectedBlockId }: { selectedBlockId?: string }) {
   }
 
   return (
-    <article className="component-page">
+    <article className="component-page blocks-page">
       <div className="page-hero component-hero">
         <div className="doc-kicker">Blocks</div>
         <h1>Application Blocks</h1>
