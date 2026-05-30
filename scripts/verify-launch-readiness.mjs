@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { existsSync, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import packageJson from '../package.json' with { type: 'json' }
 
 const requiredScripts = [
@@ -112,64 +112,13 @@ const requiredGatePhrases = [
   'Current public adoption score: **1/4**',
   'at least three of the four public signals pass',
   'Do not mark the strategy complete while the adoption score is below `3/4`',
-  'Latest campaign pack: [research/launch-actions-',
-  'Latest external-action evidence: [research/launch-evidence-',
+  'generated under `research/`',
+  'intentionally not required for CI or release-readiness checks',
   'record fields for external post URLs plus T+1, T+7, and T+30 telemetry evidence',
 ]
 const missingGatePhrases = requiredGatePhrases.filter((phrase) => !adoptionDashboard.includes(phrase))
 if (missingGatePhrases.length > 0) {
   fail('adoption dashboard is missing explicit non-completion gate language', missingGatePhrases)
-}
-
-const latestCampaignPackMatch = adoptionDashboard.match(/\[research\/(launch-actions-\d{4}-\d{2}-\d{2}\.md)\]\(\.\.\/research\/\1\)/)
-if (!latestCampaignPackMatch) {
-  fail('adoption dashboard must link the latest generated launch campaign pack')
-}
-
-const latestCampaignPackPath = `research/${latestCampaignPackMatch[1]}`
-if (!existsSync(latestCampaignPackPath)) {
-  fail('adoption dashboard references a launch campaign pack that does not exist', [latestCampaignPackPath])
-}
-
-const latestCampaignPack = readFileSync(latestCampaignPackPath, 'utf8')
-const requiredCampaignPackPhrases = [
-  'Campaign checklist:',
-  'Promotion wave:',
-  'Post URL:',
-  'T+1 day measurement',
-  'T+7 day measurement',
-  'T+30 day measurement',
-]
-const missingCampaignPackPhrases = requiredCampaignPackPhrases.filter((phrase) => !latestCampaignPack.includes(phrase))
-if (missingCampaignPackPhrases.length > 0) {
-  fail('latest launch campaign pack is missing execution evidence fields', missingCampaignPackPhrases)
-}
-
-const latestEvidenceMatch = adoptionDashboard.match(/\[research\/(launch-evidence-\d{4}-\d{2}-\d{2}\.md)\]\(\.\.\/research\/\1\)/)
-if (!latestEvidenceMatch) {
-  fail('adoption dashboard must link the latest external-action evidence file')
-}
-
-const latestEvidencePath = `research/${latestEvidenceMatch[1]}`
-if (!existsSync(latestEvidencePath)) {
-  fail('adoption dashboard references an external-action evidence file that does not exist', [latestEvidencePath])
-}
-
-const latestEvidence = readFileSync(latestEvidencePath, 'utf8')
-const requiredEvidencePhrases = [
-  'Published GitHub Seed Issues',
-  'GitHub Release Update',
-  'GitHub Repository Discovery Surface',
-  'GitHub Discussion',
-  'not external human adoption signals',
-  'https://github.com/markbang/base-themes/releases/tag/v0.1.2',
-  'https://github.com/markbang/base-themes/issues/2',
-  'https://github.com/markbang/base-themes/issues/3',
-  'https://github.com/markbang/base-themes/discussions/4',
-]
-const missingEvidencePhrases = requiredEvidencePhrases.filter((phrase) => !latestEvidence.includes(phrase))
-if (missingEvidencePhrases.length > 0) {
-  fail('latest external-action evidence file is missing published issue evidence', missingEvidencePhrases)
 }
 
 const requiredDashboardReleaseChecks = [

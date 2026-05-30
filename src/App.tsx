@@ -162,13 +162,13 @@ function toBlockPath(id: string) {
 }
 
 function getThemeStyleFromPath(pathname: string) {
-  const match = pathname.match(/^\/themes\/([^/]+)$/)
+  const match = pathname.match(/^\/themes\/([^/]+)\/?$/)
   const style = match?.[1]
   return style && themeStyles.includes(style as ThemeStyle) ? style as ThemeStyle : undefined
 }
 
 function getBlockIdFromPath(pathname: string) {
-  const match = pathname.match(/^\/blocks\/([^/]+)$/)
+  const match = pathname.match(/^\/blocks\/([^/]+)\/?$/)
   return blockDemos.some((block) => block.id === match?.[1]) ? match?.[1] : undefined
 }
 
@@ -195,7 +195,7 @@ function getBlockSeoPage(id: string): SeoPage {
 }
 
 function getCurrentId(pathname: string, fallback: string) {
-  const match = pathname.match(/^\/components\/([^/]+)$/)
+  const match = pathname.match(/^\/components\/([^/]+)\/?$/)
   return match?.[1] ?? fallback
 }
 

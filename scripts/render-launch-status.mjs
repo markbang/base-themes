@@ -117,6 +117,44 @@ function loadMarkdownTelemetry(filePath) {
   }
 }
 
+function loadDashboardTelemetry(filePath) {
+  const markdown = readFileSync(filePath, 'utf8')
+  const signals = markdown
+    .split('\n')
+    .map((line) => line.match(/^\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|$/))
+    .filter(Boolean)
+    .map((match) => signalFromMarkdownRow(match[1], match[2], match[3]))
+    .filter(Boolean)
+
+  if (signals.length === 0) {
+    fail('adoption dashboard telemetry table could not be parsed', [filePath])
+  }
+
+  const passedSignals = signals.filter((signal) => signal.passed).length
+  const signalCount = signals.length
+  const completionThreshold = 3
+
+  return {
+    generatedAt: 'dashboard-baseline',
+    repo: 'markbang/base-themes',
+    packageName: 'base-themes',
+    adoption: {
+      completionThreshold,
+      passedSignals,
+      signalCount,
+      score: `${passedSignals}/${signalCount}`,
+      externallyValidated: passedSignals >= completionThreshold,
+      signals,
+    },
+    searchConsole: undefined,
+    analytics: undefined,
+    registryAccess: undefined,
+    communityProof: undefined,
+    bundleReport: undefined,
+    errors: [],
+  }
+}
+
 function loadLiveTelemetry() {
   try {
     return JSON.parse(execFileSync('node', ['scripts/collect-telemetry.mjs', '--json', '--no-write'], {
@@ -320,10 +358,10 @@ ${status.conclusion}
 }
 
 const live = process.argv.includes('--live')
-const source = live ? 'live collect-telemetry' : latestTelemetryPath()
-if (!source) fail('no research/telemetry-YYYY-MM-DD.json report exists', ['Run npm run telemetry:collect first, or use --live.'])
+const savedTelemetryPath = latestTelemetryPath()
+const source = live ? 'live collect-telemetry' : savedTelemetryPath ?? 'docs/adoption-dashboard.md'
 
-const telemetry = live ? loadLiveTelemetry() : loadTelemetry(source)
+const telemetry = live ? loadLiveTelemetry() : savedTelemetryPath ? loadTelemetry(source) : loadDashboardTelemetry(source)
 const previousSource = previousTelemetryPath(source, telemetry.generatedAt)
 const previousTelemetry = previousSource ? loadTelemetry(previousSource) : undefined
 const status = buildPayload(telemetry, source, previousTelemetry, previousSource)

@@ -4,11 +4,7 @@ This dashboard tracks whether Base Themes has enough public evidence that users 
 
 ## Current Status
 
-Latest report: [research/telemetry-2026-05-30.md](../research/telemetry-2026-05-30.md)
-
-Latest campaign pack: [research/launch-actions-2026-05-30.md](../research/launch-actions-2026-05-30.md)
-
-Latest external-action evidence: [research/launch-evidence-2026-05-30.md](../research/launch-evidence-2026-05-30.md)
+Latest saved telemetry, campaign, and external-action evidence reports are generated under `research/` when maintainers run the live commands. Those generated execution records are intentionally not required for CI or release-readiness checks.
 
 Current public adoption score: **1/4**
 
@@ -21,7 +17,7 @@ Current public adoption score: **1/4**
 
 Conclusion: the project has package download activity, but does not yet have enough public GitHub or community signal to claim the strategy has succeeded.
 
-The campaign pack contains the live promotion wave, channel-specific post copy, share assets, and record fields for external post URLs plus T+1, T+7, and T+30 telemetry evidence.
+`npm run launch:actions` can generate a live promotion wave, channel-specific post copy, share assets, and record fields for external post URLs plus T+1, T+7, and T+30 telemetry evidence when maintainers need an execution pack.
 
 ## Completion Gate
 
