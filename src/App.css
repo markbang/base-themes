@@ -331,13 +331,15 @@
 
 .landing-stage {
   position: relative;
-  min-height: 620px;
+  width: min(100%, 760px);
+  min-height: clamp(500px, 42vw, 620px);
+  margin-inline: auto;
   isolation: isolate;
 }
 
 .landing-preview-card {
   position: absolute;
-  width: min(62vw, 520px);
+  width: min(68%, 520px);
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -350,8 +352,10 @@
 .landing-preview-card img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: var(--surface-muted);
 }
 
 .landing-preview-card figcaption {
@@ -367,30 +371,30 @@
 }
 
 .landing-preview-card.bento {
-  top: 44px;
-  left: 42px;
+  top: 76px;
+  left: 0;
   z-index: 4;
 }
 
 .landing-preview-card.shadcn {
   top: 0;
-  right: 4px;
+  right: 4%;
   z-index: 3;
-  width: min(50vw, 420px);
+  width: min(56%, 430px);
 }
 
 .landing-preview-card.neo {
-  right: 42px;
-  bottom: 58px;
+  right: 0;
+  bottom: 86px;
   z-index: 2;
-  width: min(54vw, 460px);
+  width: min(60%, 460px);
 }
 
 .landing-preview-card.data {
   bottom: 12px;
-  left: 0;
+  left: 7%;
   z-index: 1;
-  width: min(46vw, 380px);
+  width: min(48%, 370px);
 }
 
 .landing-orbit-dot {
@@ -1283,15 +1287,15 @@
     padding-top: 40px;
   }
   .landing-stage {
-    min-height: 560px;
+    min-height: 500px;
   }
   .landing-preview-card {
-    width: min(78vw, 520px);
+    width: min(68%, 500px);
   }
   .landing-preview-card.shadcn,
   .landing-preview-card.neo,
   .landing-preview-card.data {
-    width: min(58vw, 430px);
+    width: min(58%, 420px);
   }
 }
 
