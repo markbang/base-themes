@@ -1,22 +1,22 @@
 .bento-preview-card {
   width: 280px;
   padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
+  background: var(--bt-surface);
+  box-shadow: var(--bt-shadow);
 }
 
 .bento-preview-card img {
   width: 100%;
   height: 140px;
   object-fit: cover;
-  border-radius: var(--radius-sm);
+  border-radius: var(--bt-radius-sm);
   margin-bottom: 12px;
 }
 
 .bento-preview-card-title {
-  color: var(--text-strong);
+  color: var(--bt-fg);
   font-size: 16px;
   font-weight: 760;
   margin: 0;
@@ -24,10 +24,10 @@
 
 .bento-preview-card-description {
   margin-top: 6px;
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   font-size: 14px;
 }
 
 .bento-preview-card-arrow {
-  fill: var(--theme-popup-bg, var(--surface));
+  fill: var(--bt-select-popup-bg, var(--bt-surface));
 }

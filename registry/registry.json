@@ -1,64 +1,579 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "base-themes",
-  "homepage": "https://base-ui.com/",
-  "dependencies": ["@base-ui/react", "clsx", "lucide-react"],
+  "homepage": "https://github.com/markbang/base-themes",
+  "dependencies": [
+    "@base-ui/react",
+    "clsx",
+    "lucide-react"
+  ],
   "style": {
     "tokens": "src/styles/tokens.css",
     "global": "src/index.css",
+    "files": [
+      "src/index.css",
+      "src/styles/tokens.css",
+      "src/styles/themes.css",
+      "src/styles/shadcn.css",
+      "src/styles/neo-brutalism.css",
+      "src/styles/cyberpunk.css",
+      "src/styles/terminal.css",
+      "src/styles/material.css",
+      "src/styles/glass.css"
+    ],
     "default": "bento",
-    "variants": ["bento", "shadcn", "neo-brutalism", "minimal", "enterprise", "linear", "glass", "terminal", "material", "fluent", "retro", "cyberpunk", "editorial", "calm", "data-dense", "playful", "luxury", "soft-ui", "bauhaus", "mono"]
+    "variants": [
+      "bento",
+      "shadcn",
+      "neo-brutalism",
+      "minimal",
+      "enterprise",
+      "linear",
+      "glass",
+      "terminal",
+      "material",
+      "fluent",
+      "retro",
+      "cyberpunk",
+      "editorial",
+      "calm",
+      "data-dense",
+      "playful",
+      "luxury",
+      "soft-ui",
+      "bauhaus",
+      "mono"
+    ]
   },
   "components": [
-    { "name": "accordion", "title": "Accordion", "files": ["src/components/ui/Accordion.tsx", "src/components/ui/Accordion.css"] },
-    { "name": "alert-dialog", "title": "Alert Dialog", "files": ["src/components/ui/AlertDialog.tsx", "src/components/ui/AlertDialog.css"] },
-    { "name": "autocomplete", "title": "Autocomplete", "files": ["src/components/ui/Autocomplete.tsx", "src/components/ui/Autocomplete.css", "src/components/ui/Combobox.css"] },
-    { "name": "avatar", "title": "Avatar", "files": ["src/components/ui/Avatar.tsx", "src/components/ui/Avatar.css"] },
-    { "name": "button", "title": "Button", "files": ["src/components/ui/Button.tsx", "src/components/ui/Button.css"] },
-    { "name": "checkbox", "title": "Checkbox", "files": ["src/components/ui/Checkbox.tsx", "src/components/ui/Checkbox.css"] },
-    { "name": "checkbox-group", "title": "Checkbox Group", "files": ["src/components/ui/CheckboxGroup.tsx", "src/components/ui/Checkbox.css"] },
-    { "name": "collapsible", "title": "Collapsible", "files": ["src/components/ui/Collapsible.tsx", "src/components/ui/Collapsible.css"] },
-    { "name": "combobox", "title": "Combobox", "files": ["src/components/ui/Combobox.tsx", "src/components/ui/Combobox.css"] },
-    { "name": "context-menu", "title": "Context Menu", "files": ["src/components/ui/ContextMenu.tsx", "src/components/ui/ContextMenu.css", "src/components/ui/Menu.css"] },
-    { "name": "csp-provider", "title": "CSP Provider", "files": ["src/components/ui/CspProvider.tsx"] },
-    { "name": "dialog", "title": "Dialog", "files": ["src/components/ui/Dialog.tsx", "src/components/ui/Dialog.css"] },
-    { "name": "direction-provider", "title": "Direction Provider", "files": ["src/components/ui/DirectionProvider.tsx", "src/components/ui/useDirection.ts"] },
-    { "name": "drawer", "title": "Drawer", "files": ["src/components/ui/Drawer.tsx", "src/components/ui/Drawer.css"] },
-    { "name": "field", "title": "Field", "files": ["src/components/ui/Field.tsx", "src/components/ui/Field.css"] },
-    { "name": "fieldset", "title": "Fieldset", "files": ["src/components/ui/Fieldset.tsx", "src/components/ui/Fieldset.css"] },
-    { "name": "form", "title": "Form", "files": ["src/components/ui/Form.tsx", "src/components/ui/Form.css"] },
-    { "name": "input", "title": "Input", "files": ["src/components/ui/Input.tsx", "src/components/ui/Input.css"] },
-    { "name": "menu", "title": "Menu", "files": ["src/components/ui/Menu.tsx", "src/components/ui/Menu.css"] },
-    { "name": "menubar", "title": "Menubar", "files": ["src/components/ui/Menubar.tsx", "src/components/ui/Menubar.css", "src/components/ui/Menu.css"] },
-    { "name": "meter", "title": "Meter", "files": ["src/components/ui/Meter.tsx", "src/components/ui/Meter.css"] },
-    { "name": "navigation-menu", "title": "Navigation Menu", "files": ["src/components/ui/NavigationMenu.tsx", "src/components/ui/NavigationMenu.css"] },
-    { "name": "number-field", "title": "Number Field", "files": ["src/components/ui/NumberField.tsx", "src/components/ui/NumberField.css"] },
-    { "name": "otp-field", "title": "OTP Field", "files": ["src/components/ui/OtpField.tsx", "src/components/ui/OtpField.css"] },
-    { "name": "popover", "title": "Popover", "files": ["src/components/ui/Popover.tsx", "src/components/ui/Popover.css"] },
-    { "name": "preview-card", "title": "Preview Card", "files": ["src/components/ui/PreviewCard.tsx", "src/components/ui/PreviewCard.css"] },
-    { "name": "progress", "title": "Progress", "files": ["src/components/ui/Progress.tsx", "src/components/ui/Progress.css"] },
-    { "name": "radio", "title": "Radio", "files": ["src/components/ui/Radio.tsx", "src/components/ui/RadioGroup.css"] },
-    { "name": "radio-group", "title": "Radio Group", "files": ["src/components/ui/RadioGroup.tsx", "src/components/ui/RadioGroup.css"] },
-    { "name": "scroll-area", "title": "Scroll Area", "files": ["src/components/ui/ScrollArea.tsx", "src/components/ui/ScrollArea.css"] },
-    { "name": "select", "title": "Select", "files": ["src/components/ui/Select.tsx", "src/components/ui/Select.css"] },
-    { "name": "separator", "title": "Separator", "files": ["src/components/ui/Separator.tsx", "src/components/ui/Separator.css"] },
-    { "name": "slider", "title": "Slider", "files": ["src/components/ui/Slider.tsx", "src/components/ui/Slider.css"] },
-    { "name": "switch", "title": "Switch", "files": ["src/components/ui/Switch.tsx", "src/components/ui/Switch.css"] },
-    { "name": "tabs", "title": "Tabs", "files": ["src/components/ui/Tabs.tsx", "src/components/ui/Tabs.css"] },
-    { "name": "toast", "title": "Toast", "files": ["src/components/ui/Toast.tsx", "src/components/ui/Toast.css", "src/components/ui/useToastManager.ts"] },
-    { "name": "toggle", "title": "Toggle", "files": ["src/components/ui/Toggle.tsx", "src/components/ui/ToggleGroup.css"] },
-    { "name": "toggle-group", "title": "Toggle Group", "files": ["src/components/ui/ToggleGroup.tsx", "src/components/ui/ToggleGroup.css"] },
-    { "name": "toolbar", "title": "Toolbar", "files": ["src/components/ui/Toolbar.tsx", "src/components/ui/Toolbar.css"] },
-    { "name": "tooltip", "title": "Tooltip", "files": ["src/components/ui/Tooltip.tsx", "src/components/ui/Tooltip.css"] }
+    {
+      "name": "accordion",
+      "title": "Accordion",
+      "files": [
+        "src/components/ui/Accordion.tsx",
+        "src/components/ui/Accordion.css"
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "title": "Alert Dialog",
+      "files": [
+        "src/components/ui/AlertDialog.tsx",
+        "src/components/ui/AlertDialog.css",
+        "src/components/ui/Button.css"
+      ]
+    },
+    {
+      "name": "autocomplete",
+      "title": "Autocomplete",
+      "files": [
+        "src/components/ui/Autocomplete.tsx",
+        "src/components/ui/Autocomplete.css",
+        "src/components/ui/Combobox.css"
+      ]
+    },
+    {
+      "name": "avatar",
+      "title": "Avatar",
+      "files": [
+        "src/components/ui/Avatar.tsx",
+        "src/components/ui/Avatar.css"
+      ]
+    },
+    {
+      "name": "button",
+      "title": "Button",
+      "files": [
+        "src/components/ui/Button.tsx",
+        "src/components/ui/Button.css"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "files": [
+        "src/components/ui/Checkbox.tsx",
+        "src/components/ui/Checkbox.css"
+      ]
+    },
+    {
+      "name": "checkbox-group",
+      "title": "Checkbox Group",
+      "files": [
+        "src/components/ui/CheckboxGroup.tsx",
+        "src/components/ui/Checkbox.tsx",
+        "src/components/ui/Checkbox.css"
+      ]
+    },
+    {
+      "name": "collapsible",
+      "title": "Collapsible",
+      "files": [
+        "src/components/ui/Collapsible.tsx",
+        "src/components/ui/Collapsible.css"
+      ]
+    },
+    {
+      "name": "combobox",
+      "title": "Combobox",
+      "files": [
+        "src/components/ui/Combobox.tsx",
+        "src/components/ui/Combobox.css"
+      ]
+    },
+    {
+      "name": "context-menu",
+      "title": "Context Menu",
+      "files": [
+        "src/components/ui/ContextMenu.tsx",
+        "src/components/ui/ContextMenu.css",
+        "src/components/ui/Menu.css"
+      ]
+    },
+    {
+      "name": "csp-provider",
+      "title": "CSP Provider",
+      "files": [
+        "src/components/ui/CspProvider.tsx"
+      ]
+    },
+    {
+      "name": "dialog",
+      "title": "Dialog",
+      "files": [
+        "src/components/ui/Dialog.tsx",
+        "src/components/ui/Dialog.css"
+      ]
+    },
+    {
+      "name": "direction-provider",
+      "title": "Direction Provider",
+      "files": [
+        "src/components/ui/DirectionProvider.tsx",
+        "src/components/ui/useDirection.ts"
+      ]
+    },
+    {
+      "name": "drawer",
+      "title": "Drawer",
+      "files": [
+        "src/components/ui/Drawer.tsx",
+        "src/components/ui/Drawer.css"
+      ]
+    },
+    {
+      "name": "field",
+      "title": "Field",
+      "files": [
+        "src/components/ui/Field.tsx",
+        "src/components/ui/Field.css"
+      ]
+    },
+    {
+      "name": "fieldset",
+      "title": "Fieldset",
+      "files": [
+        "src/components/ui/Fieldset.tsx",
+        "src/components/ui/Fieldset.css"
+      ]
+    },
+    {
+      "name": "form",
+      "title": "Form",
+      "files": [
+        "src/components/ui/Form.tsx",
+        "src/components/ui/Form.css"
+      ]
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "files": [
+        "src/components/ui/Input.tsx",
+        "src/components/ui/Input.css"
+      ]
+    },
+    {
+      "name": "menu",
+      "title": "Menu",
+      "files": [
+        "src/components/ui/Menu.tsx",
+        "src/components/ui/Menu.css"
+      ]
+    },
+    {
+      "name": "menubar",
+      "title": "Menubar",
+      "files": [
+        "src/components/ui/Menubar.tsx",
+        "src/components/ui/Menubar.css",
+        "src/components/ui/Menu.css"
+      ]
+    },
+    {
+      "name": "meter",
+      "title": "Meter",
+      "files": [
+        "src/components/ui/Meter.tsx",
+        "src/components/ui/Meter.css"
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "title": "Navigation Menu",
+      "files": [
+        "src/components/ui/NavigationMenu.tsx",
+        "src/components/ui/NavigationMenu.css"
+      ]
+    },
+    {
+      "name": "number-field",
+      "title": "Number Field",
+      "files": [
+        "src/components/ui/NumberField.tsx",
+        "src/components/ui/NumberField.css"
+      ]
+    },
+    {
+      "name": "otp-field",
+      "title": "OTP Field",
+      "files": [
+        "src/components/ui/OtpField.tsx",
+        "src/components/ui/OtpField.css"
+      ]
+    },
+    {
+      "name": "popover",
+      "title": "Popover",
+      "files": [
+        "src/components/ui/Popover.tsx",
+        "src/components/ui/Popover.css"
+      ]
+    },
+    {
+      "name": "preview-card",
+      "title": "Preview Card",
+      "files": [
+        "src/components/ui/PreviewCard.tsx",
+        "src/components/ui/PreviewCard.css"
+      ]
+    },
+    {
+      "name": "progress",
+      "title": "Progress",
+      "files": [
+        "src/components/ui/Progress.tsx",
+        "src/components/ui/Progress.css"
+      ]
+    },
+    {
+      "name": "radio",
+      "title": "Radio",
+      "files": [
+        "src/components/ui/Radio.tsx",
+        "src/components/ui/RadioGroup.css"
+      ]
+    },
+    {
+      "name": "radio-group",
+      "title": "Radio Group",
+      "files": [
+        "src/components/ui/RadioGroup.tsx",
+        "src/components/ui/RadioGroup.css"
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "title": "Scroll Area",
+      "files": [
+        "src/components/ui/ScrollArea.tsx",
+        "src/components/ui/ScrollArea.css"
+      ]
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "files": [
+        "src/components/ui/Select.tsx",
+        "src/components/ui/Select.css"
+      ]
+    },
+    {
+      "name": "separator",
+      "title": "Separator",
+      "files": [
+        "src/components/ui/Separator.tsx",
+        "src/components/ui/Separator.css"
+      ]
+    },
+    {
+      "name": "slider",
+      "title": "Slider",
+      "files": [
+        "src/components/ui/Slider.tsx",
+        "src/components/ui/Slider.css"
+      ]
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "files": [
+        "src/components/ui/Switch.tsx",
+        "src/components/ui/Switch.css"
+      ]
+    },
+    {
+      "name": "tabs",
+      "title": "Tabs",
+      "files": [
+        "src/components/ui/Tabs.tsx",
+        "src/components/ui/Tabs.css"
+      ]
+    },
+    {
+      "name": "toast",
+      "title": "Toast",
+      "files": [
+        "src/components/ui/Toast.tsx",
+        "src/components/ui/Toast.css",
+        "src/components/ui/useToastManager.ts"
+      ]
+    },
+    {
+      "name": "toggle",
+      "title": "Toggle",
+      "files": [
+        "src/components/ui/Toggle.tsx",
+        "src/components/ui/ToggleGroup.css"
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "title": "Toggle Group",
+      "files": [
+        "src/components/ui/ToggleGroup.tsx",
+        "src/components/ui/ToggleGroup.css"
+      ]
+    },
+    {
+      "name": "toolbar",
+      "title": "Toolbar",
+      "files": [
+        "src/components/ui/Toolbar.tsx",
+        "src/components/ui/Toolbar.css"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "files": [
+        "src/components/ui/Tooltip.tsx",
+        "src/components/ui/Tooltip.css"
+      ]
+    }
   ],
   "blocks": [
-    { "name": "dashboard-shell", "title": "Dashboard Shell", "route": "/blocks", "components": ["button", "progress", "meter"] },
-    { "name": "settings-form", "title": "Settings Form", "route": "/blocks", "components": ["fieldset", "field", "switch", "button"] }
+    {
+      "name": "dashboard-shell",
+      "title": "Dashboard Shell",
+      "description": "Operational dashboard header with metrics, progress, and health status.",
+      "category": "Application UI",
+      "route": "/blocks/dashboard-shell",
+      "components": [
+        "button",
+        "progress",
+        "meter"
+      ],
+      "files": [
+        "src/blocks/DashboardShell.tsx",
+        "src/blocks/Blocks.css"
+      ]
+    },
+    {
+      "name": "settings-form",
+      "title": "Settings Form",
+      "description": "Workspace settings form with fields, density selection, and switches.",
+      "category": "Forms",
+      "route": "/blocks/settings-form",
+      "components": [
+        "fieldset",
+        "field",
+        "input",
+        "select",
+        "switch",
+        "button"
+      ],
+      "files": [
+        "src/blocks/SettingsForm.tsx",
+        "src/blocks/Blocks.css"
+      ]
+    },
+    {
+      "name": "auth-card",
+      "title": "Auth Card",
+      "description": "Focused sign-in card with email, password, remembered device, and SSO action.",
+      "category": "Authentication",
+      "route": "/blocks/auth-card",
+      "components": [
+        "button",
+        "field",
+        "input",
+        "separator",
+        "switch"
+      ],
+      "files": [
+        "src/blocks/AuthCard.tsx",
+        "src/blocks/Blocks.css"
+      ]
+    },
+    {
+      "name": "pricing-panel",
+      "title": "Pricing Panel",
+      "description": "Compact pricing and upgrade panel for billing or plan-selection screens.",
+      "category": "Billing",
+      "route": "/blocks/pricing-panel",
+      "components": [
+        "button",
+        "checkbox"
+      ],
+      "files": [
+        "src/blocks/PricingPanel.tsx",
+        "src/blocks/Blocks.css"
+      ]
+    },
+    {
+      "name": "data-table",
+      "title": "Data Table",
+      "description": "Small operational table with status filtering and row badges.",
+      "category": "Data Display",
+      "route": "/blocks/data-table",
+      "components": [
+        "button",
+        "select"
+      ],
+      "files": [
+        "src/blocks/DataTableBlock.tsx",
+        "src/blocks/Blocks.css"
+      ]
+    },
+    {
+      "name": "command-palette",
+      "title": "Command Palette",
+      "description": "Quick-action search panel for navigation, product commands, and agent workflows.",
+      "category": "Command",
+      "route": "/blocks/command-palette",
+      "components": [
+        "button",
+        "combobox"
+      ],
+      "files": [
+        "src/blocks/CommandPaletteBlock.tsx",
+        "src/blocks/Blocks.css"
+      ]
+    },
+    {
+      "name": "team-activity-feed",
+      "title": "Team Activity Feed",
+      "description": "Recent workspace activity feed with team avatars and collaboration status.",
+      "category": "Collaboration",
+      "route": "/blocks/team-activity-feed",
+      "components": [
+        "avatar",
+        "button"
+      ],
+      "files": [
+        "src/blocks/TeamActivityFeed.tsx",
+        "src/blocks/Blocks.css"
+      ]
+    },
+    {
+      "name": "theme-showcase-card",
+      "title": "Theme Showcase Card",
+      "description": "Theme value card with token swatches, tabs, and a theme CTA.",
+      "category": "Marketing",
+      "route": "/blocks/theme-showcase-card",
+      "components": [
+        "button",
+        "tabs"
+      ],
+      "files": [
+        "src/blocks/ThemeShowcaseCard.tsx",
+        "src/blocks/Blocks.css"
+      ]
+    }
   ],
   "pages": [
-    { "name": "components", "route": "/components/button" },
-    { "name": "blocks", "route": "/blocks" },
-    { "name": "themes", "route": "/themes" },
-    { "name": "installation", "route": "/docs/installation" }
+    {
+      "name": "components",
+      "route": "/components/button"
+    },
+    {
+      "name": "blocks",
+      "route": "/blocks"
+    },
+    {
+      "name": "themes",
+      "route": "/themes"
+    },
+    {
+      "name": "installation",
+      "route": "/docs/installation"
+    },
+    {
+      "name": "why-base-themes",
+      "route": "/docs/why-base-themes"
+    },
+    {
+      "name": "base-ui-vs-shadcn",
+      "route": "/docs/base-ui-vs-shadcn"
+    },
+    {
+      "name": "token-system",
+      "route": "/docs/token-system"
+    },
+    {
+      "name": "accessibility",
+      "route": "/docs/accessibility"
+    },
+    {
+      "name": "migration-guide",
+      "route": "/docs/migration-guide"
+    },
+    {
+      "name": "design-handoff",
+      "route": "/docs/design-handoff"
+    },
+    {
+      "name": "theming",
+      "route": "/docs/theming"
+    },
+    {
+      "name": "theme-customization",
+      "route": "/docs/theme-customization"
+    },
+    {
+      "name": "registry",
+      "route": "/docs/registry"
+    },
+    {
+      "name": "cli",
+      "route": "/docs/cli"
+    },
+    {
+      "name": "agent-usage",
+      "route": "/docs/agent-usage"
+    },
+    {
+      "name": "examples",
+      "route": "/docs/examples"
+    },
+    {
+      "name": "contributing",
+      "route": "/docs/contributing"
+    },
+    {
+      "name": "security",
+      "route": "/docs/security"
+    }
   ]
 }

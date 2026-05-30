@@ -1,0 +1,99 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "block-theme-showcase-card",
+  "type": "registry:block",
+  "title": "Theme Showcase Card",
+  "description": "Theme value card with token swatches, tabs, and a theme CTA.",
+  "dependencies": [
+    "@base-ui/react",
+    "clsx",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/ThemeShowcaseCard.tsx",
+      "type": "registry:block",
+      "target": "@/blocks/ThemeShowcaseCard.tsx"
+    },
+    {
+      "path": "src/blocks/Blocks.css",
+      "type": "registry:file",
+      "target": "@/blocks/Blocks.css"
+    }
+  ],
+  "categories": [
+    "block",
+    "marketing",
+    "product-ui"
+  ],
+  "meta": {
+    "baseThemes": {
+      "source": "package-and-source-copy",
+      "registryName": "theme-showcase-card",
+      "docsRoute": "/blocks/theme-showcase-card",
+      "components": [
+        "button",
+        "tabs"
+      ],
+      "supportsStyles": [
+        "bento",
+        "shadcn",
+        "neo-brutalism",
+        "minimal",
+        "enterprise",
+        "linear",
+        "glass",
+        "terminal",
+        "material",
+        "fluent",
+        "retro",
+        "cyberpunk",
+        "editorial",
+        "calm",
+        "data-dense",
+        "playful",
+        "luxury",
+        "soft-ui",
+        "bauhaus",
+        "mono"
+      ]
+    },
+    "agent": {
+      "summary": "Use Theme Showcase Card as a ready product UI starting point for marketing screens.",
+      "whenToUse": [
+        "Marketing",
+        "Product screen composition",
+        "Block-level copy plan"
+      ],
+      "registryItems": [
+        "/registry/items/block-theme-showcase-card.json",
+        "/registry/items/button.json",
+        "/registry/items/tabs.json"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { ThemeShowcaseCard } from 'base-themes'"
+      ],
+      "sourceCopy": [
+        "npx base-themes plan block:theme-showcase-card",
+        "fetch /registry/items/block-theme-showcase-card.json",
+        "copy block files",
+        "copy required component files from registryItems",
+        "copy every registry.style.files entry once"
+      ],
+      "installPlan": [
+        "npx base-themes plan block:theme-showcase-card",
+        "fetch /registry/items/block-theme-showcase-card.json",
+        "copy block files and component registryItems",
+        "import base-themes/styles.css once"
+      ],
+      "verify": [
+        "npm run registry:check",
+        "npm run tokens:check",
+        "npm run lint",
+        "npm run build"
+      ]
+    }
+  }
+}

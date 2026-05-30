@@ -1,0 +1,322 @@
+[
+  {
+    "id": "button",
+    "registryName": "button",
+    "title": "Button",
+    "group": "Inputs",
+    "summary": "An action primitive with semantic variants for primary commands, quiet actions, icons, and destructive-looking accents.",
+    "exportName": "Button"
+  },
+  {
+    "id": "checkbox",
+    "registryName": "checkbox",
+    "title": "Checkbox",
+    "group": "Inputs",
+    "summary": "A labeled boolean control with checked and unchecked visual states.",
+    "exportName": "Checkbox"
+  },
+  {
+    "id": "switch",
+    "registryName": "switch",
+    "title": "Switch",
+    "group": "Inputs",
+    "summary": "A binary setting control for immediate on/off preferences.",
+    "exportName": "Switch"
+  },
+  {
+    "id": "slider",
+    "registryName": "slider",
+    "title": "Slider",
+    "group": "Inputs",
+    "summary": "A range input with Base UI keyboard handling and tokenized track styling.",
+    "exportName": "Slider"
+  },
+  {
+    "id": "select",
+    "registryName": "select",
+    "title": "Select",
+    "group": "Inputs",
+    "summary": "A popover-backed single choice control with keyboard navigation and positioned content.",
+    "exportName": "Select"
+  },
+  {
+    "id": "radiogroup",
+    "registryName": "radio-group",
+    "title": "Radio Group",
+    "group": "Inputs",
+    "summary": "A grouped set of mutually exclusive choices.",
+    "exportName": "RadioGroup"
+  },
+  {
+    "id": "togglegroup",
+    "registryName": "toggle-group",
+    "title": "Toggle Group",
+    "group": "Inputs",
+    "summary": "A compact multi-select control for formatting and segmented actions.",
+    "exportName": "ToggleGroup"
+  },
+  {
+    "id": "combobox",
+    "registryName": "combobox",
+    "title": "Combobox",
+    "group": "Inputs",
+    "summary": "A searchable listbox for quickly filtering component names.",
+    "exportName": "Combobox"
+  },
+  {
+    "id": "input",
+    "registryName": "input",
+    "title": "Input",
+    "group": "Inputs",
+    "summary": "A styled Base UI input with optional label and helper text slots.",
+    "exportName": "Input"
+  },
+  {
+    "id": "autocomplete",
+    "registryName": "autocomplete",
+    "title": "Autocomplete",
+    "group": "Inputs",
+    "summary": "A text input with filtered suggestions and inline selection behavior.",
+    "exportName": "Autocomplete"
+  },
+  {
+    "id": "checkboxgroup",
+    "registryName": "checkbox-group",
+    "title": "Checkbox Group",
+    "group": "Inputs",
+    "summary": "A shared state container for related checkboxes.",
+    "exportName": "CheckboxGroup"
+  },
+  {
+    "id": "field",
+    "registryName": "field",
+    "title": "Field",
+    "group": "Inputs",
+    "summary": "A form field wrapper that connects label, control, description, and error state.",
+    "exportName": "Field"
+  },
+  {
+    "id": "fieldset",
+    "registryName": "fieldset",
+    "title": "Fieldset",
+    "group": "Inputs",
+    "summary": "A semantic grouping primitive for related form controls.",
+    "exportName": "Fieldset"
+  },
+  {
+    "id": "form",
+    "registryName": "form",
+    "title": "Form",
+    "group": "Inputs",
+    "summary": "A form root that integrates Base UI field validation and native submission.",
+    "exportName": "Form"
+  },
+  {
+    "id": "numberfield",
+    "registryName": "number-field",
+    "title": "Number Field",
+    "group": "Inputs",
+    "summary": "A numeric input with increment and decrement controls.",
+    "exportName": "NumberField"
+  },
+  {
+    "id": "otpfield",
+    "registryName": "otp-field",
+    "title": "OTP Field",
+    "group": "Inputs",
+    "summary": "A one-time-password input with separate slots and paste handling.",
+    "exportName": "OtpField"
+  },
+  {
+    "id": "radio",
+    "registryName": "radio",
+    "title": "Radio",
+    "group": "Inputs",
+    "summary": "A single radio primitive for custom radio group compositions.",
+    "exportName": "Radio"
+  },
+  {
+    "id": "separator",
+    "registryName": "separator",
+    "title": "Separator",
+    "group": "Inputs",
+    "summary": "A semantic divider for grouping content and toolbar controls.",
+    "exportName": "Separator"
+  },
+  {
+    "id": "toggle",
+    "registryName": "toggle",
+    "title": "Toggle",
+    "group": "Inputs",
+    "summary": "A single pressable on/off button for formatting and filters.",
+    "exportName": "Toggle"
+  },
+  {
+    "id": "toolbar",
+    "registryName": "toolbar",
+    "title": "Toolbar",
+    "group": "Inputs",
+    "summary": "A keyboard-aware toolbar for grouped commands and inputs.",
+    "exportName": "Toolbar"
+  },
+  {
+    "id": "cspprovider",
+    "registryName": "csp-provider",
+    "title": "CSP Provider",
+    "group": "Feedback",
+    "summary": "A provider for passing Content Security Policy nonce settings to Base UI internals.",
+    "exportName": "CspProvider"
+  },
+  {
+    "id": "directionprovider",
+    "registryName": "direction-provider",
+    "title": "Direction Provider",
+    "group": "Feedback",
+    "summary": "A provider that enables RTL or LTR behavior across Base UI components.",
+    "exportName": "DirectionProvider"
+  },
+  {
+    "id": "accordion",
+    "registryName": "accordion",
+    "title": "Accordion",
+    "group": "Disclosure",
+    "summary": "Stacked disclosure panels for related sections of content.",
+    "exportName": "Accordion"
+  },
+  {
+    "id": "collapsible",
+    "registryName": "collapsible",
+    "title": "Collapsible",
+    "group": "Disclosure",
+    "summary": "A single expandable region for optional detail.",
+    "exportName": "Collapsible"
+  },
+  {
+    "id": "dialog",
+    "registryName": "dialog",
+    "title": "Dialog",
+    "group": "Disclosure",
+    "summary": "A modal layer with focus management and dismiss behavior.",
+    "exportName": "Dialog"
+  },
+  {
+    "id": "alertdialog",
+    "registryName": "alert-dialog",
+    "title": "Alert Dialog",
+    "group": "Disclosure",
+    "summary": "A confirmation modal for actions that need explicit acknowledgement.",
+    "exportName": "AlertDialog"
+  },
+  {
+    "id": "drawer",
+    "registryName": "drawer",
+    "title": "Drawer",
+    "group": "Disclosure",
+    "summary": "A side panel for settings and secondary workflows.",
+    "exportName": "Drawer"
+  },
+  {
+    "id": "popover",
+    "registryName": "popover",
+    "title": "Popover",
+    "group": "Disclosure",
+    "summary": "A lightweight positioned layer for contextual content.",
+    "exportName": "Popover"
+  },
+  {
+    "id": "previewcard",
+    "registryName": "preview-card",
+    "title": "Preview Card",
+    "group": "Disclosure",
+    "summary": "A hover or focus preview surface for linked resources.",
+    "exportName": "PreviewCard"
+  },
+  {
+    "id": "tooltip",
+    "registryName": "tooltip",
+    "title": "Tooltip",
+    "group": "Disclosure",
+    "summary": "A small non-interactive label for controls and dense interfaces.",
+    "exportName": "Tooltip"
+  },
+  {
+    "id": "tabs",
+    "registryName": "tabs",
+    "title": "Tabs",
+    "group": "Navigation",
+    "summary": "A tablist for switching between related panels without navigating away.",
+    "exportName": "Tabs"
+  },
+  {
+    "id": "menu",
+    "registryName": "menu",
+    "title": "Menu",
+    "group": "Navigation",
+    "summary": "A command menu for grouped actions and disabled items.",
+    "exportName": "Menu"
+  },
+  {
+    "id": "contextmenu",
+    "registryName": "context-menu",
+    "title": "Context Menu",
+    "group": "Navigation",
+    "summary": "A menu opened from a contextual right-click or keyboard context action.",
+    "exportName": "ContextMenu"
+  },
+  {
+    "id": "menubar",
+    "registryName": "menubar",
+    "title": "Menubar",
+    "group": "Navigation",
+    "summary": "A horizontal application menu composed from Base UI menubar and menu primitives.",
+    "exportName": "Menubar"
+  },
+  {
+    "id": "navmenu",
+    "registryName": "navigation-menu",
+    "title": "Navigation Menu",
+    "group": "Navigation",
+    "summary": "A top-level navigation primitive with nested flyout items.",
+    "exportName": "NavigationMenu"
+  },
+  {
+    "id": "progress",
+    "registryName": "progress",
+    "title": "Progress",
+    "group": "Feedback",
+    "summary": "A linear indicator for completion percentage and loading workflows.",
+    "exportName": "Progress"
+  },
+  {
+    "id": "meter",
+    "registryName": "meter",
+    "title": "Meter",
+    "group": "Feedback",
+    "summary": "A semantic gauge for bounded measurements like storage or quota usage.",
+    "exportName": "Meter"
+  },
+  {
+    "id": "toast",
+    "registryName": "toast",
+    "title": "Toast",
+    "group": "Feedback",
+    "summary": "A transient notification system with provider-managed state.",
+    "exportName": "ToastProvider"
+  },
+  {
+    "id": "scrollarea",
+    "registryName": "scroll-area",
+    "title": "Scroll Area",
+    "group": "Feedback",
+    "summary": "A custom scroll container with consistent scrollbar styling across the site.",
+    "exportName": "ScrollArea"
+  },
+  {
+    "id": "avatar",
+    "registryName": "avatar",
+    "title": "Avatar",
+    "group": "Feedback",
+    "summary": "A compact identity primitive with fallback initials and grouped presentation.",
+    "exportName": "Avatar"
+  }
+]

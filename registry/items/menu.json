@@ -1,0 +1,101 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menu",
+  "type": "registry:ui",
+  "title": "Menu",
+  "description": "A command menu for grouped actions and disabled items.",
+  "dependencies": [
+    "@base-ui/react",
+    "clsx",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/Menu.tsx",
+      "type": "registry:ui",
+      "target": "@/components/ui/Menu.tsx"
+    },
+    {
+      "path": "src/components/ui/Menu.css",
+      "type": "registry:file",
+      "target": "@/components/ui/Menu.css"
+    }
+  ],
+  "categories": [
+    "base-ui",
+    "component",
+    "navigation"
+  ],
+  "meta": {
+    "baseThemes": {
+      "source": "package-and-source-copy",
+      "docsRoute": "/components/menu",
+      "supportsStyles": [
+        "bento",
+        "shadcn",
+        "neo-brutalism",
+        "minimal",
+        "enterprise",
+        "linear",
+        "glass",
+        "terminal",
+        "material",
+        "fluent",
+        "retro",
+        "cyberpunk",
+        "editorial",
+        "calm",
+        "data-dense",
+        "playful",
+        "luxury",
+        "soft-ui",
+        "bauhaus",
+        "mono"
+      ],
+      "styleContract": [
+        "data-style",
+        "data-theme",
+        "src/index.css",
+        "src/styles/tokens.css",
+        "src/styles/themes.css",
+        "src/styles/shadcn.css",
+        "src/styles/neo-brutalism.css",
+        "src/styles/cyberpunk.css",
+        "src/styles/terminal.css",
+        "src/styles/material.css",
+        "src/styles/glass.css"
+      ]
+    },
+    "agent": {
+      "summary": "Use Menu when a React UI needs a command menu for grouped actions and disabled items.",
+      "whenToUse": [
+        "Navigation",
+        "Base UI wrapper",
+        "CSS token theme support"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { Menu } from 'base-themes'"
+      ],
+      "sourceCopy": [
+        "fetch /registry/items/menu.json",
+        "copy every files[].path to files[].target",
+        "copy every registry.style.files entry once",
+        "install dependencies from dependencies[]"
+      ],
+      "installPlan": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { Menu } from 'base-themes'",
+        "or fetch /registry/items/menu.json for source-copy"
+      ],
+      "verify": [
+        "npm run registry:check",
+        "npm run tokens:check",
+        "npm run lint",
+        "npm run build"
+      ]
+    }
+  }
+}

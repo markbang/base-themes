@@ -14,20 +14,20 @@
 .bento-meter-indicator {
   height: 100%;
   border-radius: inherit;
-  background: var(--accent);
+  background: var(--bt-primary);
   transition: width 300ms ease;
 }
 
 .bento-meter-high {
-  background: var(--green);
+  background: var(--bt-success);
 }
 
 .bento-meter-mid {
-  background: var(--accent);
+  background: var(--bt-primary);
 }
 
 .bento-meter-low {
-  background: var(--theme-danger);
+  background: var(--bt-danger);
 }
 
 .bento-meter-label {
@@ -35,11 +35,11 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   font-size: 13px;
   font-weight: 680;
 }
 
 .bento-meter-value {
-  color: var(--text-strong);
+  color: var(--bt-fg);
 }

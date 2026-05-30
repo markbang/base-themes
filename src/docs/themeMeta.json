@@ -1,0 +1,22 @@
+[
+  { "style": "bento", "label": "Bento", "description": "Warm modular product cards with soft depth and teal controls." },
+  { "style": "shadcn", "label": "Shadcn", "description": "Neutral zinc interface styling modeled after shadcn/ui." },
+  { "style": "neo-brutalism", "label": "Neo Brutalism", "description": "Hard borders, loud accents, and offset block shadows." },
+  { "style": "minimal", "label": "Minimal", "description": "Swiss-inspired whitespace, thin rules, and quiet monochrome controls." },
+  { "style": "enterprise", "label": "Enterprise", "description": "Dense operational UI with blue actions and explicit boundaries." },
+  { "style": "linear", "label": "Linear", "description": "Developer-tool polish with subtle gradients and refined dark mode." },
+  { "style": "glass", "label": "Glass", "description": "Translucent surfaces, blur, and luminous focus states." },
+  { "style": "terminal", "label": "Terminal", "description": "Monospace command-line interface with phosphor green command surfaces." },
+  { "style": "material", "label": "Material", "description": "Layered Google-style surfaces with blue primary actions and soft elevation." },
+  { "style": "fluent", "label": "Fluent", "description": "Microsoft-style acrylic surfaces, soft blue accents, and gentle borders." },
+  { "style": "retro", "label": "Retro", "description": "Early desktop UI cues with chunky controls and saturated classic colors." },
+  { "style": "cyberpunk", "label": "Cyberpunk", "description": "Dark high-energy neon controls for expressive dashboards." },
+  { "style": "editorial", "label": "Editorial", "description": "Magazine-like typography, ivory surfaces, and ink-forward contrast." },
+  { "style": "calm", "label": "Calm", "description": "Low-saturation wellness palette with relaxed controls and readable contrast." },
+  { "style": "data-dense", "label": "Data Dense", "description": "Compact analytics styling for tables, filters, and repeated workflows." },
+  { "style": "playful", "label": "Playful", "description": "Rounded, bright, friendly components for creative and education tools." },
+  { "style": "luxury", "label": "Luxury", "description": "Dark premium surfaces, gold accents, and fine-line hierarchy." },
+  { "style": "soft-ui", "label": "Soft UI", "description": "Low-contrast tactile controls with inset and raised shadows." },
+  { "style": "bauhaus", "label": "Bauhaus", "description": "Geometric composition with primary colors and strong graphic contrast." },
+  { "style": "mono", "label": "Mono", "description": "Black-and-white ink system with no decorative color dependency." }
+]

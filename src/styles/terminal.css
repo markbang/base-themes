@@ -1,0 +1,188 @@
+/* terminal — phosphor-green command-line aesthetic */
+/* complements tokens.css terminal palette (monospace-first, dark-by-default) */
+
+[data-style='terminal'] {
+  --term-accent: var(--green);
+  --term-glow: 0 0 0 1px color-mix(in srgb, var(--green), transparent 64%),
+    0 0 12px color-mix(in srgb, var(--green), transparent 60%);
+  --term-block: color-mix(in srgb, var(--green), transparent 88%);
+  --term-highlight: color-mix(in srgb, var(--green), transparent 84%);
+}
+
+[data-style='terminal'][data-theme='light'] {
+  --term-glow: 0 0 0 1px color-mix(in srgb, var(--green), transparent 58%),
+    0 0 10px color-mix(in srgb, var(--green), transparent 50%);
+}
+
+/* focus ring — green phosphor */
+[data-style='terminal'] :where(button, a, [role='button'], [tabindex]):focus-visible,
+[data-style='terminal'] [data-base-ui-trigger]:focus-visible,
+[data-style='terminal'] [data-base-ui-item]:focus-visible {
+  outline: 1px solid var(--green);
+  outline-offset: 1px;
+  box-shadow: var(--term-glow);
+}
+
+/* inputs — green cursor block style */
+[data-style='terminal'] .bento-input:focus,
+[data-style='terminal'] .bento-textarea:focus,
+[data-style='terminal'] .bento-combobox-input:focus {
+  border-color: var(--green);
+  box-shadow: var(--term-glow);
+  caret-color: var(--green);
+}
+
+/* buttons — terminal-style */
+[data-style='terminal'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal) {
+  border: 1px solid var(--green);
+  color: var(--green);
+  background: transparent;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-weight: 700;
+  box-shadow: 0 0 4px color-mix(in srgb, var(--green), transparent 70%);
+}
+
+[data-style='terminal'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal):hover {
+  color: var(--bg);
+  background: var(--green);
+  box-shadow: var(--term-glow);
+}
+
+[data-style='terminal'] .bento-button.outline,
+[data-style='terminal'] .bento-button.icon {
+  border-color: var(--green);
+  color: var(--green);
+  background: transparent;
+  box-shadow: none;
+}
+
+[data-style='terminal'] .bento-button.outline:hover,
+[data-style='terminal'] .bento-button.icon:hover {
+  color: var(--bg);
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: var(--term-glow);
+}
+
+[data-style='terminal'] .bento-button.ghost {
+  color: var(--text-strong);
+}
+
+[data-style='terminal'] .bento-button.ghost:hover {
+  background: var(--term-block);
+}
+
+[data-style='terminal'] .bento-button.accent,
+[data-style='terminal'] .bento-button.teal {
+  border-color: var(--green);
+}
+
+/* select / combobox triggers  */
+[data-style='terminal'] .bento-select-trigger,
+[data-style='terminal'] .bento-combobox-input {
+  border-color: var(--green);
+  font-family: var(--font-mono);
+}
+
+[data-style='terminal'] .bento-select-trigger:focus-visible {
+  box-shadow: var(--term-glow);
+}
+
+/* popups — green border phosphor */
+[data-style='terminal'] .bento-menu-popup,
+[data-style='terminal'] .bento-select-popup,
+[data-style='terminal'] .bento-combobox-popup,
+[data-style='terminal'] .bento-nav-menu-popup,
+[data-style='terminal'] .bento-popover-popup,
+[data-style='terminal'] .bento-preview-card,
+[data-style='terminal'] .bento-tooltip-popup,
+[data-style='terminal'] .bento-toast,
+[data-style='terminal'] .bento-dialog-popup,
+[data-style='terminal'] .bento-alert-popup,
+[data-style='terminal'] .bento-drawer-popup {
+  border-color: var(--green);
+  box-shadow: var(--term-glow), var(--shadow);
+}
+
+/* highlighted items — green block cursor */
+[data-style='terminal'] .bento-menu-item[data-highlighted],
+[data-style='terminal'] .bento-combobox-item[data-highlighted],
+[data-style='terminal'] .bento-select-item[data-highlighted],
+[data-style='terminal'] .bento-nav-menu-item[data-highlighted],
+[data-style='terminal'] .bento-select-item[data-selected][data-highlighted] {
+  color: var(--green);
+  background: var(--term-block);
+}
+
+[data-style='terminal'] .bento-select-item[data-selected] {
+  color: var(--green);
+}
+
+/* tabs / toggle — green indicator */
+[data-style='terminal'] .bento-tabs-tab[data-selected],
+[data-style='terminal'] .bento-tabs-tab[data-active],
+[data-style='terminal'] .bento-tabs-tab[aria-selected='true'] {
+  color: var(--green);
+}
+
+[data-style='terminal'] .bento-tabs-indicator,
+[data-style='terminal'] .bento-toggle[data-pressed],
+[data-style='terminal'] .bento-toolbar-button[data-pressed],
+[data-style='terminal'] .bento-menubar-trigger[data-open],
+[data-style='terminal'] .style-switcher button.active {
+  background: var(--term-block);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--green), transparent 60%);
+}
+
+/* forms — green accent */
+[data-style='terminal'] .bento-checkbox[data-checked],
+[data-style='terminal'] .bento-radio[data-checked],
+[data-style='terminal'] .bento-switch[data-checked] {
+  border-color: var(--green);
+  background: var(--green);
+}
+
+[data-style='terminal'] .bento-checkbox,
+[data-style='terminal'] .bento-checkbox[data-checked],
+[data-style='terminal'] .bento-radio-indicator {
+  color: var(--bg);
+}
+
+[data-style='terminal'] .bento-slider-indicator,
+[data-style='terminal'] .bento-slider-thumb,
+[data-style='terminal'] .bento-meter-indicator,
+[data-style='terminal'] .bento-meter-mid,
+[data-style='terminal'] .bento-progress-indicator {
+  background: var(--green);
+}
+
+[data-style='terminal'] .bento-slider-thumb {
+  border-color: var(--bg);
+  box-shadow: var(--term-glow);
+}
+
+/* topbar / sidebar */
+[data-style='terminal'] .topbar,
+[data-style='terminal'] .sidebar {
+  border-color: color-mix(in srgb, var(--green), transparent 60%);
+}
+
+[data-style='terminal'] .topbar-brand-mark {
+  color: var(--bg);
+  background: var(--green);
+}
+
+/* separators */
+[data-style='terminal'] .bento-menu-separator {
+  background: color-mix(in srgb, var(--green), transparent 70%);
+}
+
+/* tooltips — green box */
+[data-style='terminal'] .bento-tooltip-popup {
+  border-color: var(--green);
+  font-family: var(--font-mono);
+}
+
+/* code blocks — already handled by tokens.css */

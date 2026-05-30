@@ -1,0 +1,102 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "An action primitive with semantic variants for primary commands, quiet actions, icons, and destructive-looking accents.",
+  "dependencies": [
+    "@base-ui/react",
+    "clsx",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/Button.tsx",
+      "type": "registry:ui",
+      "target": "@/components/ui/Button.tsx"
+    },
+    {
+      "path": "src/components/ui/Button.css",
+      "type": "registry:file",
+      "target": "@/components/ui/Button.css"
+    }
+  ],
+  "categories": [
+    "base-ui",
+    "component",
+    "inputs",
+    "form"
+  ],
+  "meta": {
+    "baseThemes": {
+      "source": "package-and-source-copy",
+      "docsRoute": "/components/button",
+      "supportsStyles": [
+        "bento",
+        "shadcn",
+        "neo-brutalism",
+        "minimal",
+        "enterprise",
+        "linear",
+        "glass",
+        "terminal",
+        "material",
+        "fluent",
+        "retro",
+        "cyberpunk",
+        "editorial",
+        "calm",
+        "data-dense",
+        "playful",
+        "luxury",
+        "soft-ui",
+        "bauhaus",
+        "mono"
+      ],
+      "styleContract": [
+        "data-style",
+        "data-theme",
+        "src/index.css",
+        "src/styles/tokens.css",
+        "src/styles/themes.css",
+        "src/styles/shadcn.css",
+        "src/styles/neo-brutalism.css",
+        "src/styles/cyberpunk.css",
+        "src/styles/terminal.css",
+        "src/styles/material.css",
+        "src/styles/glass.css"
+      ]
+    },
+    "agent": {
+      "summary": "Use Button when a React UI needs an action primitive with semantic variants for primary commands, quiet actions, icons, and destructive-looking accents.",
+      "whenToUse": [
+        "Inputs",
+        "Base UI wrapper",
+        "CSS token theme support"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { Button } from 'base-themes'"
+      ],
+      "sourceCopy": [
+        "fetch /registry/items/button.json",
+        "copy every files[].path to files[].target",
+        "copy every registry.style.files entry once",
+        "install dependencies from dependencies[]"
+      ],
+      "installPlan": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { Button } from 'base-themes'",
+        "or fetch /registry/items/button.json for source-copy"
+      ],
+      "verify": [
+        "npm run registry:check",
+        "npm run tokens:check",
+        "npm run lint",
+        "npm run build"
+      ]
+    }
+  }
+}

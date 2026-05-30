@@ -15,16 +15,16 @@
   align-items: flex-start;
   gap: 14px;
   padding: 16px 44px 16px 16px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  color: var(--text-strong);
-  background: color-mix(in srgb, var(--surface), var(--bg) 4%);
-  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16), 0 1px 2px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--bt-border-strong);
+  border-radius: var(--bt-radius);
+  color: var(--bt-fg);
+  background: color-mix(in srgb, var(--bt-surface), var(--bt-bg) 4%);
+  box-shadow: var(--bt-shadow);
   isolation: isolate;
 }
 
 .bento-toast-title {
-  color: var(--text-strong);
+  color: var(--bt-fg);
   font-size: 14px;
   font-weight: 780;
   line-height: 1.35;
@@ -32,7 +32,7 @@
 
 .bento-toast-description {
   margin-top: 6px;
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   font-size: 13px;
   line-height: 1.5;
 }
@@ -47,8 +47,8 @@
   height: 26px;
   place-items: center;
   border: 0;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-muted-fg);
   background: transparent;
   cursor: pointer;
   opacity: 0.72;
@@ -56,15 +56,15 @@
 }
 
 .bento-toast-close:hover {
-  color: var(--text-strong);
-  background: var(--surface-muted);
+  color: var(--bt-fg);
+  background: var(--bt-surface-muted);
   opacity: 1;
 }
 
 [data-theme='dark'] .bento-toast {
-  border-color: var(--line-strong);
-  background: var(--theme-popup-bg, var(--surface));
-  box-shadow: var(--shadow);
+  border-color: var(--bt-border-strong);
+  background: var(--bt-select-popup-bg, var(--bt-surface));
+  box-shadow: var(--bt-shadow);
 }
 
 @media (max-width: 640px) {

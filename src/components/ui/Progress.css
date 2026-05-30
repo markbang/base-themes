@@ -14,7 +14,7 @@
 .bento-progress-indicator {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--teal), var(--accent));
+  background: linear-gradient(90deg, var(--bt-secondary), var(--bt-primary));
   transition: width 300ms ease;
 }
 
@@ -23,11 +23,11 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   font-size: 13px;
   font-weight: 680;
 }
 
 .bento-progress-value {
-  color: var(--text-strong);
+  color: var(--bt-fg);
 }

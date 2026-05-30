@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process'
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import themeMeta from '../src/docs/themeMeta.json' with { type: 'json' }
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
@@ -9,28 +10,7 @@ const outDir = join(root, 'public/previews')
 const port = process.env.PREVIEW_PORT ?? '5175'
 const baseUrl = process.env.PREVIEW_BASE_URL ?? `http://127.0.0.1:${port}`
 
-const themes = [
-  'bento',
-  'shadcn',
-  'neo-brutalism',
-  'minimal',
-  'enterprise',
-  'linear',
-  'glass',
-  'terminal',
-  'material',
-  'fluent',
-  'retro',
-  'cyberpunk',
-  'editorial',
-  'calm',
-  'data-dense',
-  'playful',
-  'luxury',
-  'soft-ui',
-  'bauhaus',
-  'mono',
-]
+const themes = themeMeta.map((theme) => theme.style)
 
 function run(args) {
   execFileSync('agent-browser', args, { stdio: 'inherit', cwd: root })

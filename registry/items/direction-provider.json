@@ -1,0 +1,101 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "direction-provider",
+  "type": "registry:ui",
+  "title": "Direction Provider",
+  "description": "A provider that enables RTL or LTR behavior across Base UI components.",
+  "dependencies": [
+    "@base-ui/react",
+    "clsx",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/DirectionProvider.tsx",
+      "type": "registry:ui",
+      "target": "@/components/ui/DirectionProvider.tsx"
+    },
+    {
+      "path": "src/components/ui/useDirection.ts",
+      "type": "registry:ui",
+      "target": "@/components/ui/useDirection.ts"
+    }
+  ],
+  "categories": [
+    "base-ui",
+    "component",
+    "feedback"
+  ],
+  "meta": {
+    "baseThemes": {
+      "source": "package-and-source-copy",
+      "docsRoute": "/components/directionprovider",
+      "supportsStyles": [
+        "bento",
+        "shadcn",
+        "neo-brutalism",
+        "minimal",
+        "enterprise",
+        "linear",
+        "glass",
+        "terminal",
+        "material",
+        "fluent",
+        "retro",
+        "cyberpunk",
+        "editorial",
+        "calm",
+        "data-dense",
+        "playful",
+        "luxury",
+        "soft-ui",
+        "bauhaus",
+        "mono"
+      ],
+      "styleContract": [
+        "data-style",
+        "data-theme",
+        "src/index.css",
+        "src/styles/tokens.css",
+        "src/styles/themes.css",
+        "src/styles/shadcn.css",
+        "src/styles/neo-brutalism.css",
+        "src/styles/cyberpunk.css",
+        "src/styles/terminal.css",
+        "src/styles/material.css",
+        "src/styles/glass.css"
+      ]
+    },
+    "agent": {
+      "summary": "Use Direction Provider when a React UI needs a provider that enables rtl or ltr behavior across base ui components.",
+      "whenToUse": [
+        "Feedback",
+        "Base UI wrapper",
+        "CSS token theme support"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { DirectionProvider } from 'base-themes'"
+      ],
+      "sourceCopy": [
+        "fetch /registry/items/direction-provider.json",
+        "copy every files[].path to files[].target",
+        "copy every registry.style.files entry once",
+        "install dependencies from dependencies[]"
+      ],
+      "installPlan": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { DirectionProvider } from 'base-themes'",
+        "or fetch /registry/items/direction-provider.json for source-copy"
+      ],
+      "verify": [
+        "npm run registry:check",
+        "npm run tokens:check",
+        "npm run lint",
+        "npm run build"
+      ]
+    }
+  }
+}

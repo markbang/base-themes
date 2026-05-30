@@ -1,0 +1,193 @@
+/* glass — frosted translucent surfaces, luminous accents, inner highlights */
+/* complements tokens.css glass palette */
+
+[data-style='glass'] {
+  --glass-blur: blur(18px) saturate(1.3);
+  --glass-blur-strong: blur(28px) saturate(1.4);
+  --glass-border: color-mix(in srgb, var(--accent), transparent 80%);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  --glass-highlight-strong: inset 0 1px 0 rgba(255, 255, 255, 0.30);
+  --glass-bg-hover: rgba(255, 255, 255, 0.14);
+}
+
+[data-style='glass'][data-theme='dark'] {
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --glass-highlight-strong: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+}
+
+/* focus ring — luminous */
+[data-style='glass'] :where(button, a, [role='button'], [tabindex]):focus-visible,
+[data-style='glass'] [data-base-ui-trigger]:focus-visible,
+[data-style='glass'] [data-base-ui-item]:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent), transparent 40%);
+  outline-offset: 2px;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent), transparent 60%);
+}
+
+/* inputs — glass with glow focus */
+[data-style='glass'] .bento-input,
+[data-style='glass'] .bento-textarea,
+[data-style='glass'] .bento-combobox-input,
+[data-style='glass'] .bento-select-trigger {
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight);
+  transition: border-color 200ms ease, box-shadow 220ms ease, background 180ms ease;
+}
+
+[data-style='glass'] .bento-input:focus,
+[data-style='glass'] .bento-textarea:focus,
+[data-style='glass'] .bento-combobox-input:focus {
+  border-color: var(--accent);
+  box-shadow: var(--glass-highlight-strong), 0 0 14px color-mix(in srgb, var(--accent), transparent 62%);
+}
+
+/* select trigger */
+[data-style='glass'] .bento-select-trigger:focus-visible {
+  border-color: var(--accent);
+  box-shadow: var(--glass-highlight-strong), 0 0 14px color-mix(in srgb, var(--accent), transparent 62%);
+}
+
+/* buttons — frosted */
+[data-style='glass'] .bento-button:not(.outline):not(.ghost):not(.icon) {
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-highlight), 0 4px 12px color-mix(in srgb, var(--accent), transparent 85%);
+  transition: transform 180ms ease, box-shadow 200ms ease, background 180ms ease;
+}
+
+[data-style='glass'] .bento-button:not(.outline):not(.ghost):not(.icon):hover {
+  box-shadow: var(--glass-highlight-strong), 0 6px 20px color-mix(in srgb, var(--accent), transparent 72%);
+  transform: translateY(-1px);
+}
+
+[data-style='glass'] .bento-button.outline,
+[data-style='glass'] .bento-button.icon,
+[data-style='glass'] .bento-button.ghost {
+  backdrop-filter: var(--glass-blur);
+}
+
+[data-style='glass'] .bento-button.outline:hover,
+[data-style='glass'] .bento-button.icon:hover,
+[data-style='glass'] .bento-button.ghost:hover {
+  background: var(--glass-bg-hover);
+  backdrop-filter: var(--glass-blur-strong);
+}
+
+[data-style='glass'] .bento-button.accent {
+  box-shadow: var(--glass-highlight), 0 4px 16px color-mix(in srgb, var(--accent), transparent 70%);
+}
+
+/* popups — frosted glass */
+[data-style='glass'] .bento-menu-popup,
+[data-style='glass'] .bento-select-popup,
+[data-style='glass'] .bento-combobox-popup,
+[data-style='glass'] .bento-nav-menu-popup,
+[data-style='glass'] .bento-popover-popup,
+[data-style='glass'] .bento-preview-card,
+[data-style='glass'] .bento-tooltip-popup,
+[data-style='glass'] .bento-toast,
+[data-style='glass'] .bento-dialog-popup,
+[data-style='glass'] .bento-alert-popup,
+[data-style='glass'] .bento-drawer-popup {
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur-strong);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--shadow);
+}
+
+/* highlight — soft luminous */
+[data-style='glass'] .bento-menu-item[data-highlighted],
+[data-style='glass'] .bento-combobox-item[data-highlighted],
+[data-style='glass'] .bento-select-item[data-highlighted],
+[data-style='glass'] .bento-nav-menu-item[data-highlighted] {
+  background: color-mix(in srgb, var(--accent), transparent 88%);
+  backdrop-filter: var(--glass-blur);
+}
+
+/* cards — glass */
+[data-style='glass'] .demo-card,
+[data-style='glass'] .block-preview,
+[data-style='glass'] .theme-swatch {
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--shadow);
+}
+
+[data-style='glass'] .demo-card:hover,
+[data-style='glass'] .block-preview:hover {
+  box-shadow: var(--glass-highlight-strong), var(--shadow-strong);
+}
+
+/* tabs / toggle / menubar */
+[data-style='glass'] .bento-tabs-list {
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight);
+}
+
+[data-style='glass'] .bento-tabs-indicator,
+[data-style='glass'] .bento-toggle[data-pressed],
+[data-style='glass'] .bento-toolbar-button[data-pressed],
+[data-style='glass'] .bento-menubar-trigger[data-open],
+[data-style='glass'] .style-switcher button.active {
+  background: color-mix(in srgb, var(--accent), transparent 84%);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-highlight);
+}
+
+/* checkboxes / radios / switches */
+[data-style='glass'] .bento-checkbox[data-checked],
+[data-style='glass'] .bento-radio[data-checked],
+[data-style='glass'] .bento-switch[data-checked] {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent), transparent 55%);
+}
+
+/* slider / progress / meter */
+[data-style='glass'] .bento-slider-thumb {
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-highlight), 0 2px 8px color-mix(in srgb, var(--accent), transparent 60%);
+}
+
+/* toolbar */
+[data-style='glass'] .bento-toolbar {
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight);
+}
+
+/* number field group */
+[data-style='glass'] .bento-number-field-group {
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight);
+}
+
+/* separators — luminous */
+[data-style='glass'] .bento-menu-separator {
+  background: var(--glass-border);
+}
+
+/* fieldset */
+[data-style='glass'] .bento-fieldset {
+  background: var(--surface);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight);
+}
+
+/* tooltip */
+[data-style='glass'] .bento-tooltip-popup {
+  backdrop-filter: var(--glass-blur-strong);
+}
+
+/* brand mark */
+[data-style='glass'] .topbar-brand-mark {
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-highlight);
+}

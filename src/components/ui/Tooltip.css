@@ -1,14 +1,14 @@
 .bento-tooltip-popup {
   padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  color: var(--text-strong);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
+  background: var(--bt-surface);
+  box-shadow: var(--bt-shadow);
+  color: var(--bt-fg);
   font-size: 13px;
   font-weight: 720;
 }
 
 .bento-tooltip-arrow {
-  fill: var(--theme-popup-bg, var(--surface));
+  fill: var(--bt-select-popup-bg, var(--bt-surface));
 }

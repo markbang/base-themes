@@ -1,0 +1,122 @@
+[
+  {
+    "name": "type: bug",
+    "color": "d73a4a",
+    "description": "Confirmed or reproducible defect in package, docs, examples, registry, or release flow."
+  },
+  {
+    "name": "type: feature",
+    "color": "a2eeef",
+    "description": "New component, block, theme, docs route, workflow, or registry capability."
+  },
+  {
+    "name": "type: docs",
+    "color": "0075ca",
+    "description": "Documentation, examples, SEO content, README, or contributor guidance."
+  },
+  {
+    "name": "type: theme",
+    "color": "c5def5",
+    "description": "Theme style, token, preview, dark mode, or customization work."
+  },
+  {
+    "name": "type: component",
+    "color": "bfd4f2",
+    "description": "Component API, styling, accessibility, examples, or tests."
+  },
+  {
+    "name": "type: block",
+    "color": "d4c5f9",
+    "description": "Application block, product-screen composition, block docs, or block registry work."
+  },
+  {
+    "name": "type: registry",
+    "color": "f9d0c4",
+    "description": "Registry JSON, source-copy metadata, CLI plans, or agent-readable package metadata."
+  },
+  {
+    "name": "type: accessibility",
+    "color": "5319e7",
+    "description": "Keyboard, focus, labeling, contrast, screen reader, or reduced-motion behavior."
+  },
+  {
+    "name": "type: performance",
+    "color": "fbca04",
+    "description": "Bundle size, route splitting, rendering performance, or docs load behavior."
+  },
+  {
+    "name": "type: gallery",
+    "color": "0e8a16",
+    "description": "Real external usage submission for README, docs, or future community gallery."
+  },
+  {
+    "name": "type: good first issue",
+    "color": "7057ff",
+    "description": "Small, well-scoped issue suitable for a first-time contributor."
+  },
+  {
+    "name": "type: help wanted",
+    "color": "008672",
+    "description": "Maintainers welcome external implementation help."
+  },
+  {
+    "name": "area: docs",
+    "color": "1d76db",
+    "description": "Docs routes, README, SEO, examples text, or contributor documentation."
+  },
+  {
+    "name": "area: website",
+    "color": "1d76db",
+    "description": "Docs site UX, landing page, routing, analytics, or shareable pages."
+  },
+  {
+    "name": "area: components",
+    "color": "1d76db",
+    "description": "Component source, CSS, tests, docs, exports, or registry entries."
+  },
+  {
+    "name": "area: tokens",
+    "color": "1d76db",
+    "description": "CSS variables, theme styles, previews, contrast, or design-token handoff."
+  },
+  {
+    "name": "area: registry",
+    "color": "1d76db",
+    "description": "Registry metadata, CLI planner, hosted artifacts, or agent workflow."
+  },
+  {
+    "name": "area: ci",
+    "color": "1d76db",
+    "description": "Tests, validation scripts, package smoke, release, publish, or dependency automation."
+  },
+  {
+    "name": "area: examples",
+    "color": "1d76db",
+    "description": "Runnable example apps, source-copy examples, and fresh-install troubleshooting."
+  },
+  {
+    "name": "priority: high",
+    "color": "b60205",
+    "description": "Important adoption, release, security, or regression work."
+  },
+  {
+    "name": "priority: medium",
+    "color": "fbca04",
+    "description": "Useful work that should be scheduled after high-priority blockers."
+  },
+  {
+    "name": "priority: low",
+    "color": "cfd3d7",
+    "description": "Low-risk polish, follow-up, or backlog grooming work."
+  },
+  {
+    "name": "community",
+    "color": "0e8a16",
+    "description": "External user signal, showcase submission, discussion, or community follow-up."
+  },
+  {
+    "name": "help wanted",
+    "color": "008672",
+    "description": "GitHub default-compatible alias for external contribution help."
+  }
+]

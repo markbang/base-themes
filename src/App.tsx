@@ -1,118 +1,47 @@
-import { useEffect, useMemo, useRef, useSyncExternalStore, type FC, type ReactNode } from 'react'
-import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import {
-  AlignJustify,
-  Bell,
   Blocks,
-  Check,
-  ChevronDown,
-  Circle,
   Code2,
   Copy,
   Eye,
-  Gauge,
-  Image,
+  GitFork,
+  ImagePlus,
   Languages,
-  Layers3,
-  ListFilter,
+  ListChecks,
+  MessageCircle,
+  MessageSquarePlus,
   Moon,
-  MousePointer2,
-  Navigation,
   Package,
-  PanelRight,
-  Search,
   Sparkles,
+  Star,
   Sun,
-  ToggleLeft,
-  Type,
-  Users,
-  Waypoints,
 } from 'lucide-react'
 import {
-  Accordion,
-  AlertDialog,
-  Autocomplete,
-  Avatar,
-  AvatarGroup,
   Button,
-  Checkbox,
-  CheckboxGroup,
-  Collapsible,
-  Combobox,
-  ContextMenu,
-  CspProvider,
-  Dialog,
-  DirectionProvider,
-  Drawer,
-  Field,
-  Fieldset,
-  Form,
   Input,
-  Textarea,
-  Menu,
-  Menubar,
-  Meter,
-  NavigationMenu,
-  NumberField,
-  OtpField,
-  Popover,
-  PreviewCard,
-  Progress,
-  Radio,
-  RadioGroup,
-  ScrollArea,
-  Select,
-  Separator,
-  Slider,
-  Switch,
-  Tabs,
-  Toggle,
-  ToastProvider,
-  ToggleGroup,
-  Toolbar,
   Tooltip,
-  useToastManager,
 } from './components/ui'
 import { ComponentDemo } from './components/ComponentDemo'
 import { useLocale, useT } from './i18n'
 import { useTheme } from './hooks/useTheme'
-import { themeStyleDescriptions, themeStyleLabels, themeStyles } from './styles/themeList'
+import { trackEvent, trackRouteView } from './analytics'
+import { blockDemos } from './docs/blockDocs'
+import { componentMeta } from './docs/componentMeta'
+import { staticPageMeta } from './docs/staticPageMeta'
+import type { StaticDocsPageId } from './docs/StaticDocsPages'
+import { docsRoot, navigateTo, routeChangeEvent, toComponentPath } from './docs/routing'
+import { themeStyleDescriptions, themeStyleLabels, themeStyles, type ThemeStyle } from './styles/themeList'
 import './App.css'
 
-gsap.registerPlugin(useGSAP)
+const StaticDocsPages = lazy(() => import('./docs/StaticDocsPages'))
+const ComponentDocsPage = lazy(() => import('./docs/ComponentDocsPage'))
 
-type ApiProp = {
-  name: string
-  type: string
-  defaultValue?: string
-  description: string
-}
-
-type ComponentExample = {
-  title: string
-  description?: string
-  preview: ReactNode
-  code: string
-}
-
-type ComponentDoc = {
-  id: string
-  title: string
-  group: 'Inputs' | 'Disclosure' | 'Navigation' | 'Feedback'
-  summary: string
-  icon: FC<{ size?: number }>
-  preview: ReactNode
-  code: string
-  examples?: ComponentExample[]
-  api: ApiProp[]
-  interactions: string[]
-}
-
-type SidebarGroup = {
-  title: string
-  items: ComponentDoc[]
-}
+const PROJECT_REPO_URL = 'https://github.com/markbang/base-themes'
+const PROJECT_FORK_URL = `${PROJECT_REPO_URL}/fork`
+const SHOW_AND_TELL_URL = `${PROJECT_REPO_URL}/discussions/new?category=show-and-tell`
+const FEATURE_REQUEST_URL = `${PROJECT_REPO_URL}/issues/new?template=feature_request.yml`
+const GALLERY_SUBMISSION_URL = `${PROJECT_REPO_URL}/issues/new?template=gallery_submission.yml`
+const GOOD_FIRST_ISSUES_URL = `${PROJECT_REPO_URL}/issues?q=is%3Aissue+state%3Aopen+label%3A%22type%3A+good+first+issue%22`
 
 type SeoPage = {
   title: string
@@ -125,6 +54,7 @@ type SeoPage = {
 
 const siteUrl = import.meta.env.VITE_SITE_URL ?? 'https://base-themes.bangwu.me'
 const siteName = 'Base Themes'
+const registryBaseUrl = `${siteUrl}/registry`
 const defaultSeoImage = '/previews/base-themes-bento.png'
 const defaultKeywords = [
   'Base UI React components',
@@ -135,28 +65,11 @@ const defaultKeywords = [
   'accessible React components',
 ]
 
-const staticSeoPages: Record<string, SeoPage> = {
-  landing: {
-    title: 'Base Themes — Themeable Base UI React Components',
-    description: 'Typed Base UI React component wrappers with production CSS tokens, 20 visual themes, registry metadata, and ready-to-use product UI blocks.',
-    path: '/',
-  },
-  blocks: {
-    title: 'Application Blocks — Base Themes',
-    description: 'Composable dashboard and settings blocks built from accessible Base UI React primitives and themeable product UI tokens.',
-    path: '/blocks',
-  },
-  themes: {
-    title: 'Theme System — Base Themes',
-    description: 'Explore Bento, shadcn, neo brutalism, minimal, enterprise, glass, terminal, and other token-based React UI themes.',
-    path: '/themes',
-  },
-  installation: {
-    title: 'Install Base Themes for React',
-    description: 'Install base-themes from npm, import the bundled styles, and use typed Base UI React wrappers in Vite, Next.js, Remix, or any React app.',
-    path: '/docs/installation',
-  },
-}
+const staticSeoPages = Object.fromEntries(staticPageMeta.map((meta) => {
+  const { id, title, description, path, image, type, keywords } = meta
+  return [id, { title, description, path, image, type, keywords }]
+})) as Record<string, SeoPage>
+const staticPageIdByPath = new Map(staticPageMeta.map((page) => [page.path, page.id]))
 
 function absoluteUrl(path: string) {
   return new URL(path, siteUrl).toString()
@@ -201,26 +114,28 @@ function useSeo(page: SeoPage) {
   }, [page])
 }
 
-function getSeoPage(page: string, doc: ComponentDoc): SeoPage {
+function getSeoPage(page: string, componentId: string, themeStyle?: ThemeStyle): SeoPage {
+  const meta = componentMeta.find((component) => component.id === componentId) ?? componentMeta[0]
   const seoPage = page === 'components'
     ? {
-        title: `${doc.title} React Component — Base Themes`,
-        description: `${doc.summary} Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.`,
-        path: toComponentPath(doc.id),
+        title: `${meta.title} React Component — Base Themes`,
+        description: `${meta.summary} Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.`,
+        path: toComponentPath(meta.id),
         type: 'article' as const,
-        keywords: [doc.title, `${doc.title} React component`, `${doc.title} Base UI`, `${doc.group} component`],
+        keywords: [meta.title, `${meta.title} React component`, `${meta.title} Base UI`, `${meta.group} component`],
       }
+    : page === 'block-detail'
+      ? getBlockSeoPage(componentId)
+    : page === 'theme-detail' && themeStyle
+      ? getThemeSeoPage(themeStyle)
     : staticSeoPages[page] ?? staticSeoPages.landing
 
   return seoPage
 }
 
-const docsRoot = '/components'
-const routeChangeEvent = 'bento-route-change'
-
-function navigateTo(path: string) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event(routeChangeEvent))
+function handleInternalNavigation(path: string, source: string) {
+  trackEvent('internal_navigation', { source, target: path })
+  navigateTo(path)
 }
 
 function usePathname() {
@@ -238,8 +153,45 @@ function usePathname() {
   )
 }
 
-function toComponentPath(id: string) {
-  return `${docsRoot}/${id}`
+function toThemePath(style: ThemeStyle) {
+  return `/themes/${style}`
+}
+
+function toBlockPath(id: string) {
+  return `/blocks/${id}`
+}
+
+function getThemeStyleFromPath(pathname: string) {
+  const match = pathname.match(/^\/themes\/([^/]+)$/)
+  const style = match?.[1]
+  return style && themeStyles.includes(style as ThemeStyle) ? style as ThemeStyle : undefined
+}
+
+function getBlockIdFromPath(pathname: string) {
+  const match = pathname.match(/^\/blocks\/([^/]+)$/)
+  return blockDemos.some((block) => block.id === match?.[1]) ? match?.[1] : undefined
+}
+
+function getThemeSeoPage(style: ThemeStyle): SeoPage {
+  const label = themeStyleLabels[style]
+  const description = themeStyleDescriptions[style]
+  return {
+    title: `${label} React UI Theme — Base Themes`,
+    description: `${description} Preview the ${label} visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.`,
+    path: toThemePath(style),
+    keywords: [label, `${label} React theme`, `${label} UI components`, 'Base UI theme', 'CSS variable theme'],
+  }
+}
+
+function getBlockSeoPage(id: string): SeoPage {
+  const block = blockDemos.find((item) => item.id === id) ?? blockDemos[0]
+  return {
+    title: `${block.title} React UI Block — Base Themes`,
+    description: `${block.description} Copy the ${block.title} block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.`,
+    path: toBlockPath(block.id),
+    type: 'article',
+    keywords: [block.title, `${block.title} React block`, `${block.category} UI block`, 'Base UI blocks'],
+  }
 }
 
 function getCurrentId(pathname: string, fallback: string) {
@@ -248,1110 +200,13 @@ function getCurrentId(pathname: string, fallback: string) {
 }
 
 function getPage(pathname: string) {
-  if (pathname === '/') return 'landing'
-  if (pathname === '/blocks') return 'blocks'
-  if (pathname === '/themes') return 'themes'
-  if (pathname === '/docs/installation') return 'installation'
+  if (getBlockIdFromPath(pathname)) return 'block-detail'
+  if (pathname.startsWith('/blocks/')) return 'blocks'
+  if (getThemeStyleFromPath(pathname)) return 'theme-detail'
+  if (pathname.startsWith('/themes/')) return 'themes'
+  const staticPageId = staticPageIdByPath.get(pathname)
+  if (staticPageId) return staticPageId
   return 'components'
-}
-
-function ToastDemoContent() {
-  const t = useT()
-  const toast = useToastManager()
-
-  return (
-    <div className="action-row">
-      <Button variant="outline" onClick={() => toast.add(t.extended.toastSaved, t.extended.toastSavedDesc)}>
-        <Bell size={15} />{t.extended.toast}
-      </Button>
-      <Button variant="accent" onClick={() => toast.add(t.extended.toastDeleted, t.extended.toastDeletedDesc)}>
-        <Sparkles size={15} />{t.extended.actionToast}
-      </Button>
-    </div>
-  )
-}
-
-function ExampleGrid({ children }: { children: ReactNode }) {
-  return <div className="example-grid">{children}</div>
-}
-
-function ExampleStack({ children }: { children: ReactNode }) {
-  return <div className="example-stack">{children}</div>
-}
-
-function ExamplePanel({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className="example-panel">
-      <span>{title}</span>
-      {children}
-    </div>
-  )
-}
-
-function useComponentDocs(): ComponentDoc[] {
-  const t = useT()
-
-  const densityItems = {
-    compact: 'Compact',
-    comfortable: 'Comfortable',
-    spacious: 'Spacious',
-  }
-
-  const radioOptions = [
-    { value: 'system', label: 'System' },
-    { value: 'light', label: 'Light' },
-    { value: 'dark', label: 'Dark' },
-  ]
-
-  const toggleOptions = [
-    { value: 'bold', label: 'B' },
-    { value: 'italic', label: 'I' },
-    { value: 'underline', label: 'U' },
-  ]
-
-  const comboboxOptions = [
-    { value: 'button', label: 'Button' },
-    { value: 'checkbox', label: 'Checkbox' },
-    { value: 'dialog', label: 'Dialog' },
-    { value: 'select', label: 'Select' },
-    { value: 'slider', label: 'Slider' },
-    { value: 'tabs', label: 'Tabs' },
-    { value: 'toast', label: 'Toast' },
-  ]
-
-  const tabPanels = [
-    { value: 'usage', label: t.tabs.usage, title: t.tabs.usageTitle, content: t.tabs.usageContent },
-    { value: 'states', label: t.tabs.states, title: t.tabs.statesTitle, content: t.tabs.statesContent },
-  ]
-
-  const accordionItems = [
-    { value: 'a11y', label: t.accordion.a11yLabel, content: t.accordion.a11yContent },
-    { value: 'styling', label: t.accordion.stylingLabel, content: t.accordion.stylingContent },
-  ]
-
-  const menuItems = [
-    { label: t.extended.edit, icon: <Type size={15} /> },
-    { label: t.extended.duplicate, icon: <AlignJustify size={15} /> },
-    'separator' as const,
-    { label: t.extended.archive, icon: <Package size={15} /> },
-    { label: t.extended.deleteItem, icon: <Code2 size={15} />, disabled: true },
-  ]
-
-  const navItems = [
-    { label: t.nav.components, href: toComponentPath('button') },
-    {
-      label: t.extended.github,
-      children: [
-        { label: t.extended.docs, href: 'https://base-ui.com' },
-        { label: t.extended.github, href: 'https://github.com/mui/base-ui' },
-        { label: t.extended.releases, href: 'https://github.com/mui/base-ui/releases' },
-      ],
-    },
-    { label: t.nav.patterns, href: toComponentPath('tabs') },
-  ]
-
-  return [
-    {
-      id: 'button',
-      title: 'Button',
-      group: 'Inputs',
-      summary: 'An action primitive with semantic variants for primary commands, quiet actions, icons, and destructive-looking accents.',
-      icon: MousePointer2,
-      preview: (
-        <div className="action-row">
-          <Button variant="primary">Button</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="accent">Accent</Button>
-          <Button variant="teal">Teal</Button>
-          <Button variant="icon" aria-label="Sparkles"><Sparkles size={16} /></Button>
-        </div>
-      ),
-      code: `import { Button } from './components/ui'
-
-<Button variant="primary">Button</Button>
-<Button variant="outline">Outline</Button>
-<Button variant="ghost">Ghost</Button>
-<Button variant="accent">Accent</Button>
-<Button variant="teal">Teal</Button>
-<Button variant="icon" aria-label="Sparkles">
-  <Sparkles size={16} />
-</Button>`,
-      api: [
-        { name: 'variant', type: `'primary' | 'outline' | 'ghost' | 'icon' | 'accent' | 'teal'`, defaultValue: `'primary'`, description: 'Controls the visual treatment while keeping native button behavior from Base UI.' },
-        { name: 'disabled', type: 'boolean', defaultValue: 'false', description: 'Disables pointer and keyboard activation.' },
-        { name: 'children', type: 'ReactNode', description: 'Button label or icon content.' },
-      ],
-      interactions: ['Press Space or Enter to activate.', 'Use the icon variant with an aria-label.', 'All variants preserve focus-visible styling.'],
-      examples: [
-        {
-          title: 'States',
-          description: 'Common enabled, disabled, icon, and loading-like button treatments.',
-          preview: (
-            <ExampleStack>
-              <div className="action-row">
-                <Button>Default</Button>
-                <Button disabled>Disabled</Button>
-                <Button variant="outline"><Package size={15} /> With icon</Button>
-                <Button variant="accent"><Sparkles size={15} /> Publish</Button>
-              </div>
-              <div className="action-row">
-                <Button variant="ghost">Ghost</Button>
-                <Button variant="teal">Teal action</Button>
-                <Button variant="icon" aria-label="Copy"><Copy size={16} /></Button>
-              </div>
-            </ExampleStack>
-          ),
-          code: `import { Button } from './components/ui'
-
-<Button>Default</Button>
-<Button disabled>Disabled</Button>
-<Button variant="outline">
-  <Package size={15} /> With icon
-</Button>
-<Button variant="accent">
-  <Sparkles size={15} /> Publish
-</Button>
-<Button variant="icon" aria-label="Copy">
-  <Copy size={16} />
-</Button>`,
-        },
-        {
-          title: 'Toolbar composition',
-          description: 'Buttons are intended to compose inside dense product rows.',
-          preview: (
-            <div className="example-toolbar-row">
-              <Button variant="outline">Cancel</Button>
-              <Button variant="ghost">Save draft</Button>
-              <Button>Deploy</Button>
-            </div>
-          ),
-          code: `import { Button } from './components/ui'
-
-<div className="action-row">
-  <Button variant="outline">Cancel</Button>
-  <Button variant="ghost">Save draft</Button>
-  <Button>Deploy</Button>
-</div>`,
-        },
-      ],
-    },
-    {
-      id: 'checkbox', title: 'Checkbox', group: 'Inputs', summary: 'A labeled boolean control with checked and unchecked visual states.', icon: Check,
-      preview: <div className="inline-controls"><Checkbox id="cb1" defaultChecked label="Checked" /><Checkbox id="cb2" label="Unchecked" /><Checkbox id="cb3" defaultChecked label="Focus ring" /></div>,
-      code: `import { Checkbox } from './components/ui'
-
-<Checkbox id="terms" defaultChecked label="Accept terms" />
-<Checkbox id="marketing" label="Marketing emails" />`,
-      api: [
-        { name: 'label', type: 'string', description: 'Text associated with the checkbox input.' },
-        { name: 'defaultChecked', type: 'boolean', defaultValue: 'false', description: 'Initial checked state for uncontrolled usage.' },
-        { name: 'id', type: 'string', description: 'Connects the label to the checkbox root.' },
-      ],
-      interactions: ['Click the label or square to toggle.', 'Press Space while focused to toggle.', 'Disabled state is inherited from Base UI props.'],
-      examples: [
-        {
-          title: 'States',
-          preview: <ExampleStack><Checkbox id="cb-state-a" defaultChecked label="Checked" /><Checkbox id="cb-state-b" label="Unchecked" /><Checkbox id="cb-state-c" disabled label="Disabled" /><Checkbox id="cb-state-d" disabled defaultChecked label="Disabled checked" /></ExampleStack>,
-          code: `import { Checkbox } from './components/ui'
-
-<Checkbox id="checked" defaultChecked label="Checked" />
-<Checkbox id="unchecked" label="Unchecked" />
-<Checkbox id="disabled" disabled label="Disabled" />
-<Checkbox id="disabled-checked" disabled defaultChecked label="Disabled checked" />`,
-        },
-      ],
-    },
-    {
-      id: 'switch', title: 'Switch', group: 'Inputs', summary: 'A binary setting control for immediate on/off preferences.', icon: ToggleLeft,
-      preview: <div className="inline-controls"><Switch id="sw1" defaultChecked label="Motion" /><Switch id="sw2" label="Notifications" /></div>,
-      code: `import { Switch } from './components/ui'
-
-<Switch id="motion" defaultChecked label="Motion" />
-<Switch id="notifications" label="Notifications" />`,
-      api: [
-        { name: 'label', type: 'string', description: 'Visible label for the switch.' },
-        { name: 'defaultChecked', type: 'boolean', defaultValue: 'false', description: 'Initial uncontrolled state.' },
-        { name: 'onCheckedChange', type: '(checked: boolean) => void', description: 'Receives state changes from Base UI.' },
-      ],
-      interactions: ['Click to toggle.', 'Use Space to toggle while focused.', 'Track and thumb styles respond to data-checked.'],
-      examples: [
-        {
-          title: 'Settings list',
-          preview: <ExampleStack><Switch id="sw-state-a" defaultChecked label="Email notifications" /><Switch id="sw-state-b" label="Product updates" /><Switch id="sw-state-c" disabled label="Disabled setting" /></ExampleStack>,
-          code: `import { Switch } from './components/ui'
-
-<Switch id="email" defaultChecked label="Email notifications" />
-<Switch id="updates" label="Product updates" />
-<Switch id="disabled" disabled label="Disabled setting" />`,
-        },
-      ],
-    },
-    {
-      id: 'slider', title: 'Slider', group: 'Inputs', summary: 'A range input with Base UI keyboard handling and tokenized track styling.', icon: Gauge,
-      preview: <Slider defaultValue={60} min={0} max={100} aria-label="Volume" />,
-      code: `import { Slider } from './components/ui'
-
-<Slider defaultValue={60} min={0} max={100} aria-label="Volume" />`,
-      api: [
-        { name: 'defaultValue', type: 'number | number[]', description: 'Initial uncontrolled value.' },
-        { name: 'min / max', type: 'number', defaultValue: '0 / 100', description: 'Allowed value bounds.' },
-        { name: 'step', type: 'number', defaultValue: '1', description: 'Value increment for drag and keyboard interaction.' },
-      ],
-      interactions: ['Drag the thumb to change value.', 'Use arrow keys while focused.', 'Home and End jump to range limits.'],
-      examples: [
-        {
-          title: 'Ranges',
-          preview: <ExampleStack><Slider defaultValue={25} min={0} max={100} aria-label="Brightness" /><Slider defaultValue={75} min={0} max={100} step={5} aria-label="Contrast" /><Slider defaultValue={[20, 80]} min={0} max={100} aria-label="Range" /></ExampleStack>,
-          code: `import { Slider } from './components/ui'
-
-<Slider defaultValue={25} aria-label="Brightness" />
-<Slider defaultValue={75} step={5} aria-label="Contrast" />
-<Slider defaultValue={[20, 80]} aria-label="Range" />`,
-        },
-      ],
-    },
-    {
-      id: 'select', title: 'Select', group: 'Inputs', summary: 'A popover-backed single choice control with keyboard navigation and positioned content.', icon: ListFilter,
-      preview: <Select id="sel1" items={densityItems} defaultValue="comfortable" label="Density" />,
-      code: `import { Select } from './components/ui'
-
-<Select
-  id="density"
-  items={{ compact: 'Compact', comfortable: 'Comfortable', spacious: 'Spacious' }}
-  defaultValue="comfortable"
-  label="Density"
-/>`,
-      api: [
-        { name: 'items', type: 'Record<string, string>', description: 'Value-to-label map rendered as selectable items.' },
-        { name: 'label', type: 'string', description: 'Optional field label above the trigger.' },
-        { name: 'placeholder', type: 'string', description: 'Fallback text when no value is selected.' },
-      ],
-      interactions: ['Open with mouse down, Enter, Space, or ArrowDown.', 'Move through options with arrow keys.', 'Escape closes the popup without changing selection.'],
-      examples: [
-        {
-          title: 'Placeholders and disabled state',
-          preview: <ExampleGrid><Select id="select-density-placeholder" items={densityItems} placeholder="Choose density" label="Placeholder" /><Select id="select-density-disabled" items={densityItems} defaultValue="compact" label="Disabled" disabled /></ExampleGrid>,
-          code: `import { Select } from './components/ui'
-
-<Select
-  id="density"
-  items={{ compact: 'Compact', comfortable: 'Comfortable', spacious: 'Spacious' }}
-  placeholder="Choose density"
-  label="Placeholder"
-/>
-<Select
-  id="density-disabled"
-  items={{ compact: 'Compact', comfortable: 'Comfortable', spacious: 'Spacious' }}
-  defaultValue="compact"
-  label="Disabled"
-  disabled
-/>`,
-        },
-      ],
-    },
-    {
-      id: 'radiogroup', title: 'Radio Group', group: 'Inputs', summary: 'A grouped set of mutually exclusive choices.', icon: Circle,
-      preview: <div><label className="field-label">{t.extended.radioGroup}</label><RadioGroup options={radioOptions} defaultValue="system" /></div>,
-      code: `import { RadioGroup } from './components/ui'
-
-<RadioGroup
-  options={[
-    { value: 'system', label: 'System' },
-    { value: 'light', label: 'Light' },
-    { value: 'dark', label: 'Dark' },
-  ]}
-  defaultValue="system"
-/>`,
-      api: [
-        { name: 'options', type: '{ value: string; label: string }[]', description: 'Radio items rendered in order.' },
-        { name: 'defaultValue', type: 'string', description: 'Initially selected value.' },
-        { name: 'value', type: 'string', description: 'Controlled selected value.' },
-      ],
-      interactions: ['Arrow keys move selection.', 'Clicking a label selects its value.', 'Only one option may be selected.'],
-    },
-    {
-      id: 'togglegroup', title: 'Toggle Group', group: 'Inputs', summary: 'A compact multi-select control for formatting and segmented actions.', icon: ToggleLeft,
-      preview: <div><label className="field-label">{t.extended.toggleGroup}</label><ToggleGroup options={toggleOptions} defaultValue={['bold']} /></div>,
-      code: `import { ToggleGroup } from './components/ui'
-
-<ToggleGroup
-  options={[
-    { value: 'bold', label: 'B' },
-    { value: 'italic', label: 'I' },
-    { value: 'underline', label: 'U' },
-  ]}
-  defaultValue={['bold']}
-/>`,
-      api: [
-        { name: 'options', type: '{ value: string; label: string }[]', description: 'Buttons rendered inside the group.' },
-        { name: 'defaultValue', type: 'string[]', description: 'Initial selected toggle values.' },
-        { name: 'value', type: 'string[]', description: 'Controlled selected values.' },
-      ],
-      interactions: ['Click a segment to toggle it.', 'Multiple values can stay active.', 'Roving focus works through Base UI.'],
-    },
-    {
-      id: 'combobox', title: 'Combobox', group: 'Inputs', summary: 'A searchable listbox for quickly filtering component names.', icon: Search,
-      preview: <Combobox options={comboboxOptions} placeholder={t.extended.searchPlaceholder} label={t.extended.findComponent} />,
-      code: `import { Combobox } from './components/ui'
-
-<Combobox
-  options={[
-    { value: 'button', label: 'Button' },
-    { value: 'checkbox', label: 'Checkbox' },
-    { value: 'dialog', label: 'Dialog' },
-  ]}
-  placeholder="Search components..."
-  label="Find a component"
-/>`,
-      api: [
-        { name: 'options', type: '{ value: string; label: string }[]', description: 'Items available in the filtered list.' },
-        { name: 'placeholder', type: 'string', defaultValue: `'Search...'`, description: 'Input placeholder.' },
-        { name: 'label', type: 'string', description: 'Visible field label.' },
-      ],
-      interactions: ['Type to filter matching items.', 'Use arrow keys to move through results.', 'Select an item with Enter or pointer.'],
-    },
-    {
-      id: 'input', title: 'Input', group: 'Inputs', summary: 'A styled Base UI input with optional label and helper text slots.', icon: Type,
-      preview: <Input id="demo-input" label={t.extended.name} placeholder={t.extended.enterName} />,
-      code: `import { Input } from './components/ui'
-
-<Input id="name" label="Name" placeholder="Enter name..." />`,
-      api: [
-        { name: 'label', type: 'string', description: 'Optional label displayed above the input.' },
-        { name: 'placeholder', type: 'string', description: 'Native input placeholder.' },
-        { name: 'type', type: 'string', defaultValue: `'text'`, description: 'Native input type passed through to Base UI.' },
-      ],
-      interactions: ['Focus with Tab.', 'Type directly into the field.', 'Use native validation props when needed.'],
-      examples: [
-        {
-          title: 'Input types',
-          preview: <ExampleGrid><Input id="input-email" label="Email" type="email" placeholder="you@example.com" /><Input id="input-password" label="Password" type="password" placeholder="••••••••" /><Input id="input-disabled" label="Disabled" placeholder="Read only" disabled /></ExampleGrid>,
-          code: `import { Input } from './components/ui'
-
-<Input id="email" label="Email" type="email" placeholder="you@example.com" />
-<Input id="password" label="Password" type="password" placeholder="••••••••" />
-<Input id="disabled" label="Disabled" placeholder="Read only" disabled />`,
-        },
-        {
-          title: 'Textarea composition',
-          preview: <Textarea id="input-message" label="Message" placeholder="Write a short note..." rows={4} />,
-          code: `import { Textarea } from './components/ui'
-
-<Textarea
-  id="message"
-  label="Message"
-  placeholder="Write a short note..."
-  rows={4}
-/>`,
-        },
-      ],
-    },
-    {
-      id: 'autocomplete', title: 'Autocomplete', group: 'Inputs', summary: 'A text input with filtered suggestions and inline selection behavior.', icon: Search,
-      preview: <Autocomplete options={comboboxOptions} label="Autocomplete" placeholder="Find component..." openOnInputClick />,
-      code: `import { Autocomplete } from './components/ui'
-
-<Autocomplete
-  options={[
-    { value: 'button', label: 'Button' },
-    { value: 'dialog', label: 'Dialog' },
-    { value: 'select', label: 'Select' },
-  ]}
-  label="Autocomplete"
-  openOnInputClick
-/>`,
-      api: [
-        { name: 'options', type: '{ value: string; label: string }[]', description: 'Suggestion values displayed in the popup.' },
-        { name: 'openOnInputClick', type: 'boolean', defaultValue: 'false', description: 'Opens suggestions when the input is clicked.' },
-        { name: 'onValueChange', type: '(value: string) => void', description: 'Called when the input value changes.' },
-      ],
-      interactions: ['Type to filter suggestions.', 'Arrow through highlighted suggestions.', 'Enter or click selects a suggestion.'],
-    },
-    {
-      id: 'checkboxgroup', title: 'Checkbox Group', group: 'Inputs', summary: 'A shared state container for related checkboxes.', icon: Check,
-      preview: <CheckboxGroup defaultValue={['email']} options={[{ value: 'email', label: 'Email' }, { value: 'sms', label: 'SMS' }, { value: 'push', label: 'Push' }]} />,
-      code: `import { CheckboxGroup } from './components/ui'
-
-<CheckboxGroup
-  defaultValue={['email']}
-  options={[
-    { value: 'email', label: 'Email' },
-    { value: 'sms', label: 'SMS' },
-    { value: 'push', label: 'Push' },
-  ]}
-/>`,
-      api: [
-        { name: 'options', type: '{ value: string; label: string }[]', description: 'Checkboxes rendered inside the group.' },
-        { name: 'defaultValue', type: 'string[]', description: 'Initially checked values.' },
-        { name: 'onValueChange', type: '(value: string[]) => void', description: 'Receives the checked values.' },
-      ],
-      interactions: ['Toggle each checkbox independently.', 'Group value updates as an array.', 'Use disabled to block the whole group.'],
-    },
-    {
-      id: 'field', title: 'Field', group: 'Inputs', summary: 'A form field wrapper that connects label, control, description, and error state.', icon: Type,
-      preview: <Field label="Email" description="Used for product updates."><input className="bento-input" placeholder="you@example.com" /></Field>,
-      code: `import { Field } from './components/ui'
-
-<Field label="Email" description="Used for product updates.">
-  <input className="bento-input" placeholder="you@example.com" />
-</Field>`,
-      api: [
-        { name: 'label', type: 'string', description: 'Accessible label rendered with Field.Label.' },
-        { name: 'description', type: 'string', description: 'Optional helper text.' },
-        { name: 'error', type: 'string', description: 'Marks the field invalid and renders Field.Error.' },
-      ],
-      interactions: ['Label focuses the field control.', 'Invalid state propagates through data attributes.', 'Description and error text are associated with the control.'],
-    },
-    {
-      id: 'fieldset', title: 'Fieldset', group: 'Inputs', summary: 'A semantic grouping primitive for related form controls.', icon: Layers3,
-      preview: <Fieldset legend="Preferences"><div className="inline-controls"><Checkbox id="fs-mail" label="Email" defaultChecked /><Checkbox id="fs-sms" label="SMS" /></div></Fieldset>,
-      code: `import { Fieldset, Checkbox } from './components/ui'
-
-<Fieldset legend="Preferences">
-  <Checkbox id="email" label="Email" defaultChecked />
-  <Checkbox id="sms" label="SMS" />
-</Fieldset>`,
-      api: [
-        { name: 'legend', type: 'string', description: 'Visible and semantic group title.' },
-        { name: 'disabled', type: 'boolean', defaultValue: 'false', description: 'Disables nested controls when passed through.' },
-        { name: 'children', type: 'ReactNode', description: 'Grouped form controls.' },
-      ],
-      interactions: ['Groups related controls for assistive tech.', 'Legend describes the set.', 'Disabled state can be applied to the group.'],
-    },
-    {
-      id: 'form', title: 'Form', group: 'Inputs', summary: 'A form root that integrates Base UI field validation and native submission.', icon: Type,
-      preview: <Form onSubmit={(event) => event.preventDefault()}><Field label="Project"><input className="bento-input" required placeholder="Bento docs" /></Field><Button type="submit">Submit</Button></Form>,
-      code: `import { Form, Field, Button } from './components/ui'
-
-<Form onSubmit={(event) => event.preventDefault()}>
-  <Field label="Project">
-    <input className="bento-input" required placeholder="Bento docs" />
-  </Field>
-  <Button type="submit">Submit</Button>
-</Form>`,
-      api: [
-        { name: 'onSubmit', type: 'FormEventHandler<HTMLFormElement>', description: 'Handles native submit.' },
-        { name: 'action', type: 'string', description: 'Native form action target.' },
-        { name: 'children', type: 'ReactNode', description: 'Fields and submit actions.' },
-      ],
-      interactions: ['Press Enter to submit.', 'Native required validation works.', 'Use Field components for validation messaging.'],
-      examples: [
-        {
-          title: 'Profile form',
-          preview: (
-            <Form className="example-form" onSubmit={(event) => event.preventDefault()}>
-              <Field label="Display name"><input className="bento-input" required placeholder="Jane Doe" /></Field>
-              <Field label="Bio" description="Keep it short."><textarea className="bento-textarea" rows={3} placeholder="Product designer..." /></Field>
-              <div className="action-row"><Button type="submit">Save profile</Button><Button type="reset" variant="outline">Reset</Button></div>
-            </Form>
-          ),
-          code: `import { Button, Field, Form } from './components/ui'
-
-<Form onSubmit={(event) => event.preventDefault()}>
-  <Field label="Display name">
-    <input className="bento-input" required placeholder="Jane Doe" />
-  </Field>
-  <Field label="Bio" description="Keep it short.">
-    <textarea className="bento-textarea" rows={3} />
-  </Field>
-  <Button type="submit">Save profile</Button>
-</Form>`,
-        },
-      ],
-    },
-    {
-      id: 'numberfield', title: 'Number Field', group: 'Inputs', summary: 'A numeric input with increment and decrement controls.', icon: Gauge,
-      preview: <NumberField label="Seats" defaultValue={4} min={1} max={20} />,
-      code: `import { NumberField } from './components/ui'
-
-<NumberField label="Seats" defaultValue={4} min={1} max={20} />`,
-      api: [
-        { name: 'defaultValue', type: 'number', description: 'Initial numeric value.' },
-        { name: 'min / max', type: 'number', description: 'Value bounds.' },
-        { name: 'step', type: 'number', defaultValue: '1', description: 'Increment amount.' },
-      ],
-      interactions: ['Click plus or minus to change value.', 'Use arrow keys in the input.', 'Value respects min and max bounds.'],
-    },
-    {
-      id: 'otpfield', title: 'OTP Field', group: 'Inputs', summary: 'A one-time-password input with separate slots and paste handling.', icon: Code2,
-      preview: <OtpField label="Verification code" length={6} />,
-      code: `import { OtpField } from './components/ui'
-
-<OtpField label="Verification code" length={6} />`,
-      api: [
-        { name: 'length', type: 'number', defaultValue: '6', description: 'Number of visible input slots.' },
-        { name: 'validationType', type: `'numeric' | 'alphanumeric' | 'none'`, defaultValue: `'numeric'`, description: 'Allowed input characters.' },
-        { name: 'onValueComplete', type: '(value: string) => void', description: 'Called when all slots are filled.' },
-      ],
-      interactions: ['Type one character per slot.', 'Paste a full code to fill all slots.', 'Backspace moves across slots.'],
-    },
-    {
-      id: 'radio', title: 'Radio', group: 'Inputs', summary: 'A single radio primitive for custom radio group compositions.', icon: Circle,
-      preview: <Radio value="single" label="Standalone radio" />,
-      code: `import { Radio } from './components/ui'
-
-<Radio value="single" label="Standalone radio" />`,
-      api: [
-        { name: 'value', type: 'string', description: 'Radio value used by a parent RadioGroup.' },
-        { name: 'label', type: 'string', description: 'Optional visible label.' },
-        { name: 'disabled', type: 'boolean', defaultValue: 'false', description: 'Disables selection.' },
-      ],
-      interactions: ['Use inside RadioGroup for selection.', 'Click the label to select.', 'Indicator reflects data-checked.'],
-    },
-    {
-      id: 'separator', title: 'Separator', group: 'Inputs', summary: 'A semantic divider for grouping content and toolbar controls.', icon: AlignJustify,
-      preview: <div className="control-stack"><span>Account</span><Separator /><span>Billing</span></div>,
-      code: `import { Separator } from './components/ui'
-
-<div>
-  <span>Account</span>
-  <Separator />
-  <span>Billing</span>
-</div>`,
-      api: [
-        { name: 'orientation', type: `'horizontal' | 'vertical'`, defaultValue: `'horizontal'`, description: 'Divider direction.' },
-        { name: 'decorative', type: 'boolean', description: 'Marks the separator decorative when appropriate.' },
-        { name: 'className', type: 'string', description: 'Optional styling hook.' },
-      ],
-      interactions: ['Use between visual groups.', 'Vertical orientation works in flex rows.', 'Decorative separators are ignored by assistive tech.'],
-    },
-    {
-      id: 'toggle', title: 'Toggle', group: 'Inputs', summary: 'A single pressable on/off button for formatting and filters.', icon: ToggleLeft,
-      preview: <Toggle defaultPressed>Bold</Toggle>,
-      code: `import { Toggle } from './components/ui'
-
-<Toggle defaultPressed>Bold</Toggle>`,
-      api: [
-        { name: 'defaultPressed', type: 'boolean', defaultValue: 'false', description: 'Initial pressed state.' },
-        { name: 'pressed', type: 'boolean', description: 'Controlled pressed state.' },
-        { name: 'onPressedChange', type: '(pressed: boolean) => void', description: 'Called when state changes.' },
-      ],
-      interactions: ['Click to toggle pressed state.', 'Space or Enter toggles while focused.', 'Pressed state maps to data-pressed.'],
-    },
-    {
-      id: 'toolbar', title: 'Toolbar', group: 'Inputs', summary: 'A keyboard-aware toolbar for grouped commands and inputs.', icon: AlignJustify,
-      preview: <Toolbar />,
-      code: `import { Toolbar } from './components/ui'
-
-<Toolbar />`,
-      api: [
-        { name: 'orientation', type: `'horizontal' | 'vertical'`, defaultValue: `'horizontal'`, description: 'Toolbar navigation direction.' },
-        { name: 'showSearch', type: 'boolean', defaultValue: 'true', description: 'Displays the built-in search input.' },
-        { name: 'disabled', type: 'boolean', defaultValue: 'false', description: 'Disables toolbar controls.' },
-      ],
-      interactions: ['Arrow keys move between toolbar items.', 'Buttons are reachable with Tab.', 'Inputs stay editable inside the toolbar.'],
-    },
-    {
-      id: 'cspprovider', title: 'CSP Provider', group: 'Feedback', summary: 'A provider for passing Content Security Policy nonce settings to Base UI internals.', icon: Code2,
-      preview: <CspProvider nonce="demo"><Button variant="outline">Nonce provider scope</Button></CspProvider>,
-      code: `import { CspProvider } from './components/ui'
-
-<CspProvider nonce={nonceFromServer}>
-  <App />
-</CspProvider>`,
-      api: [
-        { name: 'nonce', type: 'string', description: 'Nonce applied to inline style and script tags created by Base UI.' },
-        { name: 'disableStyleElements', type: 'boolean', defaultValue: 'false', description: 'Prevents Base UI from creating inline style elements.' },
-        { name: 'children', type: 'ReactNode', description: 'Application subtree receiving the CSP configuration.' },
-      ],
-      interactions: ['Wrap the app near the root.', 'Use when a strict CSP blocks inline styles.', 'Pass the server-generated nonce for each request.'],
-    },
-    {
-      id: 'directionprovider', title: 'Direction Provider', group: 'Feedback', summary: 'A provider that enables RTL or LTR behavior across Base UI components.', icon: AlignJustify,
-      preview: <DirectionProvider direction="rtl"><div className="action-row"><Button variant="outline">RTL</Button><Select id="rtl-density" items={densityItems} defaultValue="compact" /></div></DirectionProvider>,
-      code: `import { DirectionProvider } from './components/ui'
-
-<DirectionProvider direction="rtl">
-  <App />
-</DirectionProvider>`,
-      api: [
-        { name: 'direction', type: `'ltr' | 'rtl'`, defaultValue: `'ltr'`, description: 'Reading direction applied to Base UI components.' },
-        { name: 'children', type: 'ReactNode', description: 'Application subtree receiving direction context.' },
-        { name: 'useDirection', type: '() => TextDirection', description: 'Hook exported for reading the active direction.' },
-      ],
-      interactions: ['Wrap localized RTL surfaces.', 'Menus, popovers, and keyboard behavior read direction context.', 'Use the hook inside custom wrappers when needed.'],
-    },
-    {
-      id: 'accordion', title: 'Accordion', group: 'Disclosure', summary: 'Stacked disclosure panels for related sections of content.', icon: Waypoints,
-      preview: <Accordion items={accordionItems} defaultValue={['a11y']} />,
-      code: `import { Accordion } from './components/ui'
-
-<Accordion
-  items={[
-    { value: 'a11y', label: 'Accessibility', content: '...' },
-    { value: 'styling', label: 'Styling', content: '...' },
-  ]}
-  defaultValue={['a11y']}
-/>`,
-      api: [
-        { name: 'items', type: 'AccordionItem[]', description: 'Panels with value, label, and content.' },
-        { name: 'defaultValue', type: 'string[]', description: 'Panels open on first render.' },
-        { name: 'collapsible', type: 'boolean', description: 'Allows all panels to be closed when enabled by Base UI props.' },
-      ],
-      interactions: ['Click a header to expand or collapse.', 'Use arrow keys between triggers.', 'Panel height is controlled by Base UI state attributes.'],
-    },
-    {
-      id: 'collapsible', title: 'Collapsible', group: 'Disclosure', summary: 'A single expandable region for optional detail.', icon: ChevronDown,
-      preview: <Collapsible label={t.extended.moreDetails}><p>{t.extended.collapsibleContent}</p></Collapsible>,
-      code: `import { Collapsible } from './components/ui'
-
-<Collapsible label="More details">
-  <p>Collapsible panels support expanding/collapsing any content.</p>
-</Collapsible>`,
-      api: [
-        { name: 'label', type: 'string', description: 'Trigger text.' },
-        { name: 'defaultOpen', type: 'boolean', defaultValue: 'false', description: 'Initial open state.' },
-        { name: 'children', type: 'ReactNode', description: 'Content revealed inside the panel.' },
-      ],
-      interactions: ['Click the trigger to expand.', 'Click again to collapse.', 'Content remains accessible through Base UI state.'],
-    },
-    {
-      id: 'dialog', title: 'Dialog', group: 'Disclosure', summary: 'A modal layer with focus management and dismiss behavior.', icon: Copy,
-      preview: <Dialog trigger={<Button variant="outline">{t.preview.dialog}</Button>} title={t.preview.dialogTitle} description={t.preview.dialogDesc}><Button variant="teal">{t.confirm}</Button></Dialog>,
-      code: `import { Dialog } from './components/ui'
-
-<Dialog
-  trigger={<Button variant="outline">Open</Button>}
-  title="Base UI Dialog"
-  description="Accessible dialog with focus management."
->
-  <Button variant="teal">Confirm</Button>
-</Dialog>`,
-      api: [
-        { name: 'trigger', type: 'ReactElement', description: 'Element rendered as Dialog.Trigger.' },
-        { name: 'title', type: 'string', description: 'Accessible dialog title.' },
-        { name: 'description', type: 'string', description: 'Supporting copy announced to assistive tech.' },
-      ],
-      interactions: ['Click trigger to open.', 'Escape or close button dismisses.', 'Focus is trapped while open.'],
-      examples: [
-        {
-          title: 'Confirmation flow',
-          preview: <Dialog trigger={<Button>Invite teammate</Button>} title="Invite teammate" description="Send an invitation to join this workspace."><ExampleStack><Input id="dialog-email" type="email" label="Email" placeholder="teammate@example.com" /><div className="action-row"><Button variant="outline">Cancel</Button><Button variant="teal">Send invite</Button></div></ExampleStack></Dialog>,
-          code: `import { Button, Dialog, Input } from './components/ui'
-
-<Dialog
-  trigger={<Button>Invite teammate</Button>}
-  title="Invite teammate"
-  description="Send an invitation to join this workspace."
->
-  <Input id="email" type="email" label="Email" />
-  <Button variant="teal">Send invite</Button>
-</Dialog>`,
-        },
-      ],
-    },
-    {
-      id: 'alertdialog', title: 'Alert Dialog', group: 'Disclosure', summary: 'A confirmation modal for actions that need explicit acknowledgement.', icon: Bell,
-      preview: <AlertDialog trigger={<Button variant="accent">{t.extended.delete}</Button>} title={t.extended.deleteTitle} description={t.extended.deleteDesc} confirmLabel={t.extended.delete} />,
-      code: `import { AlertDialog } from './components/ui'
-
-<AlertDialog
-  trigger={<Button variant="accent">Delete</Button>}
-  title="Delete item"
-  description="This action cannot be undone."
-  confirmLabel="Delete"
-/>`,
-      api: [
-        { name: 'trigger', type: 'ReactElement', description: 'Action that opens the alert dialog.' },
-        { name: 'confirmLabel', type: 'string', description: 'Label for the primary confirmation action.' },
-        { name: 'cancelLabel', type: 'string', defaultValue: `'Cancel'`, description: 'Label for the cancel action.' },
-      ],
-      interactions: ['Opens as a modal confirmation.', 'Cancel returns focus to trigger.', 'Confirm closes after activation.'],
-    },
-    {
-      id: 'drawer', title: 'Drawer', group: 'Disclosure', summary: 'A side panel for settings and secondary workflows.', icon: PanelRight,
-      preview: <Drawer trigger={<Button variant="outline"><PanelRight size={15} />{t.extended.openDrawer}</Button>} title={t.extended.settingsPanel} description={t.extended.settingsDesc}><div className="control-stack"><Select id="drw-theme" items={{ light: 'Light', dark: 'Dark' }} defaultValue="light" label={t.extended.theme} /><Checkbox id="drw-compact" defaultChecked label={t.extended.compactMode} /></div></Drawer>,
-      code: `import { Drawer } from './components/ui'
-
-<Drawer
-  trigger={<Button variant="outline">Open Drawer</Button>}
-  title="Settings Panel"
-  description="Configure appearance and behavior."
->
-  <Select id="theme" items={{ light: 'Light', dark: 'Dark' }} />
-</Drawer>`,
-      api: [
-        { name: 'trigger', type: 'ReactElement', description: 'Element used to open the drawer.' },
-        { name: 'title', type: 'string', description: 'Drawer heading.' },
-        { name: 'children', type: 'ReactNode', description: 'Interactive drawer body content.' },
-      ],
-      interactions: ['Slides in from the side.', 'Backdrop click and Escape close it.', 'Nested controls remain keyboard reachable.'],
-      examples: [
-        {
-          title: 'Drawer sides',
-          preview: <div className="action-row"><Drawer side="left" trigger={<Button variant="outline">Left</Button>} title="Navigation" description="Useful for app menus." /><Drawer side="bottom" trigger={<Button variant="outline">Bottom</Button>} title="Command drawer" description="Useful on mobile screens." /></div>,
-          code: `import { Button, Drawer } from './components/ui'
-
-<Drawer
-  side="left"
-  trigger={<Button variant="outline">Left</Button>}
-  title="Navigation"
-/>
-<Drawer
-  side="bottom"
-  trigger={<Button variant="outline">Bottom</Button>}
-  title="Command drawer"
-/>`,
-        },
-      ],
-    },
-    {
-      id: 'popover', title: 'Popover', group: 'Disclosure', summary: 'A lightweight positioned layer for contextual content.', icon: Image,
-      preview: <Popover trigger={<Button variant="outline"><Eye size={15} />{t.preview.popover}</Button>} title={t.preview.popoverTitle} description={t.preview.popoverDesc} />,
-      code: `import { Popover } from './components/ui'
-
-<Popover
-  trigger={<Button variant="outline">Open</Button>}
-  title="Token preview"
-  description="Card radius, borders, and shadows in CSS variables."
-/>`,
-      api: [
-        { name: 'trigger', type: 'ReactElement', description: 'Element that anchors the popover.' },
-        { name: 'title', type: 'string', description: 'Optional content heading.' },
-        { name: 'children', type: 'ReactNode', description: 'Custom body content.' },
-      ],
-      interactions: ['Click trigger to open.', 'Click outside or Escape to close.', 'Positioner keeps content aligned to trigger.'],
-      examples: [
-        {
-          title: 'Rich content',
-          preview: <Popover trigger={<Button variant="outline">Open details</Button>} title="Deployment" description="Ship the current branch to preview."><div className="control-stack"><Select id="popover-env" items={{ preview: 'Preview', staging: 'Staging' }} defaultValue="preview" label="Environment" /><Button>Deploy</Button></div></Popover>,
-          code: `import { Button, Popover, Select } from './components/ui'
-
-<Popover
-  trigger={<Button variant="outline">Open details</Button>}
-  title="Deployment"
-  description="Ship the current branch to preview."
->
-  <Select id="env" items={{ preview: 'Preview', staging: 'Staging' }} />
-  <Button>Deploy</Button>
-</Popover>`,
-        },
-      ],
-    },
-    {
-      id: 'previewcard', title: 'Preview Card', group: 'Disclosure', summary: 'A hover or focus preview surface for linked resources.', icon: Eye,
-      preview: <PreviewCard trigger={<Button variant="outline"><Image size={15} />{t.extended.preview2}</Button>} title={t.extended.previewCardTitle} description={t.extended.previewCardDesc} />,
-      code: `import { PreviewCard } from './components/ui'
-
-<PreviewCard
-  trigger={<Button variant="outline">Preview</Button>}
-  title="Bento Card Design"
-  description="Bento Grid layout with design token system."
-/>`,
-      api: [
-        { name: 'trigger', type: 'ReactElement', description: 'Anchor element for the preview.' },
-        { name: 'title', type: 'string', description: 'Preview heading.' },
-        { name: 'description', type: 'string', description: 'Preview supporting text.' },
-      ],
-      interactions: ['Hover or focus the trigger.', 'Preview appears near the trigger.', 'Moving away dismisses it.'],
-    },
-    {
-      id: 'tooltip', title: 'Tooltip', group: 'Disclosure', summary: 'A small non-interactive label for controls and dense interfaces.', icon: Sparkles,
-      preview: <Tooltip content={t.preview.tooltipContent}><Button variant="outline"><Sparkles size={15} />Hover me</Button></Tooltip>,
-      code: `import { Tooltip } from './components/ui'
-
-<Tooltip content="Tooltip primitive">
-  <Button variant="outline">Hover me</Button>
-</Tooltip>`,
-      api: [
-        { name: 'content', type: 'ReactNode', description: 'Tooltip body.' },
-        { name: 'children', type: 'ReactElement', description: 'Trigger element.' },
-        { name: 'className', type: 'string', description: 'Optional popup class.' },
-      ],
-      interactions: ['Hover or focus the trigger.', 'Tooltip follows Base UI delay behavior.', 'Escape dismisses the visible tooltip.'],
-    },
-    {
-      id: 'tabs', title: 'Tabs', group: 'Navigation', summary: 'A tablist for switching between related panels without navigating away.', icon: Layers3,
-      preview: <Tabs panels={tabPanels} defaultValue="usage" />,
-      code: `import { Tabs } from './components/ui'
-
-<Tabs
-  panels={[
-    { value: 'usage', label: 'Usage', title: 'Composable parts', content: '...' },
-    { value: 'states', label: 'States', title: 'Data attributes', content: '...' },
-  ]}
-  defaultValue="usage"
-/>`,
-      api: [
-        { name: 'panels', type: 'TabPanel[]', description: 'Tab labels and panel contents.' },
-        { name: 'defaultValue', type: 'string', description: 'Initial active tab.' },
-        { name: 'orientation', type: `'horizontal' | 'vertical'`, defaultValue: `'horizontal'`, description: 'Passed through to Base UI Tabs.' },
-      ],
-      interactions: ['Click tabs to switch panels.', 'Use arrow keys across the tablist.', 'Selected state is exposed through data attributes.'],
-      examples: [
-        {
-          title: 'Three panels',
-          preview: <Tabs panels={[{ value: 'account', label: 'Account', title: 'Account', content: 'Manage workspace profile and billing email.' }, { value: 'password', label: 'Password', title: 'Password', content: 'Update credentials and recovery methods.' }, { value: 'notifications', label: 'Notifications', title: 'Notifications', content: 'Choose product and security alerts.' }]} defaultValue="account" />,
-          code: `import { Tabs } from './components/ui'
-
-<Tabs
-  panels={[
-    { value: 'account', label: 'Account', title: 'Account', content: '...' },
-    { value: 'password', label: 'Password', title: 'Password', content: '...' },
-    { value: 'notifications', label: 'Notifications', title: 'Notifications', content: '...' },
-  ]}
-/>`,
-        },
-      ],
-    },
-    {
-      id: 'menu', title: 'Menu', group: 'Navigation', summary: 'A command menu for grouped actions and disabled items.', icon: AlignJustify,
-      preview: <Menu trigger={<Button variant="outline"><AlignJustify size={15} />{t.extended.actions}</Button>} items={menuItems} />,
-      code: `import { Menu } from './components/ui'
-
-<Menu
-  trigger={<Button variant="outline">Actions</Button>}
-  items={[
-    { label: 'Edit', icon: <Type size={15} /> },
-    'separator',
-    { label: 'Delete', icon: <Code2 size={15} />, disabled: true },
-  ]}
-/>`,
-      api: [
-        { name: 'trigger', type: 'ReactElement', description: 'Element that opens the menu.' },
-        { name: 'items', type: '(MenuItemData | "separator")[]', description: 'Action items and separators.' },
-        { name: 'disabled', type: 'boolean', description: 'Per-item flag that blocks activation.' },
-      ],
-      interactions: ['Open with pointer or keyboard.', 'Arrow keys move active item.', 'Disabled items stay visible but cannot activate.'],
-      examples: [
-        {
-          title: 'Destructive menu',
-          preview: <Menu trigger={<Button variant="outline">Project actions</Button>} items={[{ label: 'Rename', icon: <Type size={15} /> }, { label: 'Duplicate', icon: <Copy size={15} /> }, 'separator', { label: 'Delete project', icon: <Code2 size={15} /> }]} />,
-          code: `import { Button, Menu } from './components/ui'
-
-<Menu
-  trigger={<Button variant="outline">Project actions</Button>}
-  items={[
-    { label: 'Rename' },
-    { label: 'Duplicate' },
-    'separator',
-    { label: 'Delete project' },
-  ]}
-/>`,
-        },
-      ],
-    },
-    {
-      id: 'contextmenu', title: 'Context Menu', group: 'Navigation', summary: 'A menu opened from a contextual right-click or keyboard context action.', icon: AlignJustify,
-      preview: <ContextMenu items={menuItems}><span>Right click this surface</span></ContextMenu>,
-      code: `import { ContextMenu } from './components/ui'
-
-<ContextMenu
-  items={[
-    { label: 'Edit' },
-    'separator',
-    { label: 'Delete', disabled: true },
-  ]}
->
-  <span>Right click this surface</span>
-</ContextMenu>`,
-      api: [
-        { name: 'children', type: 'ReactNode', description: 'Surface that receives the context menu trigger.' },
-        { name: 'items', type: '(ContextMenuItemData | "separator")[]', description: 'Context actions rendered in the popup.' },
-        { name: 'disabled', type: 'boolean', description: 'Per-item disabled state.' },
-      ],
-      interactions: ['Right-click the trigger surface.', 'Use keyboard context menu key where available.', 'Click outside to dismiss.'],
-    },
-    {
-      id: 'menubar', title: 'Menubar', group: 'Navigation', summary: 'A horizontal application menu composed from Base UI menubar and menu primitives.', icon: Navigation,
-      preview: <Menubar menus={[{ label: 'File', items: [{ label: 'New' }, { label: 'Duplicate' }, { label: 'Archive' }] }, { label: 'Edit', items: [{ label: 'Undo' }, { label: 'Redo', disabled: true }] }]} />,
-      code: `import { Menubar } from './components/ui'
-
-<Menubar
-  menus={[
-    { label: 'File', items: [{ label: 'New' }, { label: 'Duplicate' }] },
-    { label: 'Edit', items: [{ label: 'Undo' }, { label: 'Redo', disabled: true }] },
-  ]}
-/>`,
-      api: [
-        { name: 'menus', type: 'MenubarMenu[]', description: 'Top-level menus and nested menu items.' },
-        { name: 'orientation', type: `'horizontal' | 'vertical'`, defaultValue: `'horizontal'`, description: 'Direction inherited by the underlying menubar.' },
-        { name: 'loopFocus', type: 'boolean', defaultValue: 'true', description: 'Loops arrow-key focus at edges.' },
-      ],
-      interactions: ['Open menus with pointer or keyboard.', 'Arrow keys move across menu triggers.', 'Submenu items use Base UI menu behavior.'],
-    },
-    {
-      id: 'navmenu', title: 'Navigation Menu', group: 'Navigation', summary: 'A top-level navigation primitive with nested flyout items.', icon: Navigation,
-      preview: <NavigationMenu items={navItems} />,
-      code: `import { NavigationMenu } from './components/ui'
-
-<NavigationMenu
-  items={[
-    { label: 'Components', href: '/components/button' },
-    {
-      label: 'Resources',
-      children: [
-        { label: 'Documentation', href: 'https://base-ui.com' },
-      ],
-    },
-  ]}
-/>`,
-      api: [
-        { name: 'items', type: 'NavMenuItem[]', description: 'Links and groups rendered in the navigation menu.' },
-        { name: 'href', type: 'string', description: 'Destination for leaf menu items.' },
-        { name: 'children', type: 'NavMenuItem[]', description: 'Nested flyout items.' },
-      ],
-      interactions: ['Hover or focus grouped items.', 'Nested links open in a positioned menu.', 'Keyboard users can move through menu items.'],
-    },
-    {
-      id: 'progress', title: 'Progress', group: 'Feedback', summary: 'A linear indicator for completion percentage and loading workflows.', icon: Gauge,
-      preview: <Progress value={68} showValue aria-label="Loading" />,
-      code: `import { Progress } from './components/ui'
-
-<Progress value={68} showValue aria-label="Loading" />`,
-      api: [
-        { name: 'value', type: 'number', description: 'Current progress value.' },
-        { name: 'max', type: 'number', defaultValue: '100', description: 'Maximum value.' },
-        { name: 'showValue', type: 'boolean', defaultValue: 'false', description: 'Displays the numeric percentage beside the bar.' },
-      ],
-      interactions: ['Update value from app state.', 'Use aria-label for screen readers.', 'Visual fill follows value changes.'],
-      examples: [
-        {
-          title: 'Progress states',
-          preview: <ExampleStack><Progress value={24} showValue aria-label="Uploading" /><Progress value={68} showValue aria-label="Processing" /><Progress value={100} showValue aria-label="Complete" /></ExampleStack>,
-          code: `import { Progress } from './components/ui'
-
-<Progress value={24} showValue aria-label="Uploading" />
-<Progress value={68} showValue aria-label="Processing" />
-<Progress value={100} showValue aria-label="Complete" />`,
-        },
-      ],
-    },
-    {
-      id: 'meter', title: 'Meter', group: 'Feedback', summary: 'A semantic gauge for bounded measurements like storage or quota usage.', icon: Gauge,
-      preview: <Meter value={72} showValue aria-label={t.extended.storageUsage} />,
-      code: `import { Meter } from './components/ui'
-
-<Meter value={72} showValue aria-label="Storage usage" />`,
-      api: [
-        { name: 'value', type: 'number', description: 'Current measured value.' },
-        { name: 'min / max', type: 'number', defaultValue: '0 / 100', description: 'Bounds for the measurement.' },
-        { name: 'showValue', type: 'boolean', defaultValue: 'false', description: 'Shows the normalized percentage.' },
-      ],
-      interactions: ['Use for known bounded values.', 'Update value from live data.', 'Screen readers receive meter semantics.'],
-    },
-    {
-      id: 'toast', title: 'Toast', group: 'Feedback', summary: 'A transient notification system with provider-managed state.', icon: Bell,
-      preview: <ToastProvider><ToastDemoContent /></ToastProvider>,
-      code: `import { ToastProvider, useToastManager } from './components/ui'
-
-function App() {
-  return (
-    <ToastProvider>
-      <YourApp />
-    </ToastProvider>
-  )
-}
-
-function YourApp() {
-  const toast = useToastManager()
-  return (
-    <Button onClick={() => toast.add('Saved', 'Settings updated.')}>
-      Show Toast
-    </Button>
-  )
-}`,
-      api: [
-        { name: 'ToastProvider', type: '({ children }) => JSX.Element', description: 'Wraps the area that can create toasts.' },
-        { name: 'useToastManager', type: '() => { add(title, description?) }', description: 'Hook for pushing toast notifications.' },
-        { name: 'description', type: 'string', description: 'Optional supporting text in a toast.' },
-      ],
-      interactions: ['Click an action to enqueue a toast.', 'Multiple toasts stack in the viewport.', 'Toasts dismiss automatically after their timeout.'],
-      examples: [
-        {
-          title: 'Multiple actions',
-          preview: <ToastProvider><ToastDemoContent /></ToastProvider>,
-          code: `import { Button, ToastProvider, useToastManager } from './components/ui'
-
-function ToastActions() {
-  const toast = useToastManager()
-  return (
-    <>
-      <Button onClick={() => toast.add('Saved', 'Settings updated.')}>Saved</Button>
-      <Button onClick={() => toast.add('Deleted', 'Item removed.')}>Deleted</Button>
-    </>
-  )
-}`,
-        },
-      ],
-    },
-    {
-      id: 'scrollarea', title: 'Scroll Area', group: 'Feedback', summary: 'A custom scroll container with consistent scrollbar styling across the site.', icon: PanelRight,
-      preview: <ScrollArea style={{ height: 140, width: 320 }}><p style={{ padding: '12px 16px', color: 'var(--text-muted)', fontSize: 14, lineHeight: 1.7 }}>{t.extended.scrollContent}</p></ScrollArea>,
-      code: `import { ScrollArea } from './components/ui'
-
-<ScrollArea style={{ height: 140 }}>
-  <p>Scrollable content here...</p>
-</ScrollArea>`,
-      api: [
-        { name: 'children', type: 'ReactNode', description: 'Scrollable content rendered inside the viewport.' },
-        { name: 'style', type: 'CSSProperties', description: 'Set stable height/width for the scroll container.' },
-        { name: 'className', type: 'string', description: 'Optional root class for layout integration.' },
-      ],
-      interactions: ['Scroll with wheel, trackpad, or keyboard.', 'Scrollbar thumb uses the same tokens as the page scrollbar.', 'The corner element is styled for two-axis scrolling.'],
-    },
-    {
-      id: 'avatar', title: 'Avatar', group: 'Feedback', summary: 'A compact identity primitive with fallback initials and grouped presentation.', icon: Users,
-      preview: <div className="action-row"><Avatar fallback="JD" size="sm" /><Avatar fallback="AM" /><Avatar fallback="RK" size="lg" /><AvatarGroup><Avatar fallback="A" size="sm" /><Avatar fallback="B" size="sm" /><Avatar fallback="C" size="sm" /></AvatarGroup></div>,
-      code: `import { Avatar, AvatarGroup } from './components/ui'
-
-<Avatar fallback="JD" size="sm" />
-<Avatar fallback="AM" />
-<Avatar fallback="RK" size="lg" />
-<AvatarGroup>
-  <Avatar fallback="A" size="sm" />
-  <Avatar fallback="B" size="sm" />
-  <Avatar fallback="C" size="sm" />
-</AvatarGroup>`,
-      api: [
-        { name: 'src', type: 'string', description: 'Optional image URL passed to Base UI Avatar.' },
-        { name: 'fallback', type: 'string', description: 'Initials or short fallback label.' },
-        { name: 'size', type: `'sm' | 'md' | 'lg'`, defaultValue: `'md'`, description: 'Controls avatar dimensions.' },
-      ],
-      interactions: ['Image load failure falls back to initials.', 'Groups overlap avatars with stable spacing.', 'Use meaningful fallback text for accessibility.'],
-    },
-  ]
-}
-
-function groupDocs(docs: ComponentDoc[]): SidebarGroup[] {
-  return ['Inputs', 'Disclosure', 'Navigation', 'Feedback'].map((title) => ({
-    title,
-    items: docs.filter((doc) => doc.group === title),
-  }))
-}
-
-function Sidebar({ docs, activeId }: { docs: ComponentDoc[]; activeId: string }) {
-  const groups = groupDocs(docs)
-
-  return (
-    <aside className="sidebar">
-      {groups.map((group) => (
-        <div className="sidebar-group" key={group.title}>
-          <div className="sidebar-group-title">{group.title}</div>
-          {group.items.map((item) => {
-            const Icon = item.icon
-            const href = toComponentPath(item.id)
-            return (
-              <a
-                key={item.id}
-                className={`sidebar-link${activeId === item.id ? ' active' : ''}`}
-                href={href}
-                onClick={(event) => {
-                  event.preventDefault()
-                  navigateTo(href)
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }}
-              >
-                <Icon size={16} />
-                {item.title}
-              </a>
-            )
-          })}
-        </div>
-      ))}
-    </aside>
-  )
 }
 
 function Topbar({ activeId, page }: { activeId: string; page: string }) {
@@ -1361,18 +216,34 @@ function Topbar({ activeId, page }: { activeId: string; page: string }) {
   const currentStyleIndex = themeStyles.indexOf(style)
   const nextStyle = themeStyles[(currentStyleIndex + 1) % themeStyles.length]
   const styleLabel = themeStyleLabels[style]
+  const cycleStyle = () => {
+    trackEvent('theme_style_cycle', { from: style, to: nextStyle, source: 'topbar' })
+    setStyle(nextStyle)
+    if (page === 'theme-detail') {
+      navigateTo(toThemePath(nextStyle))
+    }
+  }
+  const toggleTheme = () => {
+    const nextTheme = resolved === 'light' ? 'dark' : 'light'
+    trackEvent('color_theme_toggle', { from: resolved, to: nextTheme, source: 'topbar' })
+    setTheme(nextTheme)
+  }
 
   return (
     <header className="topbar">
-      <a className="topbar-brand" href="/" onClick={(event) => { event.preventDefault(); navigateTo('/') }}>
+      <a className="topbar-brand" href="/" onClick={(event) => { event.preventDefault(); handleInternalNavigation('/', 'topbar-brand') }}>
         <span className="topbar-brand-mark"><Blocks size={16} /></span>
         Base Themes
       </a>
       <nav className="topbar-nav">
-        <a href={toComponentPath(activeId)} className={page === 'components' ? 'active' : ''} onClick={(event) => { event.preventDefault(); navigateTo(toComponentPath(activeId)) }}>{t.nav.components}</a>
-        <a href="/blocks" className={page === 'blocks' ? 'active' : ''} onClick={(event) => { event.preventDefault(); navigateTo('/blocks') }}>Blocks</a>
-        <a href="/themes" className={page === 'themes' ? 'active' : ''} onClick={(event) => { event.preventDefault(); navigateTo('/themes') }}>Themes</a>
-        <a href="/docs/installation" className={page === 'installation' ? 'active' : ''} onClick={(event) => { event.preventDefault(); navigateTo('/docs/installation') }}>Installation</a>
+        <a href={toComponentPath(activeId)} className={page === 'components' ? 'active' : ''} onClick={(event) => { event.preventDefault(); handleInternalNavigation(toComponentPath(activeId), 'topbar-components') }}>{t.nav.components}</a>
+        <a href="/blocks" className={page === 'blocks' ? 'active' : ''} onClick={(event) => { event.preventDefault(); handleInternalNavigation('/blocks', 'topbar-blocks') }}>Blocks</a>
+        <a href="/themes" className={page === 'themes' || page === 'theme-detail' ? 'active' : ''} onClick={(event) => { event.preventDefault(); handleInternalNavigation('/themes', 'topbar-themes') }}>Themes</a>
+        <a href="/docs/installation" className={page === 'installation' ? 'active' : ''} onClick={(event) => { event.preventDefault(); handleInternalNavigation('/docs/installation', 'topbar-installation') }}>Installation</a>
+        <a href="/docs/why-base-themes" className={page === 'whyBaseThemes' || page === 'baseUiVsShadcn' || page === 'accessibility' || page === 'securityTrust' ? 'active' : ''} onClick={(event) => { event.preventDefault(); handleInternalNavigation('/docs/why-base-themes', 'topbar-learn') }}>Learn</a>
+        <a href="/docs/theme-customization" className={page === 'themeCustomization' || page === 'theming' || page === 'tokenSystem' ? 'active' : ''} onClick={(event) => { event.preventDefault(); handleInternalNavigation('/docs/theme-customization', 'topbar-customization') }}>Customize</a>
+        <a href="/docs/registry" className={page === 'registry' || page === 'agentUsage' || page === 'cliUsage' ? 'active' : ''} onClick={(event) => { event.preventDefault(); handleInternalNavigation('/docs/registry', 'topbar-registry') }}>Registry</a>
+        <a href="/docs/examples" className={page === 'examples' ? 'active' : ''} onClick={(event) => { event.preventDefault(); handleInternalNavigation('/docs/examples', 'topbar-examples') }}>Examples</a>
       </nav>
       <div className="topbar-spacer" />
       <div className="topbar-actions">
@@ -1380,14 +251,14 @@ function Topbar({ activeId, page }: { activeId: string; page: string }) {
           <Languages size={15} />
           {locale === 'en' ? '中文' : 'EN'}
         </button>
-        <button type="button" className="topbar-icon-btn" onClick={() => setStyle(nextStyle)}>
+        <button type="button" className="topbar-icon-btn" onClick={cycleStyle}>
           <Sparkles size={15} />
           {styleLabel}
         </button>
-        <button type="button" className="topbar-ghost-btn" onClick={() => setTheme(resolved === 'light' ? 'dark' : 'light')} aria-label="Toggle theme">
+        <button type="button" className="topbar-ghost-btn" onClick={toggleTheme} aria-label="Toggle theme">
           {resolved === 'light' ? <Moon size={18} /> : <Sun size={18} />}
         </button>
-        <a className="topbar-ghost-btn" href="https://github.com/mui/base-ui" target="_blank" rel="noreferrer" aria-label="GitHub">
+        <a className="topbar-ghost-btn" href={PROJECT_REPO_URL} target="_blank" rel="noreferrer" aria-label="GitHub" onClick={() => trackEvent('github_outbound_click', { source: 'topbar', target: 'repo-star' })}>
           <Code2 size={18} />
         </a>
       </div>
@@ -1395,47 +266,102 @@ function Topbar({ activeId, page }: { activeId: string; page: string }) {
   )
 }
 
-function BlocksPage() {
+function BlockShareActions({ id, title }: { id: string; title: string }) {
+  const copyUrl = () => {
+    const url = absoluteUrl(toBlockPath(id))
+    trackEvent('block_share_copy', { block: id })
+    void navigator.clipboard?.writeText(url)
+  }
+
+  return (
+    <div className="block-actions">
+      <Button variant="outline" onClick={copyUrl}><Copy size={15} /> Copy URL</Button>
+      <Button onClick={() => handleInternalNavigation(toBlockPath(id), 'block-card-detail')}><Eye size={15} /> {title}</Button>
+    </div>
+  )
+}
+
+function AdoptionSignalCta({ source, detail }: { source: string; detail?: string }) {
+  const trackSignalClick = (target: string) => {
+    trackEvent('github_outbound_click', { source, detail, target })
+  }
+
+  return (
+    <section className="doc-feedback-cta" aria-labelledby={`${source}-signal-title`}>
+      <div>
+        <div className="doc-kicker">Public signal</div>
+        <h2 id={`${source}-signal-title`}>Useful in your product?</h2>
+        <p>Leave a small public signal after trying this route: star or fork the repo, discuss what worked, request the missing piece, or submit a build for the future gallery.</p>
+      </div>
+      <div className="doc-feedback-actions compact">
+        <a href={PROJECT_REPO_URL} target="_blank" rel="noreferrer" onClick={() => trackSignalClick('repo-star')}>
+          <Star size={17} /> Star
+        </a>
+        <a href={PROJECT_FORK_URL} target="_blank" rel="noreferrer" onClick={() => trackSignalClick('repo-fork')}>
+          <GitFork size={17} /> Fork
+        </a>
+        <a href={SHOW_AND_TELL_URL} target="_blank" rel="noreferrer" onClick={() => trackSignalClick('show-and-tell')}>
+          <MessageCircle size={17} /> Discuss
+        </a>
+        <a href={FEATURE_REQUEST_URL} target="_blank" rel="noreferrer" onClick={() => trackSignalClick('feature-request')}>
+          <MessageSquarePlus size={17} /> Request
+        </a>
+        <a href={GOOD_FIRST_ISSUES_URL} target="_blank" rel="noreferrer" onClick={() => trackSignalClick('good-first-issues')}>
+          <ListChecks size={17} /> Good first
+        </a>
+        <a href={GALLERY_SUBMISSION_URL} target="_blank" rel="noreferrer" onClick={() => trackSignalClick('gallery-submission')}>
+          <ImagePlus size={17} /> Gallery
+        </a>
+      </div>
+    </section>
+  )
+}
+
+function BlocksPage({ selectedBlockId }: { selectedBlockId?: string }) {
+  const activeBlock = selectedBlockId ? blockDemos.find((block) => block.id === selectedBlockId) : undefined
+
+  if (activeBlock) {
+    return (
+      <article className="component-page">
+        <div className="page-hero component-hero">
+          <div className="doc-kicker">{activeBlock.category}</div>
+          <h1>{activeBlock.title}</h1>
+          <p>{activeBlock.description}</p>
+        </div>
+        <div className="block-detail-nav">
+          <Button variant="outline" onClick={() => handleInternalNavigation('/blocks', 'block-detail-back')}>All blocks</Button>
+          <BlockShareActions id={activeBlock.id} title="Share block" />
+        </div>
+        <ComponentDemo
+          code={activeBlock.code}
+          preview={activeBlock.preview}
+          title={`${activeBlock.title} usage`}
+        />
+        <AdoptionSignalCta source="block-detail" detail={activeBlock.id} />
+      </article>
+    )
+  }
+
   return (
     <article className="component-page">
       <div className="page-hero component-hero">
         <div className="doc-kicker">Blocks</div>
         <h1>Application Blocks</h1>
-        <p>Composable page sections built from the same Base Themes primitives, modeled after shadcn/ui blocks.</p>
+        <p>Composable page sections built from the same Base Themes primitives, registry metadata, and theme tokens.</p>
       </div>
       <div className="blocks-grid">
-        <section className="block-preview">
-          <div className="block-preview-header">
-            <span>Dashboard Shell</span>
-            <Button variant="outline">Preview</Button>
+        {blockDemos.map((block) => (
+          <div className="block-demo-card" key={block.id}>
+            <ComponentDemo
+              code={block.code}
+              preview={block.preview}
+              title={block.title}
+            />
+            <BlockShareActions id={block.id} title="Open" />
           </div>
-          <div className="block-dashboard">
-            <div className="block-stat"><strong>24</strong><span>Components</span></div>
-            <div className="block-stat"><strong>100%</strong><span>Typed</span></div>
-            <Progress value={72} showValue aria-label="Coverage" />
-          </div>
-          <ComponentDemo title="Block Code" preview={<span className="muted">Reusable operational dashboard section</span>} code={`import { Button, Progress } from './components/ui'
-
-export function DashboardBlock() {
-  return (
-    <section className="dashboard-block">
-      <Button variant="outline">Preview</Button>
-      <Progress value={72} showValue aria-label="Coverage" />
-    </section>
-  )
-}`} />
-        </section>
-        <section className="block-preview">
-          <div className="block-preview-header">
-            <span>Settings Form</span>
-            <Button variant="teal">Save</Button>
-          </div>
-          <Fieldset legend="Workspace">
-            <Field label="Name"><input className="bento-input" defaultValue="Base Themes" /></Field>
-            <Switch id="block-switch" defaultChecked label="Public docs" />
-          </Fieldset>
-        </section>
+        ))}
       </div>
+      <AdoptionSignalCta source="blocks" />
     </article>
   )
 }
@@ -1447,58 +373,161 @@ const landingPreviews = [
   { style: 'data', label: 'Data Dense', src: '/previews/base-themes-data-dense.png' },
 ]
 
+const themeUseCases: Partial<Record<ThemeStyle, string>> = {
+  bento: 'SaaS dashboards, docs tools, and AI product surfaces that need warmth without losing structure.',
+  shadcn: 'Teams that want a neutral shadcn-like baseline while keeping Base UI primitives and package installs.',
+  enterprise: 'Internal tools, admin consoles, approval flows, and operational products with repeated daily use.',
+  terminal: 'Developer tools, observability consoles, CLI-adjacent apps, and technical onboarding flows.',
+  'data-dense': 'Analytics, back-office tables, monitoring views, and filter-heavy workflows.',
+  minimal: 'Editorial product docs, portfolio admin, and quiet interfaces where content leads the page.',
+  glass: 'Marketing-adjacent product demos and immersive tools where translucency is part of the brand.',
+  mono: 'High-contrast writing tools, technical docs, and interfaces that should not depend on color semantics.',
+}
+
+const defaultThemeUseCase = 'Product interfaces that need accessible Base UI components, shared tokens, and a distinct visual direction without custom component styling from scratch.'
+
+function getThemeUseCase(themeStyle: ThemeStyle) {
+  return themeUseCases[themeStyle] ?? defaultThemeUseCase
+}
+
+function getThemeHighlights(themeStyle: ThemeStyle) {
+  const shared = ['Semantic surface and text tokens', 'Light and dark mode support', 'Shared radius, focus, and action tokens']
+
+  if (themeStyle === 'terminal') return ['Monospace typography tokens', 'High-contrast command surfaces', 'Green action and focus accents']
+  if (themeStyle === 'data-dense') return ['Compact control sizing', 'Strong table and divider contrast', 'Muted secondary surfaces for dense scans']
+  if (themeStyle === 'enterprise') return ['Blue action hierarchy', 'Explicit borders for operational clarity', 'Readable muted text states']
+  if (themeStyle === 'neo-brutalism') return ['Hard border contract', 'Loud accent actions', 'Graphic shadows for high recall']
+  if (themeStyle === 'glass') return ['Translucent surface tokens', 'Blur-friendly border contrast', 'Luminous focus states']
+  if (themeStyle === 'mono') return ['Color-independent hierarchy', 'Ink-first contrast', 'Strict neutral surfaces']
+
+  return shared
+}
+
+function getThemeRegistryItemUrl(themeStyle: ThemeStyle) {
+  return `${registryBaseUrl}/items/theme-${themeStyle}.json`
+}
+
+function getThemePackageSnippet(themeStyle: ThemeStyle, mode: 'light' | 'dark') {
+  return `import 'base-themes/styles.css'
+import { Button, Input, Select } from 'base-themes'
+
+export function ${themeStyle.replace(/(^|-)([a-z])/g, (_match, _prefix, letter: string) => letter.toUpperCase())}Preview() {
+  return (
+    <main data-style="${themeStyle}" data-theme="${mode}">
+      <Button variant="accent">Create project</Button>
+      <Input label="Workspace" placeholder="Acme Studio" />
+      <Select
+        label="Density"
+        defaultValue="comfortable"
+        items={{ compact: 'Compact', comfortable: 'Comfortable' }}
+      />
+    </main>
+  )
+}`
+}
+
+function getThemeCssSnippet(themeStyle: ThemeStyle) {
+  return `.brand-shell[data-style='${themeStyle}'] {
+  --bt-primary: #2563eb;
+  --bt-primary-hover: #1d4ed8;
+  --bt-secondary: #0f766e;
+  --bt-radius: 10px;
+  --bt-radius-sm: 8px;
+  --bt-font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.brand-shell[data-style='${themeStyle}'][data-theme='dark'] {
+  --bt-bg: #0b1120;
+  --bt-surface: #111827;
+  --bt-fg: #f8fafc;
+  --bt-primary: #60a5fa;
+}`
+}
+
+function CopySnippetButton({ value, label, source, detail }: { value: string; label: string; source: string; detail: string }) {
+  const [copied, setCopied] = useState(false)
+
+  function handleCopy() {
+    trackEvent('theme_snippet_copy', { source, detail, label })
+    void navigator.clipboard?.writeText(value)
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1600)
+  }
+
+  return <Button variant="outline" onClick={handleCopy}><Copy size={16} /> {copied ? 'Copied' : label}</Button>
+}
+
 function LandingPage() {
   const landingRef = useRef<HTMLElement>(null)
 
-  useGSAP(() => {
+  useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) return
+    if (prefersReducedMotion || !landingRef.current) return
 
-    const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
-    timeline
-      .from('.landing-eyebrow, .landing-title, .landing-copy, .landing-actions, .landing-install', {
-        y: 18,
-        opacity: 0,
-        duration: 0.72,
-        stagger: 0.08,
-      })
-      .from('.landing-preview-card', {
-        y: 38,
-        rotate: -2,
-        opacity: 0,
-        duration: 0.84,
-        stagger: 0.08,
-      }, '-=0.42')
-      .from('.landing-stat', {
-        y: 14,
-        opacity: 0,
-        duration: 0.48,
-        stagger: 0.05,
-      }, '-=0.32')
+    let context: { revert: () => void } | undefined
+    let disposed = false
 
-    gsap.to('.landing-preview-card', {
-      y: (index) => (index % 2 === 0 ? -10 : 10),
-      rotate: (index) => (index % 2 === 0 ? 1.4 : -1.4),
-      duration: 3.8,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-      stagger: 0.2,
+    void import('gsap').then(({ default: gsap }) => {
+      if (disposed || !landingRef.current) return
+
+      context = gsap.context(() => {
+        const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        timeline
+          .from('.landing-eyebrow, .landing-title, .landing-copy, .landing-actions, .landing-install', {
+            y: 18,
+            opacity: 0,
+            duration: 0.72,
+            stagger: 0.08,
+          })
+          .from('.landing-preview-card', {
+            y: 38,
+            rotate: -2,
+            opacity: 0,
+            duration: 0.84,
+            stagger: 0.08,
+          }, '-=0.42')
+          .from('.landing-stat', {
+            y: 14,
+            opacity: 0,
+            duration: 0.48,
+            stagger: 0.05,
+          }, '-=0.32')
+
+        gsap.to('.landing-preview-card', {
+          y: (index) => (index % 2 === 0 ? -10 : 10),
+          rotate: (index) => (index % 2 === 0 ? 1.4 : -1.4),
+          duration: 3.8,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          stagger: 0.2,
+        })
+
+        gsap.to('.landing-orbit-dot', {
+          x: (index) => (index % 2 === 0 ? 18 : -18),
+          y: (index) => (index % 2 === 0 ? -14 : 14),
+          duration: 4.5,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          stagger: 0.25,
+        })
+      }, landingRef)
     })
 
-    gsap.to('.landing-orbit-dot', {
-      x: (index) => (index % 2 === 0 ? 18 : -18),
-      y: (index) => (index % 2 === 0 ? -14 : 14),
-      duration: 4.5,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-      stagger: 0.25,
-    })
-  }, { scope: landingRef })
+    return () => {
+      disposed = true
+      context?.revert()
+    }
+  }, [])
 
   const copyInstallCommand = () => {
+    trackEvent('install_command_copy', { source: 'landing' })
     void navigator.clipboard?.writeText('npm install base-themes @base-ui/react')
+  }
+
+  const trackCommunityClick = (target: string) => {
+    trackEvent('github_outbound_click', { source: 'landing-community', target })
   }
 
   return (
@@ -1509,8 +538,8 @@ function LandingPage() {
           <h1 className="landing-title" id="landing-title">Base Themes</h1>
           <p className="landing-copy">Typed Base UI wrappers, production theme tokens, registry metadata, and ready-to-use visual styles in one npm package.</p>
           <div className="landing-actions">
-            <Button onClick={() => navigateTo('/docs/installation')}><Package size={16} /> Install</Button>
-            <Button variant="outline" onClick={() => navigateTo('/themes')}><Eye size={16} /> View themes</Button>
+            <Button onClick={() => handleInternalNavigation('/docs/installation', 'landing-install-cta')}><Package size={16} /> Install</Button>
+            <Button variant="outline" onClick={() => handleInternalNavigation('/themes', 'landing-themes-cta')}><Eye size={16} /> View themes</Button>
           </div>
           <div className="landing-install" aria-label="Install command">
             <code>npm install base-themes @base-ui/react</code>
@@ -1519,7 +548,7 @@ function LandingPage() {
           <div className="landing-stats" aria-label="Project stats">
             <div className="landing-stat"><strong>40</strong><span>components</span></div>
             <div className="landing-stat"><strong>20</strong><span>themes</span></div>
-            <div className="landing-stat"><strong>2</strong><span>blocks</span></div>
+            <div className="landing-stat"><strong>8</strong><span>blocks</span></div>
           </div>
         </div>
         <div className="landing-stage" aria-label="Theme preview gallery">
@@ -1534,407 +563,220 @@ function LandingPage() {
           ))}
         </div>
       </section>
+      <section className="landing-quickstart" aria-labelledby="quickstart-title">
+        <div className="landing-quickstart-copy">
+          <div className="doc-kicker">30-second quick start</div>
+          <h2 id="quickstart-title">Install, import, render.</h2>
+          <p>Use the package CSS once, then place Base Themes components inside any `data-style` and `data-theme` container.</p>
+          <div className="landing-quickstart-code" aria-label="Quick start code">
+            <code>npm install base-themes @base-ui/react</code>
+            <code>import 'base-themes/styles.css'</code>
+            <code>{'<main data-style="bento" data-theme="light">'}</code>
+          </div>
+          <div className="landing-actions compact">
+            <Button onClick={() => handleInternalNavigation('/docs/installation', 'landing-quickstart-install')}><Code2 size={16} /> Full install guide</Button>
+            <Button variant="outline" onClick={() => handleInternalNavigation('/components/button', 'landing-quickstart-components')}><Eye size={16} /> Component docs</Button>
+          </div>
+        </div>
+        <div className="landing-quickstart-preview" data-style="bento" data-theme="light">
+          <div className="quickstart-preview-bar">
+            <span>Live preview</span>
+            <Button variant="accent">Deploy</Button>
+          </div>
+          <div className="theme-sample">
+            <Input id="landing-quickstart-workspace" label="Workspace" placeholder="Acme Cloud" />
+            <Button>Save</Button>
+            <Button variant="outline">Preview</Button>
+          </div>
+        </div>
+      </section>
       <section className="landing-band" aria-label="Feature summary">
         <div><strong>Package-first install</strong><span>Import components and CSS directly from npm.</span></div>
         <div><strong>Theme audit coverage</strong><span>Contrast checks cover buttons, popups, code tokens, and muted text.</span></div>
         <div><strong>Agent-ready registry</strong><span>Components, blocks, dependencies, and skill guidance ship with the package.</span></div>
       </section>
+      <section className="landing-community" aria-labelledby="community-title">
+        <div className="landing-community-copy">
+          <div className="doc-kicker">Community signal</div>
+          <h2 id="community-title">Try it, then leave a public signal.</h2>
+          <p>Stars, forks, discussions, issues, and real usage examples are the evidence that decides the next roadmap: deeper OSS components, blocks, or agent-native registry workflows.</p>
+        </div>
+        <div className="landing-community-actions" aria-label="Community actions">
+          <a href={PROJECT_REPO_URL} target="_blank" rel="noreferrer" onClick={() => trackCommunityClick('repo-star') }>
+            <Star size={18} />
+            <span><strong>Star the repo</strong><small>Mark the Base UI-first direction as useful.</small></span>
+          </a>
+          <a href={PROJECT_FORK_URL} target="_blank" rel="noreferrer" onClick={() => trackCommunityClick('repo-fork') }>
+            <GitFork size={18} />
+            <span><strong>Fork the repo</strong><small>Try a theme, block, or docs change in public.</small></span>
+          </a>
+          <a href={SHOW_AND_TELL_URL} target="_blank" rel="noreferrer" onClick={() => trackCommunityClick('show-and-tell') }>
+            <MessageCircle size={18} />
+            <span><strong>Show and tell</strong><small>Share what worked and what was missing.</small></span>
+          </a>
+          <a href={FEATURE_REQUEST_URL} target="_blank" rel="noreferrer" onClick={() => trackCommunityClick('feature-request') }>
+            <MessageSquarePlus size={18} />
+            <span><strong>Request a component</strong><small>Tell us what would make it usable in a real app.</small></span>
+          </a>
+          <a href={GOOD_FIRST_ISSUES_URL} target="_blank" rel="noreferrer" onClick={() => trackCommunityClick('good-first-issues') }>
+            <ListChecks size={18} />
+            <span><strong>Pick a good first issue</strong><small>Comment before opening a focused PR.</small></span>
+          </a>
+          <a href={GALLERY_SUBMISSION_URL} target="_blank" rel="noreferrer" onClick={() => trackCommunityClick('gallery-submission') }>
+            <ImagePlus size={18} />
+            <span><strong>Submit a build</strong><small>Share a screenshot or repo for the future gallery.</small></span>
+          </a>
+        </div>
+      </section>
     </article>
   )
 }
 
-function ThemesPage() {
-  const swatches = ['--bg', '--surface', '--text-strong', '--accent', '--teal', '--blue', '--green']
-  const { style, setStyle } = useTheme()
+function ThemesPage({ selectedStyle }: { selectedStyle?: ThemeStyle }) {
+  const swatches = ['--bt-bg', '--bt-surface', '--bt-fg', '--bt-primary', '--bt-secondary', '--bt-info', '--bt-success']
+  const { style, setStyle, resolved, setTheme } = useTheme()
+  const activeStyle = selectedStyle ?? style
+  const activeLabel = themeStyleLabels[activeStyle]
+  const activeMode = resolved === 'dark' ? 'dark' : 'light'
+  const packageSnippet = getThemePackageSnippet(activeStyle, activeMode)
+  const cssSnippet = getThemeCssSnippet(activeStyle)
+  const registryItemUrl = getThemeRegistryItemUrl(activeStyle)
+
+  useEffect(() => {
+    if (selectedStyle && style !== selectedStyle) {
+      setStyle(selectedStyle)
+    }
+  }, [selectedStyle, setStyle, style])
+
+  const selectStyle = (themeStyle: ThemeStyle) => {
+    trackEvent('theme_style_select', { from: style, to: themeStyle, source: selectedStyle ? 'theme-detail' : 'themes-page' })
+    setStyle(themeStyle)
+    navigateTo(toThemePath(themeStyle))
+  }
+
+  const toggleMode = () => {
+    const nextMode = resolved === 'light' ? 'dark' : 'light'
+    trackEvent('color_theme_toggle', { from: resolved, to: nextMode, source: selectedStyle ? 'theme-detail' : 'themes-page' })
+    setTheme(nextMode)
+  }
 
   return (
     <article className="component-page">
       <div className="page-hero component-hero">
         <div className="doc-kicker">Themes</div>
-        <h1>Theme System</h1>
-        <p>Theme tokens are centralized CSS variables. Choose from practical product styles, expressive visual systems, and dense operational modes.</p>
+        <h1>{selectedStyle ? `${activeLabel} Theme` : 'Theme System'}</h1>
+        <p>{selectedStyle ? getThemeSeoPage(selectedStyle).description : 'Theme tokens are centralized CSS variables. Choose from practical product styles, expressive visual systems, and dense operational modes.'}</p>
+      </div>
+      <div className="theme-actions">
+        <Button variant="outline" onClick={toggleMode}>{resolved === 'light' ? <Moon size={16} /> : <Sun size={16} />} {resolved === 'light' ? 'Dark preview' : 'Light preview'}</Button>
+        <Button onClick={() => handleInternalNavigation('/docs/theme-customization', 'theme-detail-customize')}><Code2 size={16} /> Customize tokens</Button>
       </div>
       <div className="style-switcher" aria-label="Theme style">
         {themeStyles.map((themeStyle) => (
-          <button
-            className={style === themeStyle ? 'active' : ''}
+          <a
+            className={activeStyle === themeStyle ? 'active' : ''}
+            href={toThemePath(themeStyle)}
             key={themeStyle}
-            type="button"
-            onClick={() => setStyle(themeStyle)}
+            onClick={(event) => {
+              event.preventDefault()
+              selectStyle(themeStyle)
+            }}
             title={themeStyleDescriptions[themeStyle]}
           >
             {themeStyleLabels[themeStyle]}
-          </button>
+          </a>
         ))}
       </div>
-      <div className="theme-description" role="status">{themeStyleDescriptions[style]}</div>
+      <div className="theme-description" role="status">{themeStyleDescriptions[activeStyle]}</div>
+      {selectedStyle && (
+        <section className="theme-detail-panel" aria-label={`${activeLabel} theme details`}>
+          <div>
+            <h2>Best fit</h2>
+            <p>{getThemeUseCase(activeStyle)}</p>
+          </div>
+          <div>
+            <h2>Token highlights</h2>
+            <ul>
+              {getThemeHighlights(activeStyle).map((highlight) => <li key={highlight}>{highlight}</li>)}
+            </ul>
+          </div>
+          <div className="theme-install-snippet">
+            <h2>Install snippet</h2>
+            <code>{`<main data-style="${activeStyle}" data-theme="${activeMode}">`}</code>
+            <div className="theme-detail-actions">
+              <CopySnippetButton value={packageSnippet} label="Copy JSX" source={selectedStyle ? 'theme-detail' : 'themes'} detail={activeStyle} />
+              <CopySnippetButton value={cssSnippet} label="Copy CSS" source={selectedStyle ? 'theme-detail' : 'themes'} detail={activeStyle} />
+            </div>
+          </div>
+          <div className="theme-registry-snippet">
+            <h2>Registry item</h2>
+            <p>Use this item when an agent or source-copy workflow needs theme metadata, files, and install guidance.</p>
+            <code>{registryItemUrl}</code>
+          </div>
+        </section>
+      )}
       <div className="theme-grid">
         {swatches.map((token) => <div className="theme-swatch" key={token}><span style={{ background: `var(${token})` }} /> <code>{token}</code></div>)}
       </div>
       <ComponentDemo
-        title="Theme Override"
+        title={`${activeLabel} Package Usage`}
         preview={<div className="theme-sample"><Button variant="accent">Accent</Button><Button variant="teal">Teal</Button><Input label="Tokenized input" placeholder="Theme aware" /></div>}
-        code={`/* src/styles/tokens.css */
-:root {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --text-strong: #111827;
-  --accent: #f97316;
-  --teal: #0f766e;
-}
+        code={`${packageSnippet}
 
-[data-style='shadcn'] {
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --text-strong: #09090b;
-  --accent: #18181b;
-}
-
-[data-style='shadcn'][data-theme='dark'] {
-  --bg: #0b1120;
-  --surface: #09090b;
-  --text-strong: #fafafa;
-  --accent: #fafafa;
-}
-
-[data-style='neo-brutalism'] {
-  --bg: #fff7d6;
-  --surface: #ffffff;
-  --text-strong: #000000;
-  --accent: #ff4d6d;
-  --teal: #00d1b2;
-}
-
-[data-style='terminal'] {
-  --font-sans: 'SFMono-Regular', Consolas, monospace;
-  --accent: #22c55e;
-}`} />
+${cssSnippet}`} />
+      <AdoptionSignalCta source={selectedStyle ? 'theme-detail' : 'themes'} detail={selectedStyle ?? activeStyle} />
     </article>
   )
 }
 
-function InstallationPage() {
+function isStaticDocsPage(page: string): page is StaticDocsPageId {
+  return staticPageMeta.some((meta) => meta.id === page && meta.path.startsWith('/docs/'))
+}
+
+function StaticDocsFallback() {
   return (
     <article className="component-page">
       <div className="page-hero component-hero">
-        <div className="doc-kicker">Installation</div>
-        <h1>Install Base Themes</h1>
-        <p>Install the npm package, import the bundled CSS once, then use the packaged Base UI wrappers directly.</p>
+        <div className="doc-kicker">Docs</div>
+        <h1>Loading docs</h1>
       </div>
-      <ComponentDemo
-        title="Install from npm"
-        preview={<span className="muted">Works with Vite, Next.js, Remix, or any React app.</span>}
-        code={`npm install base-themes @base-ui/react react react-dom`} />
-      <ComponentDemo
-        title="Import styles"
-        preview={<span className="muted">Load the theme tokens and component styles once at app startup.</span>}
-        code={`import 'base-themes/styles.css'`} />
-      <ComponentDemo
-        title="Use a component"
-        preview={<Button>Installed</Button>}
-        code={`import { Button } from 'base-themes'
-
-export function App() {
-  return (
-    <main data-style="bento" data-theme="light">
-      <Button>Installed</Button>
-    </main>
-  )
-}`} />
-      <ComponentDemo
-        title="Use the registry or skill"
-        preview={<span className="muted">The npm package also exposes registry metadata and the bundled agent skill.</span>}
-        code={`import registry from 'base-themes/registry.json'
-
-// Agent skill markdown is available at:
-// node_modules/base-themes/skills/base-themes/SKILL.md
-// or via the package export: base-themes/skill`} />
-    </article>
-  )
-}
-
-function getCatalogExamples(doc: ComponentDoc): ComponentExample[] {
-  const fallback: ComponentExample = {
-    title: 'Composition checklist',
-    description: `Baseline ${doc.title} states to verify before shipping a product surface.`,
-    preview: <ExamplePanel title="Default composition">{doc.preview}</ExamplePanel>,
-    code: `// ${doc.title} checklist:\n// - Default interaction\n// - Disabled or read-only state\n// - Keyboard focus and escape behavior\n// - Composition with surrounding controls`,
-  }
-
-  const examples: Partial<Record<string, ComponentExample[]>> = {
-    radiogroup: [{
-      title: 'Preference cards',
-      preview: <RadioGroup options={[{ value: 'daily', label: 'Daily summary' }, { value: 'weekly', label: 'Weekly digest' }, { value: 'never', label: 'Never' }]} defaultValue="weekly" />,
-      code: `import { RadioGroup } from './components/ui'\n\n<RadioGroup\n  options={[\n    { value: 'daily', label: 'Daily summary' },\n    { value: 'weekly', label: 'Weekly digest' },\n    { value: 'never', label: 'Never' },\n  ]}\n  defaultValue="weekly"\n/>`,
-    }],
-    togglegroup: [{
-      title: 'Text formatting',
-      preview: <ToggleGroup options={[{ value: 'bold', label: 'B' }, { value: 'italic', label: 'I' }, { value: 'code', label: '</>' }]} defaultValue={['bold', 'code']} />,
-      code: `import { ToggleGroup } from './components/ui'\n\n<ToggleGroup\n  options={[\n    { value: 'bold', label: 'B' },\n    { value: 'italic', label: 'I' },\n    { value: 'code', label: '</>' },\n  ]}\n  defaultValue={['bold', 'code']}\n/>`,
-    }],
-    combobox: [{
-      title: 'Command search',
-      preview: <Combobox label="Jump to" placeholder="Search pages..." options={[{ value: 'overview', label: 'Overview' }, { value: 'billing', label: 'Billing' }, { value: 'members', label: 'Members' }]} />,
-      code: `import { Combobox } from './components/ui'\n\n<Combobox\n  label="Jump to"\n  placeholder="Search pages..."\n  options={[\n    { value: 'overview', label: 'Overview' },\n    { value: 'billing', label: 'Billing' },\n    { value: 'members', label: 'Members' },\n  ]}\n/>`,
-    }],
-    autocomplete: [{
-      title: 'People picker',
-      preview: <Autocomplete label="Assignee" placeholder="Search teammates..." openOnInputClick options={[{ value: 'ada', label: 'Ada Lovelace' }, { value: 'grace', label: 'Grace Hopper' }, { value: 'alan', label: 'Alan Turing' }]} />,
-      code: `import { Autocomplete } from './components/ui'\n\n<Autocomplete\n  label="Assignee"\n  placeholder="Search teammates..."\n  openOnInputClick\n  options={[\n    { value: 'ada', label: 'Ada Lovelace' },\n    { value: 'grace', label: 'Grace Hopper' },\n    { value: 'alan', label: 'Alan Turing' },\n  ]}\n/>`,
-    }],
-    checkboxgroup: [{
-      title: 'Notification channels',
-      preview: <CheckboxGroup defaultValue={['email', 'push']} options={[{ value: 'email', label: 'Email' }, { value: 'sms', label: 'SMS' }, { value: 'push', label: 'Push' }]} />,
-      code: `import { CheckboxGroup } from './components/ui'\n\n<CheckboxGroup\n  defaultValue={['email', 'push']}\n  options={[\n    { value: 'email', label: 'Email' },\n    { value: 'sms', label: 'SMS' },\n    { value: 'push', label: 'Push' },\n  ]}\n/>`,
-    }],
-    field: [{
-      title: 'Validation states',
-      preview: <ExampleStack><Field label="Email" description="Used for receipts."><input className="bento-input" placeholder="you@example.com" /></Field><Field label="Workspace slug" error="Only lowercase letters and hyphens are allowed."><input className="bento-input" defaultValue="Base Themes" /></Field></ExampleStack>,
-      code: `import { Field } from './components/ui'\n\n<Field label="Email" description="Used for receipts.">\n  <input className="bento-input" placeholder="you@example.com" />\n</Field>\n<Field label="Workspace slug" error="Only lowercase letters and hyphens are allowed.">\n  <input className="bento-input" defaultValue="Base Themes" />\n</Field>`,
-    }],
-    fieldset: [{
-      title: 'Billing details',
-      preview: <Fieldset legend="Billing details"><ExampleStack><Input id="billing-name" label="Name" placeholder="Jane Doe" /><Input id="billing-email" label="Email" placeholder="jane@example.com" /></ExampleStack></Fieldset>,
-      code: `import { Fieldset, Input } from './components/ui'\n\n<Fieldset legend="Billing details">\n  <Input id="name" label="Name" />\n  <Input id="email" label="Email" />\n</Fieldset>`,
-    }],
-    numberfield: [{
-      title: 'Bounded values',
-      preview: <ExampleGrid><NumberField label="Seats" defaultValue={4} min={1} max={20} /><NumberField label="Retries" defaultValue={2} min={0} max={5} /></ExampleGrid>,
-      code: `import { NumberField } from './components/ui'\n\n<NumberField label="Seats" defaultValue={4} min={1} max={20} />\n<NumberField label="Retries" defaultValue={2} min={0} max={5} />`,
-    }],
-    otpfield: [{
-      title: 'Verification variants',
-      preview: <ExampleGrid><OtpField label="Six digits" length={6} /><OtpField label="Four digits" length={4} /></ExampleGrid>,
-      code: `import { OtpField } from './components/ui'\n\n<OtpField label="Six digits" length={6} />\n<OtpField label="Four digits" length={4} />`,
-    }],
-    radio: [{
-      title: 'Inside a custom group',
-      preview: <RadioGroup options={[{ value: 'one', label: 'Option one' }, { value: 'two', label: 'Option two' }]} defaultValue="one" />,
-      code: `import { RadioGroup } from './components/ui'\n\n<RadioGroup\n  options={[\n    { value: 'one', label: 'Option one' },\n    { value: 'two', label: 'Option two' },\n  ]}\n/>`,
-    }],
-    separator: [{
-      title: 'Toolbar separators',
-      preview: <div className="action-row"><Button variant="ghost">Bold</Button><Separator orientation="vertical" style={{ height: 28 }} /><Button variant="ghost">Italic</Button><Separator orientation="vertical" style={{ height: 28 }} /><Button variant="outline">Save</Button></div>,
-      code: `import { Button, Separator } from './components/ui'\n\n<div className="action-row">\n  <Button variant="ghost">Bold</Button>\n  <Separator orientation="vertical" />\n  <Button variant="ghost">Italic</Button>\n</div>`,
-    }],
-    toggle: [{
-      title: 'Pressed states',
-      preview: <div className="action-row"><Toggle defaultPressed>Bold</Toggle><Toggle>Italic</Toggle><Toggle disabled>Disabled</Toggle></div>,
-      code: `import { Toggle } from './components/ui'\n\n<Toggle defaultPressed>Bold</Toggle>\n<Toggle>Italic</Toggle>\n<Toggle disabled>Disabled</Toggle>`,
-    }],
-    toolbar: [{
-      title: 'Without search',
-      preview: <Toolbar showSearch={false} />,
-      code: `import { Toolbar } from './components/ui'\n\n<Toolbar showSearch={false} />`,
-    }],
-    cspprovider: [{
-      title: 'App root wrapper',
-      preview: <CspProvider nonce="request-nonce"><ExamplePanel title="Nonce scope"><Button variant="outline">Protected subtree</Button></ExamplePanel></CspProvider>,
-      code: `import { CspProvider } from './components/ui'\n\n<CspProvider nonce={nonceFromServer}>\n  <App />\n</CspProvider>`,
-    }],
-    directionprovider: [{
-      title: 'RTL form controls',
-      preview: <DirectionProvider direction="rtl"><ExampleStack><Input id="rtl-name" label="الاسم" placeholder="اكتب الاسم" /><Select id="rtl-status" items={{ draft: 'مسودة', live: 'منشور' }} defaultValue="draft" label="الحالة" /></ExampleStack></DirectionProvider>,
-      code: `import { DirectionProvider, Input, Select } from './components/ui'\n\n<DirectionProvider direction="rtl">\n  <Input id="name" label="الاسم" />\n  <Select id="status" items={{ draft: 'مسودة', live: 'منشور' }} />\n</DirectionProvider>`,
-    }],
-    accordion: [{
-      title: 'FAQ list',
-      preview: <Accordion items={[{ value: 'billing', label: 'Can I change plans?', content: 'Yes, plan changes are prorated automatically.' }, { value: 'security', label: 'Is SSO supported?', content: 'Enterprise workspaces can enable SSO.' }, { value: 'export', label: 'Can I export data?', content: 'Exports are available from workspace settings.' }]} defaultValue={['billing']} />,
-      code: `import { Accordion } from './components/ui'\n\n<Accordion\n  items={[\n    { value: 'billing', label: 'Can I change plans?', content: 'Yes.' },\n    { value: 'security', label: 'Is SSO supported?', content: 'Enterprise only.' },\n  ]}\n/>`,
-    }],
-    collapsible: [{
-      title: 'Inline details',
-      preview: <ExampleStack><Collapsible label="Advanced settings"><p className="muted">Expose rarely used configuration without leaving the current form.</p></Collapsible><Collapsible label="Open by default" defaultOpen><p className="muted">Use defaultOpen when the content is important but still collapsible.</p></Collapsible></ExampleStack>,
-      code: `import { Collapsible } from './components/ui'\n\n<Collapsible label="Advanced settings">\n  <p>Expose rarely used configuration.</p>\n</Collapsible>\n<Collapsible label="Open by default" defaultOpen>\n  <p>Important but collapsible content.</p>\n</Collapsible>`,
-    }],
-    alertdialog: [{
-      title: 'Destructive confirmation',
-      preview: <AlertDialog trigger={<Button variant="accent">Delete project</Button>} title="Delete project?" description="This action cannot be undone." confirmLabel="Delete" cancelLabel="Cancel" />,
-      code: `import { AlertDialog, Button } from './components/ui'\n\n<AlertDialog\n  trigger={<Button variant="accent">Delete project</Button>}\n  title="Delete project?"\n  description="This action cannot be undone."\n  confirmLabel="Delete"\n/>`,
-    }],
-    previewcard: [{
-      title: 'Link preview',
-      preview: <PreviewCard trigger={<a href="https://base-ui.com" onClick={(event) => event.preventDefault()}>Base UI docs</a>} title="Base UI" description="Unstyled accessible primitives for React apps." imageUrl="/previews/base-themes-shadcn.png" imageAlt="Theme preview" />,
-      code: `import { PreviewCard } from './components/ui'\n\n<PreviewCard\n  trigger={<a href="https://base-ui.com">Base UI docs</a>}\n  title="Base UI"\n  description="Unstyled accessible primitives for React apps."\n  imageUrl="/previews/base-themes-shadcn.png"\n/>`,
-    }],
-    tooltip: [{
-      title: 'Icon hints',
-      preview: <div className="action-row"><Tooltip content="Copy to clipboard"><Button variant="icon" aria-label="Copy"><Copy size={16} /></Button></Tooltip><Tooltip content="Open settings"><Button variant="icon" aria-label="Settings"><Sparkles size={16} /></Button></Tooltip></div>,
-      code: `import { Button, Tooltip } from './components/ui'\n\n<Tooltip content="Copy to clipboard">\n  <Button variant="icon" aria-label="Copy"><Copy size={16} /></Button>\n</Tooltip>`,
-    }],
-    contextmenu: [{
-      title: 'Canvas actions',
-      preview: <ContextMenu items={[{ label: 'Rename', icon: <Type size={15} /> }, { label: 'Duplicate', icon: <Copy size={15} /> }, 'separator', { label: 'Delete', icon: <Code2 size={15} /> }]}><div className="example-context-target">Right-click this surface</div></ContextMenu>,
-      code: `import { ContextMenu } from './components/ui'\n\n<ContextMenu\n  items={[\n    { label: 'Rename' },\n    { label: 'Duplicate' },\n    'separator',\n    { label: 'Delete' },\n  ]}\n>\n  <div>Right-click this surface</div>\n</ContextMenu>`,
-    }],
-    menubar: [{
-      title: 'Editor menubar',
-      preview: <Menubar menus={[{ label: 'File', items: [{ label: 'New' }, { label: 'Export' }] }, { label: 'Edit', items: [{ label: 'Undo' }, { label: 'Redo', disabled: true }] }, { label: 'View', items: [{ label: 'Command palette' }] }]} />,
-      code: `import { Menubar } from './components/ui'\n\n<Menubar\n  menus={[\n    { label: 'File', items: [{ label: 'New' }, { label: 'Export' }] },\n    { label: 'Edit', items: [{ label: 'Undo' }, { label: 'Redo', disabled: true }] },\n  ]}\n/>`,
-    }],
-    navmenu: [{
-      title: 'Marketing navigation',
-      preview: <NavigationMenu items={[{ label: 'Product', children: [{ label: 'Components', href: toComponentPath('button') }, { label: 'Themes', href: '/themes' }] }, { label: 'Pricing', href: '#' }, { label: 'Docs', href: '/docs/installation' }]} />,
-      code: `import { NavigationMenu } from './components/ui'\n\n<NavigationMenu\n  items={[\n    { label: 'Product', children: [\n      { label: 'Components', href: '/components/button' },\n      { label: 'Themes', href: '/themes' },\n    ] },\n    { label: 'Pricing', href: '#' },\n  ]}\n/>`,
-    }],
-    meter: [{
-      title: 'Health thresholds',
-      preview: <ExampleStack><Meter value={18} showValue aria-label="Low usage" /><Meter value={58} showValue aria-label="Healthy usage" /><Meter value={91} showValue aria-label="High usage" /></ExampleStack>,
-      code: `import { Meter } from './components/ui'\n\n<Meter value={18} showValue aria-label="Low usage" />\n<Meter value={58} showValue aria-label="Healthy usage" />\n<Meter value={91} showValue aria-label="High usage" />`,
-    }],
-    scrollarea: [{
-      title: 'Long activity list',
-      preview: <ScrollArea style={{ height: 190, width: 360 }}><div className="example-scroll-list">{['Created workspace', 'Invited teammate', 'Updated billing', 'Published theme', 'Generated preview', 'Synced registry'].map((item) => <span key={item}>{item}</span>)}</div></ScrollArea>,
-      code: `import { ScrollArea } from './components/ui'\n\n<ScrollArea style={{ height: 190, width: 360 }}>\n  <ActivityList />\n</ScrollArea>`,
-    }],
-    avatar: [{
-      title: 'Team stack',
-      preview: <ExampleGrid><ExamplePanel title="Sizes"><div className="action-row"><Avatar fallback="SM" size="sm" /><Avatar fallback="MD" /><Avatar fallback="LG" size="lg" /></div></ExamplePanel><ExamplePanel title="Group"><AvatarGroup><Avatar fallback="AL" size="sm" /><Avatar fallback="GH" size="sm" /><Avatar fallback="AT" size="sm" /></AvatarGroup></ExamplePanel></ExampleGrid>,
-      code: `import { Avatar, AvatarGroup } from './components/ui'\n\n<Avatar fallback="SM" size="sm" />\n<Avatar fallback="MD" />\n<Avatar fallback="LG" size="lg" />\n<AvatarGroup>\n  <Avatar fallback="AL" size="sm" />\n  <Avatar fallback="GH" size="sm" />\n</AvatarGroup>`,
-    }],
-  }
-
-  return examples[doc.id] ?? [fallback]
-}
-
-function getChecklistExample(doc: ComponentDoc): ComponentExample {
-  return {
-    title: 'Implementation checklist',
-    description: 'A final integration pass for accessibility, disabled states, and layout composition.',
-    preview: (
-      <ExampleGrid>
-        <ExamplePanel title="Component">{doc.preview}</ExamplePanel>
-        <ExamplePanel title="Accessibility"><span className="muted">Verify label, focus order, keyboard interaction, and screen reader copy.</span></ExamplePanel>
-        <ExamplePanel title="State coverage"><span className="muted">Test default, disabled, empty, loading, and long-content states where applicable.</span></ExamplePanel>
-      </ExampleGrid>
-    ),
-    code: `// ${doc.title} implementation checklist:\n// - Label or aria-label is present\n// - Keyboard interaction matches the interaction notes\n// - Disabled/empty/loading states are covered\n// - Layout works in narrow containers and dense forms`,
-  }
-}
-
-function getExamples(doc: ComponentDoc) {
-  const examples = [...(doc.examples ?? []), ...getCatalogExamples(doc)]
-  return examples.length >= 2 ? examples : [...examples, getChecklistExample(doc)]
-}
-
-function slugify(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-}
-
-function ApiTable({ rows }: { rows: ApiProp[] }) {
-  return (
-    <div className="api-table-wrap">
-      <table className="api-table">
-        <thead>
-          <tr>
-            <th>Prop</th>
-            <th>Type</th>
-            <th>Default</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.name}>
-              <td><code>{row.name}</code></td>
-              <td><code>{row.type}</code></td>
-              <td>{row.defaultValue ? <code>{row.defaultValue}</code> : <span className="muted">-</span>}</td>
-              <td>{row.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-function ComponentPage({ doc }: { doc: ComponentDoc }) {
-  const examples = getExamples(doc)
-
-  return (
-    <article className="component-page">
-      <div className="page-hero component-hero">
-        <div className="doc-kicker">Components</div>
-        <h1>{doc.title}</h1>
-        <p>{doc.summary}</p>
-      </div>
-
-      <section className="doc-section">
-        <div className="section-heading">
-          <h2>Preview</h2>
-          <p>Interactive example using the local Base UI wrapper and selected visual layer.</p>
-        </div>
-        <ComponentDemo title="Interactive Demo" preview={doc.preview} code={doc.code} />
-      </section>
-
-      <section className="doc-section">
-        <div className="section-heading">
-          <h2>Examples</h2>
-          <p>Variants, states, and product compositions to test before using this component in an app.</p>
-        </div>
-        <nav className="example-nav" aria-label={`${doc.title} examples`}>
-          {examples.map((example, index) => (
-            <a href={`#${doc.id}-${slugify(example.title)}`} key={example.title}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              {example.title}
-            </a>
-          ))}
-        </nav>
-        {examples.map((example, index) => (
-          <div className="component-example" id={`${doc.id}-${slugify(example.title)}`} key={example.title}>
-            <div className="example-meta">
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              {example.description && <p className="example-description">{example.description}</p>}
-            </div>
-            <ComponentDemo title={example.title} preview={example.preview} code={example.code} />
-          </div>
-        ))}
-      </section>
-
-      <section className="doc-section">
-        <div className="section-heading">
-          <h2>API Reference</h2>
-          <p>Primary props exposed by this wrapper. Base UI root props are still passed through where the component supports them.</p>
-        </div>
-        <ApiTable rows={doc.api} />
-      </section>
-
-      <section className="doc-section">
-        <div className="section-heading">
-          <h2>Interactions</h2>
-          <p>Behavior to verify when embedding this component in product screens.</p>
-        </div>
-        <ul className="interaction-list">
-          {doc.interactions.map((interaction) => <li key={interaction}>{interaction}</li>)}
-        </ul>
-      </section>
     </article>
   )
 }
 
 export default function App() {
-  const docs = useComponentDocs()
   const pathname = usePathname()
   const page = getPage(pathname)
-  const firstId = docs[0]?.id ?? 'button'
+  const themeStyleFromPath = getThemeStyleFromPath(pathname)
+  const blockIdFromPath = getBlockIdFromPath(pathname)
+  const firstId = componentMeta[0]?.id ?? 'button'
   const activeId = getCurrentId(pathname, firstId)
-  const doc = useMemo(() => docs.find((item) => item.id === activeId) ?? docs[0], [activeId, docs])
-  const seo = useMemo(() => getSeoPage(page, doc), [doc, page])
+  const activeComponent = componentMeta.find((item) => item.id === activeId) ?? componentMeta[0]
+  const seoTargetId = page === 'block-detail' ? blockIdFromPath ?? blockDemos[0].id : activeComponent.id
+  const seo = useMemo(() => getSeoPage(page, seoTargetId, themeStyleFromPath), [page, seoTargetId, themeStyleFromPath])
   useSeo(seo)
+  useEffect(() => {
+    trackRouteView(pathname, { page, component: page === 'components' ? activeComponent.id : undefined, block: page === 'block-detail' ? blockIdFromPath : undefined, themeStyle: themeStyleFromPath })
+  }, [activeComponent.id, blockIdFromPath, page, pathname, themeStyleFromPath])
 
   return (
     <Tooltip.Provider>
-      <Topbar activeId={doc.id} page={page} />
-      {page === 'components' && <Sidebar docs={docs} activeId={doc.id} />}
+      <Topbar activeId={activeComponent.id} page={page} />
       <main className={`main-content${page !== 'components' ? ' no-sidebar' : ''}${page === 'landing' ? ' landing-main' : ''}`}>
         {page === 'landing' && <LandingPage />}
-        {page === 'blocks' && <BlocksPage />}
-        {page === 'themes' && <ThemesPage />}
-        {page === 'installation' && <InstallationPage />}
-        {page === 'components' && <ComponentPage doc={doc} />}
+        {(page === 'blocks' || page === 'block-detail') && <BlocksPage selectedBlockId={blockIdFromPath} />}
+        {(page === 'themes' || page === 'theme-detail') && <ThemesPage selectedStyle={themeStyleFromPath} />}
+        {isStaticDocsPage(page) && (
+          <Suspense fallback={<StaticDocsFallback />}>
+            <StaticDocsPages page={page} />
+          </Suspense>
+        )}
+        {page === 'components' && (
+          <Suspense fallback={<StaticDocsFallback />}>
+            <ComponentDocsPage activeId={activeComponent.id} />
+          </Suspense>
+        )}
       </main>
     </Tooltip.Provider>
   )
 }
-
-export { Accordion, AlertDialog, Autocomplete, Avatar, AvatarGroup, Button, Checkbox, CheckboxGroup, Collapsible, Combobox, ContextMenu, CspProvider, Dialog, DirectionProvider, Drawer, Field, Fieldset, Form, Input, Textarea, Menu, Menubar, Meter, NavigationMenu, NumberField, OtpField, Popover, PreviewCard, Progress, Radio, RadioGroup, ScrollArea, Select, Separator, Slider, Switch, Tabs, ToastProvider, Toggle, ToggleGroup, Toolbar, Tooltip }

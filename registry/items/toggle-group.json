@@ -1,0 +1,101 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-group",
+  "type": "registry:ui",
+  "title": "Toggle Group",
+  "description": "A compact multi-select control for formatting and segmented actions.",
+  "dependencies": [
+    "@base-ui/react",
+    "clsx",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/ToggleGroup.tsx",
+      "type": "registry:ui",
+      "target": "@/components/ui/ToggleGroup.tsx"
+    },
+    {
+      "path": "src/components/ui/ToggleGroup.css",
+      "type": "registry:file",
+      "target": "@/components/ui/ToggleGroup.css"
+    }
+  ],
+  "categories": [
+    "base-ui",
+    "component",
+    "inputs"
+  ],
+  "meta": {
+    "baseThemes": {
+      "source": "package-and-source-copy",
+      "docsRoute": "/components/togglegroup",
+      "supportsStyles": [
+        "bento",
+        "shadcn",
+        "neo-brutalism",
+        "minimal",
+        "enterprise",
+        "linear",
+        "glass",
+        "terminal",
+        "material",
+        "fluent",
+        "retro",
+        "cyberpunk",
+        "editorial",
+        "calm",
+        "data-dense",
+        "playful",
+        "luxury",
+        "soft-ui",
+        "bauhaus",
+        "mono"
+      ],
+      "styleContract": [
+        "data-style",
+        "data-theme",
+        "src/index.css",
+        "src/styles/tokens.css",
+        "src/styles/themes.css",
+        "src/styles/shadcn.css",
+        "src/styles/neo-brutalism.css",
+        "src/styles/cyberpunk.css",
+        "src/styles/terminal.css",
+        "src/styles/material.css",
+        "src/styles/glass.css"
+      ]
+    },
+    "agent": {
+      "summary": "Use Toggle Group when a React UI needs a compact multi-select control for formatting and segmented actions.",
+      "whenToUse": [
+        "Inputs",
+        "Base UI wrapper",
+        "CSS token theme support"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { ToggleGroup } from 'base-themes'"
+      ],
+      "sourceCopy": [
+        "fetch /registry/items/toggle-group.json",
+        "copy every files[].path to files[].target",
+        "copy every registry.style.files entry once",
+        "install dependencies from dependencies[]"
+      ],
+      "installPlan": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { ToggleGroup } from 'base-themes'",
+        "or fetch /registry/items/toggle-group.json for source-copy"
+      ],
+      "verify": [
+        "npm run registry:check",
+        "npm run tokens:check",
+        "npm run lint",
+        "npm run build"
+      ]
+    }
+  }
+}

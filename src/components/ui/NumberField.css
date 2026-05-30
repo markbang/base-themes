@@ -9,15 +9,15 @@
   grid-template-columns: 36px 1fr 36px;
   height: 40px;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius-sm);
+  background: var(--bt-surface);
 }
 
 .bento-number-field-button,
 .bento-number-field-input {
   border: 0;
-  color: var(--text-strong);
+  color: var(--bt-fg);
   background: transparent;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .bento-number-field-button:hover {
-  background: var(--surface-muted);
+  background: var(--bt-surface-muted);
 }
 
 .bento-number-field-input {

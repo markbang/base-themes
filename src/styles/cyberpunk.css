@@ -1,0 +1,159 @@
+/* cyberpunk — neon glow, electric hover, high-energy dark aesthetic */
+/* complements tokens.css dark-by-default cyberpunk palette */
+
+[data-style='cyberpunk'] {
+  --cyber-glow: 0 0 12px var(--accent), 0 0 32px color-mix(in srgb, var(--accent), transparent 50%);
+  --cyber-glow-strong: 0 0 18px var(--accent), 0 0 48px color-mix(in srgb, var(--accent), transparent 40%);
+  --cyber-border-glow: 0 0 0 1px color-mix(in srgb, var(--accent), transparent 60%),
+    0 0 18px color-mix(in srgb, var(--accent), transparent 55%);
+}
+
+[data-style='cyberpunk'][data-theme='light'] {
+  --cyber-glow: 0 0 8px var(--accent), 0 0 22px color-mix(in srgb, var(--accent), transparent 55%);
+  --cyber-glow-strong: 0 0 12px var(--accent), 0 0 36px color-mix(in srgb, var(--accent), transparent 45%);
+  --cyber-border-glow: 0 0 0 1px color-mix(in srgb, var(--accent), transparent 68%),
+    0 0 12px color-mix(in srgb, var(--accent), transparent 60%);
+}
+
+/* focus ring — neon electric */
+[data-style='cyberpunk'] :where(button, a, [role='button'], [tabindex]):focus-visible,
+[data-style='cyberpunk'] [data-base-ui-trigger]:focus-visible,
+[data-style='cyberpunk'] [data-base-ui-item]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: var(--cyber-glow);
+}
+
+/* inputs — neon border on focus */
+[data-style='cyberpunk'] .bento-input:focus,
+[data-style='cyberpunk'] .bento-textarea:focus,
+[data-style='cyberpunk'] .bento-combobox-input:focus {
+  border-color: var(--accent);
+  box-shadow: var(--cyber-border-glow);
+}
+
+/* buttons — glow on hover */
+[data-style='cyberpunk'] .bento-button:not(.outline):not(.ghost):not(.icon) {
+  border: 1px solid color-mix(in srgb, var(--accent), transparent 70%);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent), transparent 60%);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 180ms ease, transform 120ms ease;
+}
+
+[data-style='cyberpunk'] .bento-button:not(.outline):not(.ghost):not(.icon):hover {
+  box-shadow: var(--cyber-glow);
+  transform: translateY(-1px);
+}
+
+[data-style='cyberpunk'] .bento-button:not(.outline):not(.ghost):not(.icon):active {
+  transform: translateY(1px);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--accent), transparent 60%);
+}
+
+[data-style='cyberpunk'] .bento-button.outline,
+[data-style='cyberpunk'] .bento-button.icon {
+  border-color: color-mix(in srgb, var(--accent), transparent 50%);
+  box-shadow: 0 0 4px color-mix(in srgb, var(--accent), transparent 50%);
+}
+
+[data-style='cyberpunk'] .bento-button.outline:hover,
+[data-style='cyberpunk'] .bento-button.icon:hover {
+  border-color: var(--accent);
+  box-shadow: var(--cyber-glow);
+}
+
+[data-style='cyberpunk'] .bento-button.accent {
+  box-shadow: var(--cyber-glow);
+}
+
+[data-style='cyberpunk'] .bento-button.accent:hover {
+  box-shadow: var(--cyber-glow-strong);
+}
+
+/* popups — neon border + glow */
+[data-style='cyberpunk'] .bento-menu-popup,
+[data-style='cyberpunk'] .bento-select-popup,
+[data-style='cyberpunk'] .bento-combobox-popup,
+[data-style='cyberpunk'] .bento-nav-menu-popup,
+[data-style='cyberpunk'] .bento-popover-popup,
+[data-style='cyberpunk'] .bento-preview-card,
+[data-style='cyberpunk'] .bento-tooltip-popup,
+[data-style='cyberpunk'] .bento-toast,
+[data-style='cyberpunk'] .bento-dialog-popup,
+[data-style='cyberpunk'] .bento-alert-popup,
+[data-style='cyberpunk'] .bento-drawer-popup {
+  border-color: color-mix(in srgb, var(--accent), transparent 60%);
+  box-shadow: var(--cyber-border-glow), var(--shadow);
+}
+
+/* highlighted items — electric accent */
+[data-style='cyberpunk'] .bento-menu-item[data-highlighted],
+[data-style='cyberpunk'] .bento-combobox-item[data-highlighted],
+[data-style='cyberpunk'] .bento-select-item[data-highlighted],
+[data-style='cyberpunk'] .bento-nav-menu-item[data-highlighted] {
+  background: color-mix(in srgb, var(--accent), transparent 82%);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--accent), transparent 70%);
+}
+
+/* tabs / toggle / menubar — neon active indicator */
+[data-style='cyberpunk'] .bento-tabs-tab[data-selected],
+[data-style='cyberpunk'] .bento-tabs-tab[data-active],
+[data-style='cyberpunk'] .bento-tabs-tab[aria-selected='true'] {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--accent), transparent 70%);
+}
+
+[data-style='cyberpunk'] .bento-tabs-indicator,
+[data-style='cyberpunk'] .bento-toggle[data-pressed],
+[data-style='cyberpunk'] .bento-toolbar-button[data-pressed],
+[data-style='cyberpunk'] .bento-menubar-trigger[data-open],
+[data-style='cyberpunk'] .style-switcher button.active {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent), transparent 60%);
+}
+
+/* cards — subtle glow border */
+[data-style='cyberpunk'] .demo-card,
+[data-style='cyberpunk'] .block-preview,
+[data-style='cyberpunk'] .theme-swatch {
+  border-color: color-mix(in srgb, var(--accent), transparent 50%);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent), transparent 40%);
+}
+
+/* slider / progress / meter — neon track */
+[data-style='cyberpunk'] .bento-slider-indicator,
+[data-style='cyberpunk'] .bento-slider-thumb,
+[data-style='cyberpunk'] .bento-progress-indicator,
+[data-style='cyberpunk'] .bento-meter-indicator,
+[data-style='cyberpunk'] .bento-meter-mid {
+  box-shadow: var(--cyber-glow);
+}
+
+[data-style='cyberpunk'] .bento-slider-thumb {
+  border-color: var(--bg);
+}
+
+/* checkboxes / radios / switches — glow when checked */
+[data-style='cyberpunk'] .bento-checkbox[data-checked],
+[data-style='cyberpunk'] .bento-radio[data-checked],
+[data-style='cyberpunk'] .bento-switch[data-checked] {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent), transparent 55%);
+}
+
+/* topbar / sidebar — electric accents */
+[data-style='cyberpunk'] .topbar,
+[data-style='cyberpunk'] .sidebar {
+  border-color: color-mix(in srgb, var(--accent), transparent 50%);
+}
+
+[data-style='cyberpunk'] .topbar-brand-mark {
+  box-shadow: var(--cyber-glow);
+}
+
+/* separators — neon line */
+[data-style='cyberpunk'] .bento-menu-separator {
+  background: color-mix(in srgb, var(--accent), transparent 70%);
+}
+
+/* error states — red neon */
+[data-style='cyberpunk'] .bento-field-error,
+[data-style='cyberpunk'] .bento-meter-low {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--theme-danger, #ff2bd6), transparent 60%);
+}

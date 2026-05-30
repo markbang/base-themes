@@ -1,3 +1,5 @@
+import themeMetaJson from '../docs/themeMeta.json'
+
 export const themeStyles = [
   'bento',
   'shadcn',
@@ -23,48 +25,14 @@ export const themeStyles = [
 
 export type ThemeStyle = (typeof themeStyles)[number]
 
-export const themeStyleLabels: Record<ThemeStyle, string> = {
-  bento: 'Bento',
-  shadcn: 'Shadcn',
-  'neo-brutalism': 'Neo Brutalism',
-  minimal: 'Minimal',
-  enterprise: 'Enterprise',
-  linear: 'Linear',
-  glass: 'Glass',
-  terminal: 'Terminal',
-  material: 'Material',
-  fluent: 'Fluent',
-  retro: 'Retro',
-  cyberpunk: 'Cyberpunk',
-  editorial: 'Editorial',
-  calm: 'Calm',
-  'data-dense': 'Data Dense',
-  playful: 'Playful',
-  luxury: 'Luxury',
-  'soft-ui': 'Soft UI',
-  bauhaus: 'Bauhaus',
-  mono: 'Mono',
+type ThemeMetaEntry = {
+  style: ThemeStyle
+  label: string
+  description: string
 }
 
-export const themeStyleDescriptions: Record<ThemeStyle, string> = {
-  bento: 'Warm modular product cards with soft depth and teal controls.',
-  shadcn: 'Neutral zinc interface styling modeled after shadcn/ui.',
-  'neo-brutalism': 'Hard borders, loud accents, and offset block shadows.',
-  minimal: 'Swiss-inspired whitespace, thin rules, and quiet monochrome controls.',
-  enterprise: 'Dense operational UI with blue actions and explicit boundaries.',
-  linear: 'Developer-tool polish with subtle gradients and refined dark mode.',
-  glass: 'Translucent surfaces, blur, and luminous focus states.',
-  terminal: 'Monospace command-line interface with phosphor green command surfaces.',
-  material: 'Layered Google-style surfaces with blue primary actions and soft elevation.',
-  fluent: 'Microsoft-style acrylic surfaces, soft blue accents, and gentle borders.',
-  retro: 'Early desktop UI cues with chunky controls and saturated classic colors.',
-  cyberpunk: 'Dark high-energy neon controls for expressive dashboards.',
-  editorial: 'Magazine-like typography, ivory surfaces, and ink-forward contrast.',
-  calm: 'Low-saturation wellness palette with relaxed controls and readable contrast.',
-  'data-dense': 'Compact analytics styling for tables, filters, and repeated workflows.',
-  playful: 'Rounded, bright, friendly components for creative and education tools.',
-  luxury: 'Dark premium surfaces, gold accents, and fine-line hierarchy.',
-  'soft-ui': 'Low-contrast tactile controls with inset and raised shadows.',
-  bauhaus: 'Geometric composition with primary colors and strong graphic contrast.',
-  mono: 'Black-and-white ink system with no decorative color dependency.',
-}
+const themeMeta = themeMetaJson as ThemeMetaEntry[]
+
+export const themeStyleLabels = Object.fromEntries(themeMeta.map((theme) => [theme.style, theme.label])) as Record<ThemeStyle, string>
+
+export const themeStyleDescriptions = Object.fromEntries(themeMeta.map((theme) => [theme.style, theme.description])) as Record<ThemeStyle, string>

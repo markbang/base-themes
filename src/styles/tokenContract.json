@@ -1,0 +1,61 @@
+{
+  "version": "0.1.0",
+  "stablePrefix": "--bt-",
+  "legacyCompatibility": "Legacy tokens without the --bt- prefix remain compatibility aliases for the 0.x line. New docs, examples, registry items, and agent workflows should prefer --bt-* tokens.",
+  "dataAttributes": ["data-style", "data-theme"],
+  "publicTokens": {
+    "semantic": [
+      { "name": "--bt-bg", "legacy": "--bg", "description": "Page background." },
+      { "name": "--bt-fg", "legacy": "--text-strong", "description": "Primary foreground text." },
+      { "name": "--bt-text", "legacy": "--text", "description": "Default body text." },
+      { "name": "--bt-muted-fg", "legacy": "--text-muted", "description": "Secondary text and labels." },
+      { "name": "--bt-surface", "legacy": "--surface", "description": "Default panel or control surface." },
+      { "name": "--bt-surface-muted", "legacy": "--surface-muted", "description": "Subtle grouped surface." },
+      { "name": "--bt-surface-strong", "legacy": "--surface-strong", "description": "High-contrast surface used for inverse controls." },
+      { "name": "--bt-border", "legacy": "--line", "description": "Default border color." },
+      { "name": "--bt-border-strong", "legacy": "--line-strong", "description": "Higher emphasis border color." },
+      { "name": "--bt-primary", "legacy": "--accent", "description": "Primary action color." },
+      { "name": "--bt-primary-hover", "legacy": "--accent-strong", "description": "Primary action hover or pressed color." },
+      { "name": "--bt-primary-fg", "legacy": "--theme-primary-foreground", "description": "Text/icon color on primary actions." },
+      { "name": "--bt-secondary", "legacy": "--teal", "description": "Secondary action color." },
+      { "name": "--bt-secondary-fg", "legacy": "--theme-teal-foreground", "description": "Text/icon color on secondary actions." },
+      { "name": "--bt-info", "legacy": "--blue", "description": "Informational accent color." },
+      { "name": "--bt-success", "legacy": "--green", "description": "Success accent color." },
+      { "name": "--bt-danger", "legacy": "--theme-danger", "description": "Danger/error accent color." },
+      { "name": "--bt-danger-fg", "legacy": "--theme-danger-foreground", "description": "Text/icon color on danger actions." },
+      { "name": "--bt-ring", "legacy": "--theme-focus", "description": "Focus ring color." }
+    ],
+    "shapeTypography": [
+      { "name": "--bt-radius", "legacy": "--radius", "description": "Default large radius." },
+      { "name": "--bt-radius-sm", "legacy": "--radius-sm", "description": "Compact control radius." },
+      { "name": "--bt-font-sans", "legacy": "--font-sans", "description": "Sans-serif font stack." },
+      { "name": "--bt-font-mono", "legacy": "--font-mono", "description": "Monospace font stack." },
+      { "name": "--bt-shadow", "legacy": "--shadow", "description": "Default elevated shadow." },
+      { "name": "--bt-shadow-strong", "legacy": "--shadow-strong", "description": "High emphasis shadow." }
+    ],
+    "componentAliases": [
+      { "name": "--bt-button-bg", "legacy": "--surface-strong", "description": "Default button background." },
+      { "name": "--bt-button-fg", "legacy": "--bg", "description": "Default button foreground." },
+      { "name": "--bt-button-border", "legacy": "--line", "description": "Button border color." },
+      { "name": "--bt-input-bg", "legacy": "--surface", "description": "Input background." },
+      { "name": "--bt-input-fg", "legacy": "--text-strong", "description": "Input foreground." },
+      { "name": "--bt-input-border", "legacy": "--line-strong", "description": "Input border color." },
+      { "name": "--bt-select-popup-bg", "legacy": "--theme-popup-bg", "description": "Select/menu popup background." },
+      { "name": "--bt-select-popup-fg", "legacy": "--theme-popup-text", "description": "Select/menu popup foreground." },
+      { "name": "--bt-tabs-active-bg", "legacy": "--surface", "description": "Active tab background." },
+      { "name": "--bt-tabs-active-fg", "legacy": "--text-strong", "description": "Active tab foreground." }
+    ],
+    "motionDensity": [
+      { "name": "--bt-border-width", "legacy": "--theme-border-width", "description": "Default control border width." },
+      { "name": "--bt-font-weight", "legacy": "--theme-font-weight", "description": "Default control font weight." },
+      { "name": "--bt-duration", "legacy": "--theme-transition-duration", "description": "Default interaction transition duration." },
+      { "name": "--bt-letter-spacing", "legacy": "--theme-letter-spacing", "description": "Default control letter spacing." },
+      { "name": "--bt-control-height", "legacy": "--theme-control-height", "description": "Default control height for dense customization." }
+    ],
+    "docsOnly": [
+      { "name": "--topbar-bg", "description": "Docs topbar background; not a package component API." },
+      { "name": "--card-bg", "description": "Docs card background; not a package component API." },
+      { "name": "--hero-text", "description": "Docs hero text token; not a package component API." }
+    ]
+  }
+}

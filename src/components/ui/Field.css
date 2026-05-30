@@ -11,9 +11,9 @@
 }
 
 .bento-field-description {
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
 }
 
 .bento-field-error {
-  color: var(--accent-strong);
+  color: var(--bt-primary-hover);
 }

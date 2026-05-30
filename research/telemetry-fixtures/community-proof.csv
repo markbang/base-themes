@@ -1,0 +1,5 @@
+type,title,url,author,style,permissionToFeature,timestamp
+discussion,Enterprise dashboard feedback,https://github.com/markbang/base-themes/discussions/12,octo-user,enterprise,false,2026-06-01
+gallery,Internal tools screenshot,https://github.com/markbang/base-themes/issues/18,acme-dev,data-dense,true,2026-06-02
+repo,Base Themes starter,https://github.com/example/base-themes-starter,example,bento,false,2026-06-03
+url,Public admin rebuild,https://example.com/base-themes-admin,web-team,terminal,true,2026-06-04

@@ -2,8 +2,8 @@
   display: inline-flex;
   gap: 4px;
   padding: 4px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
   background: var(--group-bg);
 }
 
@@ -14,22 +14,22 @@
   min-height: 36px;
   padding: 0 12px;
   border: 0;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-muted-fg);
   background: transparent;
   cursor: pointer;
-  font-weight: 680;
+  font-weight: var(--bt-font-weight, 680);
   font-size: 14px;
-  transition: color 140ms ease, background 140ms ease;
+  transition: color var(--bt-duration, 140ms) ease, background var(--bt-duration, 140ms) ease;
 }
 
 .bento-toggle[data-pressed] {
-  color: var(--text-strong);
-  background: var(--surface);
-  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.1);
+  color: var(--bt-fg);
+  background: var(--bt-surface);
+  box-shadow: var(--bt-shadow);
 }
 
 .bento-toggle:focus-visible {
-  outline: 3px solid var(--theme-focus, rgba(37, 99, 235, 0.32));
+  outline: 3px solid var(--bt-ring, rgba(37, 99, 235, 0.32));
   outline-offset: 2px;
 }

@@ -5,20 +5,20 @@
   height: 26px;
   align-items: center;
   padding: 3px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--bt-border-strong);
   border-radius: 999px;
   background: var(--track-bg);
   cursor: pointer;
-  transition: border-color 160ms ease, background 160ms ease;
+  transition: border-color var(--bt-duration, 160ms) ease, background var(--bt-duration, 160ms) ease;
 }
 
 .bento-switch[data-checked] {
-  border-color: var(--surface-strong);
-  background: var(--surface-strong);
+  border-color: var(--bt-surface-strong);
+  background: var(--bt-surface-strong);
 }
 
 .bento-switch:focus-visible {
-  outline: 3px solid var(--theme-focus, rgba(37, 99, 235, 0.32));
+  outline: 3px solid var(--bt-ring, rgba(37, 99, 235, 0.32));
   outline-offset: 2px;
 }
 
@@ -26,8 +26,8 @@
   width: 18px;
   height: 18px;
   border-radius: 999px;
-  background: var(--surface);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.24);
+  background: var(--bt-surface);
+  box-shadow: var(--bt-shadow);
   transition: transform 180ms ease;
 }
 
@@ -39,7 +39,7 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: var(--text-strong);
+  color: var(--bt-fg);
   font-weight: 680;
   cursor: pointer;
 }

@@ -1,0 +1,99 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "block-team-activity-feed",
+  "type": "registry:block",
+  "title": "Team Activity Feed",
+  "description": "Recent workspace activity feed with team avatars and collaboration status.",
+  "dependencies": [
+    "@base-ui/react",
+    "clsx",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/TeamActivityFeed.tsx",
+      "type": "registry:block",
+      "target": "@/blocks/TeamActivityFeed.tsx"
+    },
+    {
+      "path": "src/blocks/Blocks.css",
+      "type": "registry:file",
+      "target": "@/blocks/Blocks.css"
+    }
+  ],
+  "categories": [
+    "block",
+    "collaboration",
+    "product-ui"
+  ],
+  "meta": {
+    "baseThemes": {
+      "source": "package-and-source-copy",
+      "registryName": "team-activity-feed",
+      "docsRoute": "/blocks/team-activity-feed",
+      "components": [
+        "avatar",
+        "button"
+      ],
+      "supportsStyles": [
+        "bento",
+        "shadcn",
+        "neo-brutalism",
+        "minimal",
+        "enterprise",
+        "linear",
+        "glass",
+        "terminal",
+        "material",
+        "fluent",
+        "retro",
+        "cyberpunk",
+        "editorial",
+        "calm",
+        "data-dense",
+        "playful",
+        "luxury",
+        "soft-ui",
+        "bauhaus",
+        "mono"
+      ]
+    },
+    "agent": {
+      "summary": "Use Team Activity Feed as a ready product UI starting point for collaboration screens.",
+      "whenToUse": [
+        "Collaboration",
+        "Product screen composition",
+        "Block-level copy plan"
+      ],
+      "registryItems": [
+        "/registry/items/block-team-activity-feed.json",
+        "/registry/items/avatar.json",
+        "/registry/items/button.json"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { TeamActivityFeed } from 'base-themes'"
+      ],
+      "sourceCopy": [
+        "npx base-themes plan block:team-activity-feed",
+        "fetch /registry/items/block-team-activity-feed.json",
+        "copy block files",
+        "copy required component files from registryItems",
+        "copy every registry.style.files entry once"
+      ],
+      "installPlan": [
+        "npx base-themes plan block:team-activity-feed",
+        "fetch /registry/items/block-team-activity-feed.json",
+        "copy block files and component registryItems",
+        "import base-themes/styles.css once"
+      ],
+      "verify": [
+        "npm run registry:check",
+        "npm run tokens:check",
+        "npm run lint",
+        "npm run build"
+      ]
+    }
+  }
+}

@@ -13,10 +13,10 @@
   z-index: 51;
   width: min(420px, calc(100vw - 32px));
   padding: 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
+  background: var(--bt-surface);
+  box-shadow: var(--bt-shadow);
   transform: translate(-50%, -50%);
 }
 
@@ -28,14 +28,14 @@
 }
 
 .bento-dialog-title {
-  color: var(--text-strong);
+  color: var(--bt-fg);
   font-size: 20px;
-  font-weight: 780;
+  font-weight: var(--bt-font-weight, 780);
   margin: 0;
 }
 
 .bento-dialog-description {
   margin: 14px 0 18px;
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   line-height: 1.6;
 }

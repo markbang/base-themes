@@ -1,30 +1,20 @@
 import { execFileSync } from 'node:child_process'
+import themeMeta from '../src/docs/themeMeta.json' with { type: 'json' }
 
 const baseUrl = process.env.PREVIEW_BASE_URL ?? 'http://127.0.0.1:5175'
+const scope = process.env.THEME_E2E_SCOPE ?? 'full'
+const requestedStyles = process.env.THEME_E2E_STYLES?.split(',').map((style) => style.trim()).filter(Boolean)
 let session = 'base-themes-e2e'
 
-const themes = [
-  'bento',
-  'shadcn',
-  'neo-brutalism',
-  'minimal',
-  'enterprise',
-  'linear',
-  'glass',
-  'terminal',
-  'material',
-  'fluent',
-  'retro',
-  'cyberpunk',
-  'editorial',
-  'calm',
-  'data-dense',
-  'playful',
-  'luxury',
-  'soft-ui',
-  'bauhaus',
-  'mono',
-]
+const allThemes = themeMeta.map((theme) => theme.style)
+const smokeThemes = ['bento', 'shadcn', 'enterprise', 'terminal', 'cyberpunk']
+const themes = requestedStyles ?? (scope === 'smoke' ? smokeThemes : allThemes)
+const unknownThemes = themes.filter((theme) => !allThemes.includes(theme))
+
+if (unknownThemes.length > 0) {
+  console.error(`Unknown theme style${unknownThemes.length === 1 ? '' : 's'}: ${unknownThemes.join(', ')}`)
+  process.exit(1)
+}
 
 function run(args, options = {}) {
   return execFileSync('agent-browser', ['--session', session, ...args], {
@@ -285,4 +275,4 @@ if (failures.length) {
   process.exit(1)
 }
 
-console.log(`Theme E2E verification passed for ${themes.length} styles in light and dark modes.`)
+console.log(`Theme E2E verification passed for ${themes.length} styles in light and dark modes (${scope} scope).`)

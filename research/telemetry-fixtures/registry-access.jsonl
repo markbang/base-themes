@@ -1,0 +1,10 @@
+{"path":"/registry/registry.json","status":200,"referer":"https://base-themes.bangwu.me/docs/registry","userAgent":"curl/8","timestamp":"2026-06-01T00:00:00.000Z"}
+{"path":"/registry/shadcn-registry.json","status":200,"referer":"https://base-themes.bangwu.me/llms.txt","userAgent":"agent-discovery","timestamp":"2026-06-01T00:01:00.000Z"}
+{"path":"/registry/items/button.json","status":200,"referer":"https://base-themes.bangwu.me/llms.txt","userAgent":"agent-discovery","timestamp":"2026-06-01T00:02:00.000Z"}
+{"path":"/registry/items/block-dashboard-shell.json","status":200,"referer":"https://base-themes.bangwu.me/docs/agent-usage","userAgent":"agent-discovery","timestamp":"2026-06-01T00:03:00.000Z"}
+{"path":"/registry/items/theme-enterprise.json","status":200,"referer":"https://base-themes.bangwu.me/themes/enterprise","userAgent":"agent-discovery","timestamp":"2026-06-01T00:04:00.000Z"}
+{"path":"/registry/block-meta.json","status":200,"referer":"https://base-themes.bangwu.me/docs/registry","userAgent":"agent-discovery","timestamp":"2026-06-01T00:05:00.000Z"}
+{"url":"https://base-themes.bangwu.me/llms.txt","status":200,"userAgent":"agent-discovery","timestamp":"2026-06-01T00:06:00.000Z"}
+{"url":"https://base-themes.bangwu.me/llms-full.txt","status":200,"userAgent":"agent-discovery","timestamp":"2026-06-01T00:07:00.000Z"}
+{"path":"/docs/cli","status":200,"referer":"https://base-themes.bangwu.me/","userAgent":"Mozilla/5.0","timestamp":"2026-06-01T00:08:00.000Z"}
+{"path":"/untracked","status":200,"referer":"https://example.com","userAgent":"Mozilla/5.0","timestamp":"2026-06-01T00:09:00.000Z"}

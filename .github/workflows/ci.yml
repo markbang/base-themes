@@ -4,6 +4,9 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * 1'
 
 jobs:
   verify:
@@ -16,5 +19,36 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run registry:check
+      - run: npm run tokens:check
       - run: npm run lint
+      - run: npm run test
       - run: npm run build
+      - run: npm run seo:check
+      - run: npm run community:check
+      - run: npm run telemetry:fixtures
+      - run: npm run launch:check
+      - run: npm run bundle:report
+      - run: npm run package:smoke
+      - run: npm run example:registry-copy -- button select block:dashboard-shell
+      - run: npm run example:vite:build
+      - run: npm run example:dashboard:build
+      - run: npm run example:theme-customization:build
+      - run: npm run example:next:build
+
+  theme-e2e:
+    runs-on: ubuntu-latest
+    env:
+      THEME_E2E_SCOPE: ${{ (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && 'full' || 'smoke' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm install -g agent-browser@0.27.0
+      - run: npm run build:docs
+      - run: npx vite preview --host 127.0.0.1 --port 5175 &
+      - run: node scripts/wait-for-url.mjs http://127.0.0.1:5175/components/select 30000
+      - run: npm run themes:e2e
+      - run: npm run previews:check

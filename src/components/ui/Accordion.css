@@ -4,8 +4,8 @@
 }
 
 .bento-accordion-item {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
   background: var(--group-bg);
 }
 
@@ -21,7 +21,7 @@
   justify-content: space-between;
   border: 0;
   padding: 0 14px;
-  color: var(--text-strong);
+  color: var(--bt-fg);
   background: transparent;
   cursor: pointer;
   font-weight: 760;
@@ -37,6 +37,6 @@
 
 .bento-accordion-panel {
   padding: 0 14px 14px;
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   line-height: 1.6;
 }

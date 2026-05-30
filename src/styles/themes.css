@@ -11,6 +11,7 @@
   --theme-popup-text: var(--text-strong);
   --theme-focus: color-mix(in srgb, var(--accent), transparent 62%);
   --theme-danger: #dc2626;
+  --theme-danger-foreground: #ffffff;
 }
 
 [data-theme='dark'] {
@@ -18,6 +19,7 @@
   --theme-teal-foreground: var(--bg);
   --theme-control-active: color-mix(in srgb, var(--accent), var(--surface) 78%);
   --theme-danger: #f87171;
+  --theme-danger-foreground: var(--bg);
 }
 
 [data-style='terminal'],
@@ -262,6 +264,7 @@
 }
 
 [data-style] .bento-button {
+  border-width: var(--theme-border-width, 1px);
   color: var(--theme-primary-foreground);
   background: var(--theme-primary);
 }
@@ -425,7 +428,8 @@
 [data-style] .bento-toggle[data-pressed],
 [data-style] .bento-toolbar-button[data-pressed],
 [data-style] .bento-menubar-trigger[data-open],
-[data-style] .style-switcher button.active {
+[data-style] .style-switcher button.active,
+[data-style] .style-switcher a.active {
   color: var(--theme-control-active-text);
 }
 
@@ -433,7 +437,8 @@
 [data-style] .bento-toggle[data-pressed],
 [data-style] .bento-toolbar-button[data-pressed],
 [data-style] .bento-menubar-trigger[data-open],
-[data-style] .style-switcher button.active {
+[data-style] .style-switcher button.active,
+[data-style] .style-switcher a.active {
   background: var(--theme-control-active);
   box-shadow: var(--shadow-strong);
 }
@@ -474,7 +479,8 @@
 [data-style='soft-ui'] .bento-button:active,
 [data-style='soft-ui'] .bento-toggle[data-pressed],
 [data-style='soft-ui'] .bento-tabs-indicator,
-[data-style='soft-ui'] .style-switcher button.active {
+[data-style='soft-ui'] .style-switcher button.active,
+[data-style='soft-ui'] .style-switcher a.active {
   box-shadow: var(--shadow-strong);
 }
 
@@ -493,7 +499,8 @@
 
 [data-style='mono'] .topbar-nav a.active,
 [data-style='mono'] .sidebar-link.active,
-[data-style='mono'] .style-switcher button.active {
+[data-style='mono'] .style-switcher button.active,
+[data-style='mono'] .style-switcher a.active {
   color: var(--bg);
   background: var(--surface-strong);
 }
@@ -526,4 +533,280 @@
 [data-style='mono'] .bento-button.icon:hover,
 [data-style='data-dense'] .bento-button.icon:hover {
   box-shadow: none;
+}
+
+/* ── retro — chunky old-desktop controls ── */
+
+[data-style='retro'] .bento-button {
+  font-weight: 780;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+
+[data-style='retro'] .bento-select-trigger,
+[data-style='retro'] .bento-input,
+[data-style='retro'] .bento-textarea,
+[data-style='retro'] .bento-combobox-input {
+  border-radius: 2px;
+}
+
+[data-style='retro'] .bento-menu-popup,
+[data-style='retro'] .bento-select-popup,
+[data-style='retro'] .bento-combobox-popup,
+[data-style='retro'] .bento-dialog-popup,
+[data-style='retro'] .bento-alert-popup {
+  border-radius: 2px;
+}
+
+[data-style='retro'] .bento-menu-item[data-highlighted],
+[data-style='retro'] .bento-combobox-item[data-highlighted],
+[data-style='retro'] .bento-select-item[data-highlighted],
+[data-style='retro'] .bento-select-item[data-selected][data-highlighted] {
+  color: var(--bg);
+  background: var(--surface-strong);
+}
+
+/* ── playful — rounded, bright, friendly ── */
+
+[data-style='playful'] .bento-button {
+  border-radius: 999px;
+  font-weight: 750;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent), transparent 70%);
+}
+
+[data-style='playful'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal):hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--accent), transparent 60%);
+}
+
+[data-style='playful'] .bento-button.outline,
+[data-style='playful'] .bento-button.icon,
+[data-style='playful'] .bento-button.ghost {
+  border-radius: 999px;
+}
+
+[data-style='playful'] .bento-input,
+[data-style='playful'] .bento-textarea,
+[data-style='playful'] .bento-combobox-input,
+[data-style='playful'] .bento-select-trigger {
+  border-radius: 18px;
+}
+
+[data-style='playful'] .bento-menu-popup,
+[data-style='playful'] .bento-select-popup,
+[data-style='playful'] .bento-combobox-popup,
+[data-style='playful'] .bento-dialog-popup,
+[data-style='playful'] .bento-tooltip-popup {
+  border-radius: 18px;
+}
+
+[data-style='playful'] .bento-tabs-tab {
+  border-radius: 999px;
+}
+
+[data-style='playful'] .bento-tabs-indicator {
+  border-radius: 999px;
+}
+
+[data-style='playful'] .bento-checkbox,
+[data-style='playful'] .bento-radio {
+  border-radius: 6px;
+}
+
+/* ── bauhaus — geometric, primary colors, strong contrast ── */
+
+[data-style='bauhaus'] .bento-button {
+  font-weight: 780;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+[data-style='bauhaus'] .bento-select-trigger,
+[data-style='bauhaus'] .bento-input,
+[data-style='bauhaus'] .bento-textarea,
+[data-style='bauhaus'] .bento-combobox-input {
+  border-radius: 0;
+  border-width: 2px;
+}
+
+[data-style='bauhaus'] .bento-menu-popup,
+[data-style='bauhaus'] .bento-select-popup,
+[data-style='bauhaus'] .bento-combobox-popup,
+[data-style='bauhaus'] .bento-dialog-popup,
+[data-style='bauhaus'] .bento-alert-popup {
+  border-radius: 0;
+  border-width: 2px;
+}
+
+[data-style='bauhaus'] .bento-menu-item[data-highlighted],
+[data-style='bauhaus'] .bento-combobox-item[data-highlighted],
+[data-style='bauhaus'] .bento-select-item[data-highlighted],
+[data-style='bauhaus'] .bento-select-item[data-selected][data-highlighted] {
+  background: var(--surface-muted);
+  color: var(--text-strong);
+}
+
+[data-style='bauhaus'] .bento-slider-thumb {
+  border-radius: 0;
+}
+
+[data-style='bauhaus'] .bento-switch-thumb {
+  border-radius: 0;
+}
+
+[data-style='bauhaus'] .bento-checkbox,
+[data-style='bauhaus'] .bento-radio {
+  border-radius: 0;
+}
+
+/* ── minimal — refined thin-line aesthetic ── */
+
+[data-style='minimal'] .bento-menu-popup,
+[data-style='minimal'] .bento-select-popup,
+[data-style='minimal'] .bento-combobox-popup,
+[data-style='minimal'] .bento-dialog-popup,
+[data-style='minimal'] .bento-alert-popup,
+[data-style='minimal'] .bento-tooltip-popup {
+  border-color: var(--line);
+}
+
+[data-style='minimal'] .bento-menu-item[data-highlighted],
+[data-style='minimal'] .bento-combobox-item[data-highlighted],
+[data-style='minimal'] .bento-select-item[data-highlighted] {
+  background: var(--surface-muted);
+}
+
+[data-style='minimal'] .bento-tabs-indicator,
+[data-style='minimal'] .bento-toggle[data-pressed],
+[data-style='minimal'] .bento-toolbar-button[data-pressed],
+[data-style='minimal'] .style-switcher button.active,
+[data-style='minimal'] .style-switcher a.active {
+  box-shadow: none;
+}
+
+/* ── calm — relaxed, smooth, wellness palette ── */
+
+[data-style='calm'] .bento-button {
+  transition: background 280ms ease, box-shadow 280ms ease, transform 280ms ease;
+}
+
+[data-style='calm'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal):hover {
+  transform: scale(1.02);
+}
+
+[data-style='calm'] .bento-input,
+[data-style='calm'] .bento-textarea,
+[data-style='calm'] .bento-combobox-input {
+  transition: border-color 280ms ease, box-shadow 280ms ease, background 280ms ease;
+}
+
+[data-style='calm'] .bento-menu-item[data-highlighted],
+[data-style='calm'] .bento-combobox-item[data-highlighted],
+[data-style='calm'] .bento-select-item[data-highlighted] {
+  background: color-mix(in srgb, var(--accent), transparent 90%);
+}
+
+/* ── luxury — premium dark surfaces, gold accents, fine-line ── */
+
+[data-style='luxury'] .bento-button.accent,
+[data-style='luxury'] .bento-button.teal {
+  letter-spacing: 0.03em;
+  font-weight: 700;
+}
+
+[data-style='luxury'] .bento-menu-item[data-highlighted],
+[data-style='luxury'] .bento-combobox-item[data-highlighted],
+[data-style='luxury'] .bento-select-item[data-highlighted],
+[data-style='luxury'] .bento-select-item[data-selected][data-highlighted] {
+  background: color-mix(in srgb, var(--accent), transparent 86%);
+}
+
+[data-style='luxury'] .bento-tabs-tab[data-selected],
+[data-style='luxury'] .bento-tabs-tab[data-active],
+[data-style='luxury'] .bento-tabs-tab[aria-selected='true'] {
+  color: var(--accent);
+}
+
+/* ── linear — developer-tool polish ── */
+
+[data-style='linear'] .bento-button {
+  border-radius: 8px;
+  letter-spacing: -0.01em;
+}
+
+[data-style='linear'] .bento-input,
+[data-style='linear'] .bento-textarea,
+[data-style='linear'] .bento-combobox-input,
+[data-style='linear'] .bento-select-trigger {
+  border-radius: 8px;
+}
+
+[data-style='linear'] .bento-menu-popup,
+[data-style='linear'] .bento-select-popup,
+[data-style='linear'] .bento-dialog-popup {
+  border-radius: 10px;
+}
+
+[data-style='linear'][data-theme='dark'] .bento-menu-item[data-highlighted],
+[data-style='linear'][data-theme='dark'] .bento-combobox-item[data-highlighted],
+[data-style='linear'][data-theme='dark'] .bento-select-item[data-highlighted] {
+  background: color-mix(in srgb, var(--accent), transparent 84%);
+}
+
+/* ── fluent — Microsoft acrylic, soft edges ── */
+
+[data-style='fluent'] .bento-button {
+  border-radius: 4px;
+  font-weight: 620;
+}
+
+[data-style='fluent'] .bento-input,
+[data-style='fluent'] .bento-textarea,
+[data-style='fluent'] .bento-combobox-input,
+[data-style='fluent'] .bento-select-trigger {
+  border-radius: 4px;
+}
+
+[data-style='fluent'] .bento-menu-popup,
+[data-style='fluent'] .bento-select-popup,
+[data-style='fluent'] .bento-dialog-popup {
+  border-radius: 6px;
+}
+
+/* ── editorial — magazine typography, ink-forward ── */
+
+[data-style='editorial'] .bento-button {
+  font-weight: 680;
+  border-radius: 2px;
+}
+
+[data-style='editorial'] .bento-input,
+[data-style='editorial'] .bento-textarea,
+[data-style='editorial'] .bento-combobox-input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  background: transparent;
+  padding-left: 0;
+}
+
+[data-style='editorial'] .bento-input:focus,
+[data-style='editorial'] .bento-textarea:focus,
+[data-style='editorial'] .bento-combobox-input:focus {
+  box-shadow: none;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--accent);
+}
+
+[data-style='editorial'] .bento-select-trigger {
+  border-radius: 2px;
+}
+
+[data-style='editorial'] .bento-menu-item[data-highlighted],
+[data-style='editorial'] .bento-combobox-item[data-highlighted],
+[data-style='editorial'] .bento-select-item[data-highlighted] {
+  background: var(--surface-muted);
 }

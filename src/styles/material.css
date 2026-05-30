@@ -1,0 +1,232 @@
+/* material — layered Google-style elevation and soft transitions */
+/* complements tokens.css material palette */
+
+[data-style='material'] {
+  --md-elevation-1: 0 1px 2px rgba(60, 64, 67, 0.12), 0 1px 3px rgba(60, 64, 67, 0.08);
+  --md-elevation-2: 0 1px 2px rgba(60, 64, 67, 0.14), 0 2px 6px rgba(60, 64, 67, 0.10);
+  --md-elevation-3: 0 4px 8px rgba(60, 64, 67, 0.14), 0 1px 3px rgba(60, 64, 67, 0.10);
+  --md-elevation-4: 0 6px 10px rgba(60, 64, 67, 0.16), 0 2px 6px rgba(60, 64, 67, 0.10);
+  --md-elevation-8: 0 12px 17px rgba(60, 64, 67, 0.18), 0 5px 22px rgba(60, 64, 67, 0.12);
+  --md-state-hover: color-mix(in srgb, var(--text-strong), transparent 92%);
+  --md-state-pressed: color-mix(in srgb, var(--text-strong), transparent 86%);
+  --md-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-style='material'][data-theme='dark'] {
+  --md-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.24), 0 1px 3px rgba(0, 0, 0, 0.16);
+  --md-elevation-2: 0 1px 2px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.18);
+  --md-elevation-3: 0 4px 8px rgba(0, 0, 0, 0.30), 0 1px 3px rgba(0, 0, 0, 0.20);
+  --md-elevation-4: 0 6px 10px rgba(0, 0, 0, 0.34), 0 2px 6px rgba(0, 0, 0, 0.20);
+  --md-elevation-8: 0 12px 17px rgba(0, 0, 0, 0.38), 0 5px 22px rgba(0, 0, 0, 0.26);
+  --md-state-hover: color-mix(in srgb, var(--text-strong), transparent 90%);
+  --md-state-pressed: color-mix(in srgb, var(--text-strong), transparent 82%);
+}
+
+/* smooth transitions */
+[data-style='material'] .bento-button,
+[data-style='material'] .bento-select-trigger,
+[data-style='material'] .bento-input,
+[data-style='material'] .bento-textarea,
+[data-style='material'] .bento-combobox-input,
+[data-style='material'] .bento-checkbox,
+[data-style='material'] .bento-radio,
+[data-style='material'] .bento-switch {
+  transition: background var(--md-transition), border-color var(--md-transition),
+    box-shadow var(--md-transition), transform var(--md-transition);
+}
+
+/* focus ring — blue Google-style */
+[data-style='material'] :where(button, a, [role='button'], [tabindex]):focus-visible,
+[data-style='material'] [data-base-ui-trigger]:focus-visible,
+[data-style='material'] [data-base-ui-item]:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* buttons — Material Design style */
+[data-style='material'] .bento-button {
+  border-radius: 20px;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  box-shadow: none;
+}
+
+[data-style='material'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal) {
+  background: var(--blue);
+  color: #ffffff;
+  box-shadow: var(--md-elevation-1);
+}
+
+[data-style='material'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal):hover {
+  background: var(--blue);
+  box-shadow: var(--md-elevation-3);
+  transform: translateY(-1px);
+}
+
+[data-style='material'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal):active {
+  box-shadow: var(--md-elevation-1);
+  transform: translateY(0);
+}
+
+[data-style='material'] .bento-button.accent {
+  box-shadow: var(--md-elevation-2);
+}
+
+[data-style='material'] .bento-button.accent:hover {
+  box-shadow: var(--md-elevation-4);
+  transform: translateY(-1px);
+}
+
+[data-style='material'] .bento-button.outline,
+[data-style='material'] .bento-button.icon,
+[data-style='material'] .bento-button.ghost {
+  border-radius: 20px;
+}
+
+/* cards — elevation */
+[data-style='material'] .demo-card,
+[data-style='material'] .block-preview {
+  border-radius: 12px;
+  box-shadow: var(--md-elevation-2);
+  transition: box-shadow var(--md-transition);
+}
+
+[data-style='material'] .demo-card:hover,
+[data-style='material'] .block-preview:hover {
+  box-shadow: var(--md-elevation-4);
+}
+
+/* popups — elevated */
+[data-style='material'] .bento-menu-popup,
+[data-style='material'] .bento-select-popup,
+[data-style='material'] .bento-combobox-popup,
+[data-style='material'] .bento-nav-menu-popup,
+[data-style='material'] .bento-popover-popup,
+[data-style='material'] .bento-preview-card,
+[data-style='material'] .bento-tooltip-popup,
+[data-style='material'] .bento-toast,
+[data-style='material'] .bento-dialog-popup,
+[data-style='material'] .bento-alert-popup,
+[data-style='material'] .bento-drawer-popup {
+  border-radius: 8px;
+  border-color: transparent;
+  box-shadow: var(--md-elevation-8);
+}
+
+/* dialog — centered, elevated */
+[data-style='material'] .bento-dialog-popup {
+  border-radius: 16px;
+}
+
+/* highlighted items */
+[data-style='material'] .bento-menu-item[data-highlighted],
+[data-style='material'] .bento-combobox-item[data-highlighted],
+[data-style='material'] .bento-select-item[data-highlighted],
+[data-style='material'] .bento-nav-menu-item[data-highlighted] {
+  background: var(--md-state-hover);
+}
+
+[data-style='material'] .bento-menu-item:active,
+[data-style='material'] .bento-combobox-item:active,
+[data-style='material'] .bento-select-item:active {
+  background: var(--md-state-pressed);
+}
+
+/* tabs — no border, just indicator */
+[data-style='material'] .bento-tabs-list {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+[data-style='material'] .bento-tabs-tab {
+  border-radius: 8px 8px 0 0;
+}
+
+[data-style='material'] .bento-tabs-indicator {
+  border-radius: 4px 4px 0 0;
+  box-shadow: none;
+}
+
+/* toggle / menubar */
+[data-style='material'] .bento-toggle[data-pressed],
+[data-style='material'] .bento-toolbar-button[data-pressed],
+[data-style='material'] .bento-menubar-trigger[data-open],
+[data-style='material'] .style-switcher button.active {
+  background: var(--md-state-pressed);
+  box-shadow: none;
+}
+
+/* inputs — filled style */
+[data-style='material'] .bento-input,
+[data-style='material'] .bento-textarea,
+[data-style='material'] .bento-combobox-input,
+[data-style='material'] .bento-select-trigger {
+  border-radius: 8px 8px 0 0;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-width: 1px;
+  background: var(--surface-muted);
+}
+
+[data-style='material'] .bento-input:focus,
+[data-style='material'] .bento-textarea:focus,
+[data-style='material'] .bento-combobox-input:focus {
+  border-bottom-color: var(--blue);
+  border-bottom-width: 2px;
+  box-shadow: none;
+  background: color-mix(in srgb, var(--blue), transparent 94%);
+}
+
+/* checkboxes / radios / switches */
+[data-style='material'] .bento-checkbox[data-checked],
+[data-style='material'] .bento-radio[data-checked] {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+[data-style='material'] .bento-switch[data-checked] {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+/* slider / progress — blue accent */
+[data-style='material'] .bento-slider-indicator,
+[data-style='material'] .bento-slider-thumb,
+[data-style='material'] .bento-progress-indicator,
+[data-style='material'] .bento-meter-indicator,
+[data-style='material'] .bento-meter-mid {
+  background: var(--blue);
+}
+
+[data-style='material'] .bento-slider-thumb {
+  border-color: var(--surface);
+  box-shadow: var(--md-elevation-2);
+}
+
+/* FAB-like icon button */
+[data-style='material'] .bento-button.icon {
+  border-radius: 50%;
+  box-shadow: var(--md-elevation-2);
+}
+
+[data-style='material'] .bento-button.icon:hover {
+  box-shadow: var(--md-elevation-4);
+  transform: translateY(-1px);
+}
+
+/* topbar — elevated */
+[data-style='material'] .topbar {
+  box-shadow: var(--md-elevation-2);
+}
+
+[data-style='material'] .topbar-brand-mark {
+  border-radius: 8px;
+}
+
+/* avatar group */
+[data-style='material'] .bento-avatar {
+  box-shadow: var(--md-elevation-1);
+}

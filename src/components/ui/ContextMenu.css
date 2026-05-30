@@ -1,9 +1,9 @@
 .bento-context-menu-trigger {
   min-width: 240px;
   padding: 22px;
-  border: 1px dashed var(--line-strong);
-  border-radius: var(--radius);
-  color: var(--text-muted);
-  background: var(--surface);
+  border: 1px dashed var(--bt-border-strong);
+  border-radius: var(--bt-radius);
+  color: var(--bt-muted-fg);
+  background: var(--bt-surface);
   text-align: center;
 }

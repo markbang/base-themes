@@ -1,0 +1,79 @@
+# Base Themes
+
+Base Themes is a type-safe React component system built on Base UI. It ships accessible component wrappers, CSS-token themes, 20 curated visual styles, source-copyable registry metadata, blocks, examples, and agent-friendly customization workflows.
+
+## Start Here
+
+- [Install Base Themes](https://base-themes.bangwu.me/docs/installation)
+- [Why Base Themes](https://base-themes.bangwu.me/docs/why-base-themes)
+- [Base UI vs shadcn/ui](https://base-themes.bangwu.me/docs/base-ui-vs-shadcn)
+- [Registry and source-copy workflow](https://base-themes.bangwu.me/docs/registry)
+- [CLI usage](https://base-themes.bangwu.me/docs/cli)
+- [Agent usage guide](https://base-themes.bangwu.me/docs/agent-usage)
+- [Runnable examples](https://base-themes.bangwu.me/docs/examples)
+- [Security and release trust](https://base-themes.bangwu.me/docs/security)
+
+## Machine-Readable Metadata
+
+- [Registry JSON](https://base-themes.bangwu.me/registry/registry.json)
+- [Shadcn-compatible registry catalog](https://base-themes.bangwu.me/registry/shadcn-registry.json)
+- [Block metadata JSON](https://base-themes.bangwu.me/registry/block-meta.json)
+- [Component metadata JSON](https://base-themes.bangwu.me/registry/component-meta.json)
+- [Static page metadata JSON](https://base-themes.bangwu.me/registry/static-page-meta.json)
+- [Theme metadata JSON](https://base-themes.bangwu.me/registry/theme-meta.json)
+- [Registry item example](https://base-themes.bangwu.me/registry/items/button.json)
+- [Full agent context](https://base-themes.bangwu.me/llms-full.txt)
+- [Sitemap](https://base-themes.bangwu.me/sitemap.xml)
+
+## Common Components
+
+- [Button](https://base-themes.bangwu.me/components/button)
+- [Select](https://base-themes.bangwu.me/components/select)
+- [Dialog](https://base-themes.bangwu.me/components/dialog)
+- [Tabs](https://base-themes.bangwu.me/components/tabs)
+- [Input](https://base-themes.bangwu.me/components/input)
+
+## Useful Themes
+
+- [Bento theme](https://base-themes.bangwu.me/themes/bento)
+- [Enterprise theme](https://base-themes.bangwu.me/themes/enterprise)
+- [Terminal theme](https://base-themes.bangwu.me/themes/terminal)
+- [Data Dense theme](https://base-themes.bangwu.me/themes/data-dense)
+
+## Product Blocks
+
+- [Dashboard Shell block](https://base-themes.bangwu.me/blocks/dashboard-shell)
+- [Data Table block](https://base-themes.bangwu.me/blocks/data-table)
+- [Command Palette block](https://base-themes.bangwu.me/blocks/command-palette)
+
+## Package Commands
+
+```bash
+npm install base-themes @base-ui/react react react-dom
+npx base-themes list
+npx base-themes list --json
+npx base-themes plan button select block:dashboard-shell theme:enterprise
+npx base-themes plan button select block:dashboard-shell theme:enterprise --json
+npx base-themes add button select block:dashboard-shell theme:enterprise --target . --dry-run
+npx base-themes add button select block:dashboard-shell theme:enterprise --target . --dry-run --json
+npx base-themes doctor .
+npx base-themes doctor . --json
+```
+
+## Integration Contract
+
+- Import `base-themes/styles.css` once at app startup.
+- Set `data-style` for visual system and `data-theme` for light or dark mode.
+- Use `base-themes/registry.json`, `base-themes/shadcn-registry.json`, hosted registry JSON, or item JSON before source-copying files.
+- Run registry, lint, test, build, SEO, and package smoke checks after applying changes.
+- Use the Vite, dashboard, theme-customization, Next.js, and registry-copy examples to verify real integration paths.
+
+## Feedback And Community Signals
+
+- [Repository](https://github.com/markbang/base-themes)
+- [Fork the repo](https://github.com/markbang/base-themes/fork)
+- [Show and tell Discussion](https://github.com/markbang/base-themes/discussions/new?category=show-and-tell)
+- [Feature request](https://github.com/markbang/base-themes/issues/new?template=feature_request.yml)
+- [Bug report](https://github.com/markbang/base-themes/issues/new?template=bug_report.yml)
+- [Community gallery submission](https://github.com/markbang/base-themes/issues/new?template=gallery_submission.yml)
+- [Good first issues](https://github.com/markbang/base-themes/issues?q=is%3Aissue+state%3Aopen+label%3A%22type%3A+good+first+issue%22)

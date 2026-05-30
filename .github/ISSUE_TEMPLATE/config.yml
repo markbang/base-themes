@@ -1,0 +1,20 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Show and tell Discussion
+    url: https://github.com/markbang/base-themes/discussions/new?category=show-and-tell
+    about: Share a real install, prototype, screenshot, or source-copy workflow without opening an issue.
+  - name: Good first issues
+    url: https://github.com/markbang/base-themes/issues?q=is%3Aissue+state%3Aopen+label%3A%22type%3A+good+first+issue%22
+    about: Find a small contribution path before opening a pull request.
+  - name: Community gallery submission
+    url: https://github.com/markbang/base-themes/issues/new?template=gallery_submission.yml
+    about: Submit a real project, screenshot, or repository with permission-to-feature details.
+  - name: Security report
+    url: https://github.com/markbang/base-themes/security/advisories/new
+    about: Report vulnerabilities privately when GitHub private reporting is enabled.
+  - name: Base UI upstream
+    url: https://base-ui.com/
+    about: Base Themes builds on Base UI primitives; upstream primitive behavior may belong there.
+  - name: Community gallery proposal
+    url: https://github.com/markbang/base-themes/blob/main/docs/community-gallery-proposal.md
+    about: Read the submission model and launch criteria before proposing gallery entries.

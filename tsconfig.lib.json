@@ -17,5 +17,6 @@
     "noUnusedParameters": false,
     "erasableSyntaxOnly": true
   },
-  "include": ["src/lib.ts", "src/components/ui/**/*", "src/hooks/useTheme.ts"]
+  "include": ["src/lib.ts", "src/components/ui/**/*", "src/blocks/**/*", "src/hooks/useTheme.ts"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "src/test"]
 }

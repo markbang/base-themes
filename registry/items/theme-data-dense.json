@@ -1,0 +1,107 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-data-dense",
+  "type": "registry:theme",
+  "title": "Data Dense Theme",
+  "description": "Compact analytics styling for tables, filters, and repeated workflows.",
+  "files": [
+    {
+      "path": "src/index.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/index.css"
+    },
+    {
+      "path": "src/styles/tokens.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/tokens.css"
+    },
+    {
+      "path": "src/styles/themes.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/themes.css"
+    },
+    {
+      "path": "src/styles/shadcn.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/shadcn.css"
+    },
+    {
+      "path": "src/styles/neo-brutalism.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/neo-brutalism.css"
+    },
+    {
+      "path": "src/styles/cyberpunk.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/cyberpunk.css"
+    },
+    {
+      "path": "src/styles/terminal.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/terminal.css"
+    },
+    {
+      "path": "src/styles/material.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/material.css"
+    },
+    {
+      "path": "src/styles/glass.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/glass.css"
+    }
+  ],
+  "categories": [
+    "theme",
+    "base-themes"
+  ],
+  "meta": {
+    "preview": {
+      "light": "/previews/base-themes-data-dense.png"
+    },
+    "baseThemes": {
+      "style": "data-dense",
+      "label": "Data Dense",
+      "defaultMode": "light",
+      "supportsModes": [
+        "light",
+        "dark"
+      ],
+      "dataAttributes": {
+        "style": "data-dense",
+        "theme": "light"
+      }
+    },
+    "agent": {
+      "summary": "Use the Data Dense theme when the user wants compact analytics styling for tables, filters, and repeated workflows.",
+      "whenToUse": [
+        "Data Dense",
+        "CSS variable theme",
+        "Base Themes visual style"
+      ],
+      "avoidWhen": [
+        "The user needs a fully custom brand system before trying token overrides"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "set data-style=\"data-dense\"",
+        "set data-theme=\"light\" or data-theme=\"dark\""
+      ],
+      "sourceCopy": [
+        "fetch /registry/items/theme-data-dense.json",
+        "copy every files[].path to files[].target",
+        "copy src/styles/tokenContract.json when generating overrides"
+      ],
+      "installPlan": [
+        "import base-themes/styles.css once",
+        "set data-style=\"data-dense\"",
+        "set data-theme=\"light\" or data-theme=\"dark\"",
+        "or fetch /registry/items/theme-data-dense.json for source-copy"
+      ],
+      "prompts": [
+        "Create a React settings screen using Base Themes with data-style=\"data-dense\"."
+      ]
+    }
+  }
+}

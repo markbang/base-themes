@@ -4,9 +4,9 @@
   align-items: center;
   gap: 10px;
   padding: 8px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
+  background: var(--bt-surface);
 }
 
 .bento-toolbar-group {
@@ -21,23 +21,23 @@
   height: 32px;
   place-items: center;
   border: 0;
-  border-radius: var(--radius-sm);
-  color: var(--text);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-text);
   background: transparent;
   cursor: pointer;
 }
 
 .bento-toolbar-button:hover,
 .bento-toolbar-button[data-pressed] {
-  color: var(--text-strong);
-  background: var(--surface-muted);
+  color: var(--bt-fg);
+  background: var(--bt-surface-muted);
 }
 
 .bento-toolbar-separator {
   width: 1px;
   height: 22px;
   margin: 0 4px;
-  background: var(--line);
+  background: var(--bt-border);
 }
 
 .bento-toolbar-search {
@@ -46,15 +46,15 @@
   gap: 7px;
   height: 32px;
   padding: 0 9px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-muted-fg);
 }
 
 .bento-toolbar-input {
   width: 150px;
   border: 0;
-  color: var(--text-strong);
+  color: var(--bt-fg);
   background: transparent;
   outline: 0;
 }

@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-06-01T00:00:00.000Z",
+  "budgets": {
+    "largestJsBytes": 512000,
+    "appJsGzipBytes": 81920,
+    "totalJsGzipBytes": 307200
+  },
+  "appJs": {
+    "file": "index-example.js",
+    "bytes": 70000,
+    "gzipBytes": 21000
+  },
+  "largestJs": {
+    "file": "vendor-base-ui.js",
+    "bytes": 350000,
+    "gzipBytes": 112000
+  },
+  "totalJsBytes": 850000,
+  "totalJsGzipBytes": 266000,
+  "budgetChecks": [
+    {
+      "id": "largest-js-bytes",
+      "label": "Largest JS chunk",
+      "current": 350000,
+      "limit": 512000,
+      "passed": true
+    },
+    {
+      "id": "app-js-gzip-bytes",
+      "label": "App JS gzip",
+      "current": 21000,
+      "limit": 81920,
+      "passed": true
+    },
+    {
+      "id": "total-js-gzip-bytes",
+      "label": "Total JS gzip",
+      "current": 266000,
+      "limit": 307200,
+      "passed": true
+    }
+  ],
+  "ok": true
+}

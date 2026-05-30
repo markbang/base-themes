@@ -1,0 +1,9 @@
+{"name":"route_view","path":"/docs/installation","timestamp":"2026-06-01T00:00:00.000Z","properties":{"campaign":"launch-0-1-2","source":"github-release","medium":"release-notes","content":"install-docs"}}
+{"name":"install_command_copy","path":"/docs/installation","timestamp":"2026-06-01T00:01:00.000Z","properties":{"campaign":"launch-0-1-2","source":"github-release","medium":"release-notes","content":"install-docs"}}
+{"name":"github_outbound_click","path":"/","timestamp":"2026-06-01T00:02:00.000Z","properties":{"campaign":"launch-0-1-2","source":"github-release","medium":"release-notes","content":"topbar-star","target":"repo-star"}}
+{"name":"github_outbound_click","path":"/community","timestamp":"2026-06-01T00:03:00.000Z","properties":{"campaign":"launch-0-1-2","source":"github-release","medium":"release-notes","content":"feature-request","target":"feature-request"}}
+{"name":"github_outbound_click","path":"/docs/contributing","timestamp":"2026-06-01T00:03:30.000Z","properties":{"campaign":"launch-0-1-2","source":"github-release","medium":"release-notes","content":"good-first-issues","target":"good-first-issues"}}
+{"name":"github_outbound_click","path":"/docs/contributing","timestamp":"2026-06-01T00:03:45.000Z","properties":{"campaign":"launch-0-1-2","source":"github-release","medium":"release-notes","content":"fork-to-first-change","target":"repo-fork"}}
+{"name":"theme_snippet_copy","path":"/themes/enterprise","timestamp":"2026-06-01T00:04:00.000Z","properties":{"source":"theme-route"}}
+{"name":"block_share_copy","path":"/blocks/dashboard-shell","timestamp":"2026-06-01T00:05:00.000Z","properties":{"block":"dashboard-shell"}}
+{"name":"theme_style_select","path":"/themes","timestamp":"2026-06-01T00:06:00.000Z","properties":{"source":"theme-picker"}}

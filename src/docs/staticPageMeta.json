@@ -1,0 +1,143 @@
+[
+  {
+    "id": "landing",
+    "path": "/",
+    "title": "Base Themes — Themeable Base UI React Components",
+    "description": "Typed Base UI React component wrappers with production CSS tokens, 20 visual themes, registry metadata, and ready-to-use product UI blocks.",
+    "priority": "1.0"
+  },
+  {
+    "id": "blocks",
+    "path": "/blocks",
+    "title": "Application Blocks — Base Themes",
+    "description": "Composable dashboard and settings blocks built from accessible Base UI React primitives and themeable product UI tokens.",
+    "priority": "0.8"
+  },
+  {
+    "id": "themes",
+    "path": "/themes",
+    "title": "Theme System — Base Themes",
+    "description": "Explore Bento, shadcn, neo brutalism, minimal, enterprise, glass, terminal, and other token-based React UI themes.",
+    "priority": "0.9"
+  },
+  {
+    "id": "installation",
+    "path": "/docs/installation",
+    "title": "Install Base Themes for React",
+    "description": "Install base-themes from npm, import the bundled styles, and use typed Base UI React wrappers in Vite, Next.js, Remix, or any React app.",
+    "type": "article",
+    "priority": "0.9"
+  },
+  {
+    "id": "theming",
+    "path": "/docs/theming",
+    "title": "Theme Tokens and CSS Variables — Base Themes",
+    "description": "Learn the Base Themes data-style and data-theme contract, CSS variable layers, dark mode behavior, and practical theme override workflow.",
+    "type": "article",
+    "priority": "0.85"
+  },
+  {
+    "id": "registry",
+    "path": "/docs/registry",
+    "title": "Registry and Source Copy Workflow — Base Themes",
+    "description": "Use the Base Themes registry metadata to resolve components, blocks, source files, CSS tokens, dependencies, and copy plans for tools and agents.",
+    "type": "article",
+    "priority": "0.85"
+  },
+  {
+    "id": "cliUsage",
+    "path": "/docs/cli",
+    "title": "Base Themes CLI for Registry Copy Workflows",
+    "description": "Use npx base-themes list, plan, add, and doctor to inspect registry coverage, generate source-copy plans, copy files conservatively, and verify React app integration.",
+    "type": "article",
+    "priority": "0.8"
+  },
+  {
+    "id": "agentUsage",
+    "path": "/docs/agent-usage",
+    "title": "Agent Usage Guide — Base Themes",
+    "description": "Use the bundled Base Themes agent skill, registry exports, and verification commands to customize React components, blocks, and themes safely.",
+    "type": "article",
+    "priority": "0.8"
+  },
+  {
+    "id": "examples",
+    "path": "/docs/examples",
+    "title": "Runnable React Examples — Base Themes",
+    "description": "Build Vite, dashboard, Next.js, and registry-copy examples that prove Base Themes package installs, CSS imports, blocks, and registry metadata work in real apps.",
+    "type": "article",
+    "priority": "0.8"
+  },
+  {
+    "id": "contributingGuide",
+    "path": "/docs/contributing",
+    "title": "Contributing to Base Themes",
+    "description": "Follow the contribution workflow for Base Themes components, blocks, themes, registry metadata, tests, and release validation.",
+    "type": "article",
+    "priority": "0.75"
+  },
+  {
+    "id": "themeCustomization",
+    "path": "/docs/theme-customization",
+    "title": "Customize React UI Theme Tokens — Base Themes",
+    "description": "Adjust Base Themes primary color, radius, font, and density tokens, preview the result, and copy ready-to-use CSS variables.",
+    "type": "article",
+    "priority": "0.85"
+  },
+  {
+    "id": "whyBaseThemes",
+    "path": "/docs/why-base-themes",
+    "title": "Why Base Themes for Base UI React Components",
+    "description": "Learn how Base Themes adds typed wrappers, CSS variables, visual styles, registry metadata, and agent workflows on top of Base UI React primitives.",
+    "type": "article",
+    "priority": "0.85"
+  },
+  {
+    "id": "baseUiVsShadcn",
+    "path": "/docs/base-ui-vs-shadcn",
+    "title": "Base UI vs shadcn/ui for Themed React Apps",
+    "description": "Compare Base UI, shadcn/ui, and Base Themes honestly across primitives, install model, theming, source-copy workflows, and agent-ready registry metadata.",
+    "type": "article",
+    "priority": "0.8"
+  },
+  {
+    "id": "tokenSystem",
+    "path": "/docs/token-system",
+    "title": "CSS Variable Theme System for React — Base Themes",
+    "description": "Understand the Base Themes token architecture for surfaces, text, actions, radius, typography, dark mode, and custom React UI themes.",
+    "type": "article",
+    "priority": "0.85"
+  },
+  {
+    "id": "accessibility",
+    "path": "/docs/accessibility",
+    "title": "Accessible React UI Components — Base Themes",
+    "description": "See how Base Themes builds on Base UI accessibility primitives and verifies focus states, keyboard behavior, contrast, SSR safety, and registry parity.",
+    "type": "article",
+    "priority": "0.8"
+  },
+  {
+    "id": "migrationGuide",
+    "path": "/docs/migration-guide",
+    "title": "Migrate to Base Themes from shadcn, MUI, Chakra, or Custom CSS",
+    "description": "Adopt Base Themes incrementally with package CSS, data-style and data-theme tokens, component replacement slices, and registry-backed verification.",
+    "type": "article",
+    "priority": "0.8"
+  },
+  {
+    "id": "designHandoff",
+    "path": "/docs/design-handoff",
+    "title": "Figma and Design Token Handoff — Base Themes",
+    "description": "Use Base Themes CSS variables, preview assets, theme metadata, and registry files as a shared contract between design and implementation.",
+    "type": "article",
+    "priority": "0.75"
+  },
+  {
+    "id": "securityTrust",
+    "path": "/docs/security",
+    "title": "Security and Release Trust — Base Themes",
+    "description": "Review Base Themes vulnerability reporting, npm provenance, release checks, dependency posture, and registry trust boundaries before adopting the package.",
+    "type": "article",
+    "priority": "0.75"
+  }
+]

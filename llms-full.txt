@@ -1,0 +1,288 @@
+# Base Themes Full Agent Context
+
+Base Themes is a package-first React component system built on Base UI primitives. It provides typed component wrappers, CSS token themes, 20 visual styles, source-copy registry metadata, product blocks, runnable examples, and agent-oriented verification workflows.
+
+## Primary Goals
+
+- Prefer package installs for normal React apps.
+- Use registry metadata before source-copying components, blocks, or themes.
+- Keep changes token-based through `data-style`, `data-theme`, and stable `--bt-*` variables.
+- Verify with registry, token, lint, test, build, SEO, bundle, and package smoke checks.
+
+## Install And Verify
+
+```bash
+npm install base-themes @base-ui/react react react-dom
+npx base-themes list
+npx base-themes list --json
+npx base-themes plan button select block:dashboard-shell theme:enterprise
+npx base-themes plan button select block:dashboard-shell theme:enterprise --json
+npx base-themes add button select block:dashboard-shell theme:enterprise --target . --dry-run
+npx base-themes add button select block:dashboard-shell theme:enterprise --target . --dry-run --json
+npx base-themes doctor .
+npx base-themes doctor . --json
+npm run registry:check
+npm run tokens:check
+npm run lint
+npm run test
+npm run build
+npm run seo:check
+npm run bundle:report
+npm run package:smoke
+```
+
+## Metadata Entrypoints
+
+- [Registry JSON](https://base-themes.bangwu.me/registry/registry.json)
+- [Shadcn-compatible registry catalog](https://base-themes.bangwu.me/registry/shadcn-registry.json)
+- [Block metadata JSON](https://base-themes.bangwu.me/registry/block-meta.json)
+- [Component metadata JSON](https://base-themes.bangwu.me/registry/component-meta.json)
+- [Static page metadata JSON](https://base-themes.bangwu.me/registry/static-page-meta.json)
+- [Theme metadata JSON](https://base-themes.bangwu.me/registry/theme-meta.json)
+- [Compact agent discovery](https://base-themes.bangwu.me/llms.txt)
+- [Sitemap](https://base-themes.bangwu.me/sitemap.xml)
+
+## Standard Registry Agent Fields
+
+- Component, block, and theme item JSON files include `meta.agent.summary`, `meta.agent.packageInstall`, `meta.agent.sourceCopy`, and `meta.agent.installPlan`.
+- Block item JSON files also include `meta.agent.registryItems`, listing the block item URL and every component item URL needed for source-copy workflows.
+- Prefer `meta.agent.packageInstall` for package consumers and `meta.agent.sourceCopy` for copy-based tools.
+
+## Package Exports
+
+```ts
+import { Button, Select, DashboardShell, useTheme } from 'base-themes'
+import registry from 'base-themes/registry.json'
+import shadcnRegistry from 'base-themes/shadcn-registry.json'
+import buttonItem from 'base-themes/registry/items/button.json'
+import dashboardItem from 'base-themes/registry/items/block-dashboard-shell.json'
+import blockMeta from 'base-themes/block-meta.json'
+import componentMeta from 'base-themes/component-meta.json'
+import staticPageMeta from 'base-themes/static-page-meta.json'
+import themeMeta from 'base-themes/theme-meta.json'
+import tokenContract from 'base-themes/token-contract.json'
+import 'base-themes/styles.css'
+```
+
+## Docs Routes
+
+- [Base Themes — Themeable Base UI React Components](https://base-themes.bangwu.me/): Typed Base UI React component wrappers with production CSS tokens, 20 visual themes, registry metadata, and ready-to-use product UI blocks.
+- [Application Blocks — Base Themes](https://base-themes.bangwu.me/blocks): Composable dashboard and settings blocks built from accessible Base UI React primitives and themeable product UI tokens.
+- [Theme System — Base Themes](https://base-themes.bangwu.me/themes): Explore Bento, shadcn, neo brutalism, minimal, enterprise, glass, terminal, and other token-based React UI themes.
+- [Install Base Themes for React](https://base-themes.bangwu.me/docs/installation): Install base-themes from npm, import the bundled styles, and use typed Base UI React wrappers in Vite, Next.js, Remix, or any React app.
+- [Theme Tokens and CSS Variables — Base Themes](https://base-themes.bangwu.me/docs/theming): Learn the Base Themes data-style and data-theme contract, CSS variable layers, dark mode behavior, and practical theme override workflow.
+- [Registry and Source Copy Workflow — Base Themes](https://base-themes.bangwu.me/docs/registry): Use the Base Themes registry metadata to resolve components, blocks, source files, CSS tokens, dependencies, and copy plans for tools and agents.
+- [Base Themes CLI for Registry Copy Workflows](https://base-themes.bangwu.me/docs/cli): Use npx base-themes list, plan, add, and doctor to inspect registry coverage, generate source-copy plans, copy files conservatively, and verify React app integration.
+- [Agent Usage Guide — Base Themes](https://base-themes.bangwu.me/docs/agent-usage): Use the bundled Base Themes agent skill, registry exports, and verification commands to customize React components, blocks, and themes safely.
+- [Runnable React Examples — Base Themes](https://base-themes.bangwu.me/docs/examples): Build Vite, dashboard, Next.js, and registry-copy examples that prove Base Themes package installs, CSS imports, blocks, and registry metadata work in real apps.
+- [Contributing to Base Themes](https://base-themes.bangwu.me/docs/contributing): Follow the contribution workflow for Base Themes components, blocks, themes, registry metadata, tests, and release validation.
+- [Customize React UI Theme Tokens — Base Themes](https://base-themes.bangwu.me/docs/theme-customization): Adjust Base Themes primary color, radius, font, and density tokens, preview the result, and copy ready-to-use CSS variables.
+- [Why Base Themes for Base UI React Components](https://base-themes.bangwu.me/docs/why-base-themes): Learn how Base Themes adds typed wrappers, CSS variables, visual styles, registry metadata, and agent workflows on top of Base UI React primitives.
+- [Base UI vs shadcn/ui for Themed React Apps](https://base-themes.bangwu.me/docs/base-ui-vs-shadcn): Compare Base UI, shadcn/ui, and Base Themes honestly across primitives, install model, theming, source-copy workflows, and agent-ready registry metadata.
+- [CSS Variable Theme System for React — Base Themes](https://base-themes.bangwu.me/docs/token-system): Understand the Base Themes token architecture for surfaces, text, actions, radius, typography, dark mode, and custom React UI themes.
+- [Accessible React UI Components — Base Themes](https://base-themes.bangwu.me/docs/accessibility): See how Base Themes builds on Base UI accessibility primitives and verifies focus states, keyboard behavior, contrast, SSR safety, and registry parity.
+- [Migrate to Base Themes from shadcn, MUI, Chakra, or Custom CSS](https://base-themes.bangwu.me/docs/migration-guide): Adopt Base Themes incrementally with package CSS, data-style and data-theme tokens, component replacement slices, and registry-backed verification.
+- [Figma and Design Token Handoff — Base Themes](https://base-themes.bangwu.me/docs/design-handoff): Use Base Themes CSS variables, preview assets, theme metadata, and registry files as a shared contract between design and implementation.
+- [Security and Release Trust — Base Themes](https://base-themes.bangwu.me/docs/security): Review Base Themes vulnerability reporting, npm provenance, release checks, dependency posture, and registry trust boundaries before adopting the package.
+- [Button React Component — Base Themes](https://base-themes.bangwu.me/components/button): An action primitive with semantic variants for primary commands, quiet actions, icons, and destructive-looking accents. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Checkbox React Component — Base Themes](https://base-themes.bangwu.me/components/checkbox): A labeled boolean control with checked and unchecked visual states. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Switch React Component — Base Themes](https://base-themes.bangwu.me/components/switch): A binary setting control for immediate on/off preferences. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Slider React Component — Base Themes](https://base-themes.bangwu.me/components/slider): A range input with Base UI keyboard handling and tokenized track styling. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Select React Component — Base Themes](https://base-themes.bangwu.me/components/select): A popover-backed single choice control with keyboard navigation and positioned content. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Radio Group React Component — Base Themes](https://base-themes.bangwu.me/components/radiogroup): A grouped set of mutually exclusive choices. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Toggle Group React Component — Base Themes](https://base-themes.bangwu.me/components/togglegroup): A compact multi-select control for formatting and segmented actions. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Combobox React Component — Base Themes](https://base-themes.bangwu.me/components/combobox): A searchable listbox for quickly filtering component names. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Input React Component — Base Themes](https://base-themes.bangwu.me/components/input): A styled Base UI input with optional label and helper text slots. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Autocomplete React Component — Base Themes](https://base-themes.bangwu.me/components/autocomplete): A text input with filtered suggestions and inline selection behavior. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Checkbox Group React Component — Base Themes](https://base-themes.bangwu.me/components/checkboxgroup): A shared state container for related checkboxes. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Field React Component — Base Themes](https://base-themes.bangwu.me/components/field): A form field wrapper that connects label, control, description, and error state. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Fieldset React Component — Base Themes](https://base-themes.bangwu.me/components/fieldset): A semantic grouping primitive for related form controls. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Form React Component — Base Themes](https://base-themes.bangwu.me/components/form): A form root that integrates Base UI field validation and native submission. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Number Field React Component — Base Themes](https://base-themes.bangwu.me/components/numberfield): A numeric input with increment and decrement controls. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [OTP Field React Component — Base Themes](https://base-themes.bangwu.me/components/otpfield): A one-time-password input with separate slots and paste handling. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Radio React Component — Base Themes](https://base-themes.bangwu.me/components/radio): A single radio primitive for custom radio group compositions. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Separator React Component — Base Themes](https://base-themes.bangwu.me/components/separator): A semantic divider for grouping content and toolbar controls. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Toggle React Component — Base Themes](https://base-themes.bangwu.me/components/toggle): A single pressable on/off button for formatting and filters. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Toolbar React Component — Base Themes](https://base-themes.bangwu.me/components/toolbar): A keyboard-aware toolbar for grouped commands and inputs. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [CSP Provider React Component — Base Themes](https://base-themes.bangwu.me/components/cspprovider): A provider for passing Content Security Policy nonce settings to Base UI internals. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Direction Provider React Component — Base Themes](https://base-themes.bangwu.me/components/directionprovider): A provider that enables RTL or LTR behavior across Base UI components. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Accordion React Component — Base Themes](https://base-themes.bangwu.me/components/accordion): Stacked disclosure panels for related sections of content. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Collapsible React Component — Base Themes](https://base-themes.bangwu.me/components/collapsible): A single expandable region for optional detail. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Dialog React Component — Base Themes](https://base-themes.bangwu.me/components/dialog): A modal layer with focus management and dismiss behavior. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Alert Dialog React Component — Base Themes](https://base-themes.bangwu.me/components/alertdialog): A confirmation modal for actions that need explicit acknowledgement. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Drawer React Component — Base Themes](https://base-themes.bangwu.me/components/drawer): A side panel for settings and secondary workflows. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Popover React Component — Base Themes](https://base-themes.bangwu.me/components/popover): A lightweight positioned layer for contextual content. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Preview Card React Component — Base Themes](https://base-themes.bangwu.me/components/previewcard): A hover or focus preview surface for linked resources. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Tooltip React Component — Base Themes](https://base-themes.bangwu.me/components/tooltip): A small non-interactive label for controls and dense interfaces. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Tabs React Component — Base Themes](https://base-themes.bangwu.me/components/tabs): A tablist for switching between related panels without navigating away. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Menu React Component — Base Themes](https://base-themes.bangwu.me/components/menu): A command menu for grouped actions and disabled items. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Context Menu React Component — Base Themes](https://base-themes.bangwu.me/components/contextmenu): A menu opened from a contextual right-click or keyboard context action. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Menubar React Component — Base Themes](https://base-themes.bangwu.me/components/menubar): A horizontal application menu composed from Base UI menubar and menu primitives. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Navigation Menu React Component — Base Themes](https://base-themes.bangwu.me/components/navmenu): A top-level navigation primitive with nested flyout items. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Progress React Component — Base Themes](https://base-themes.bangwu.me/components/progress): A linear indicator for completion percentage and loading workflows. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Meter React Component — Base Themes](https://base-themes.bangwu.me/components/meter): A semantic gauge for bounded measurements like storage or quota usage. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Toast React Component — Base Themes](https://base-themes.bangwu.me/components/toast): A transient notification system with provider-managed state. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Scroll Area React Component — Base Themes](https://base-themes.bangwu.me/components/scrollarea): A custom scroll container with consistent scrollbar styling across the site. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Avatar React Component — Base Themes](https://base-themes.bangwu.me/components/avatar): A compact identity primitive with fallback initials and grouped presentation. Includes interactive examples, API reference, keyboard interactions, and themeable Base UI styling.
+- [Bento React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/bento): Warm modular product cards with soft depth and teal controls. Preview the Bento visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Shadcn React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/shadcn): Neutral zinc interface styling modeled after shadcn/ui. Preview the Shadcn visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Neo Brutalism React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/neo-brutalism): Hard borders, loud accents, and offset block shadows. Preview the Neo Brutalism visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Minimal React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/minimal): Swiss-inspired whitespace, thin rules, and quiet monochrome controls. Preview the Minimal visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Enterprise React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/enterprise): Dense operational UI with blue actions and explicit boundaries. Preview the Enterprise visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Linear React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/linear): Developer-tool polish with subtle gradients and refined dark mode. Preview the Linear visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Glass React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/glass): Translucent surfaces, blur, and luminous focus states. Preview the Glass visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Terminal React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/terminal): Monospace command-line interface with phosphor green command surfaces. Preview the Terminal visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Material React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/material): Layered Google-style surfaces with blue primary actions and soft elevation. Preview the Material visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Fluent React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/fluent): Microsoft-style acrylic surfaces, soft blue accents, and gentle borders. Preview the Fluent visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Retro React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/retro): Early desktop UI cues with chunky controls and saturated classic colors. Preview the Retro visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Cyberpunk React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/cyberpunk): Dark high-energy neon controls for expressive dashboards. Preview the Cyberpunk visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Editorial React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/editorial): Magazine-like typography, ivory surfaces, and ink-forward contrast. Preview the Editorial visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Calm React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/calm): Low-saturation wellness palette with relaxed controls and readable contrast. Preview the Calm visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Data Dense React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/data-dense): Compact analytics styling for tables, filters, and repeated workflows. Preview the Data Dense visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Playful React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/playful): Rounded, bright, friendly components for creative and education tools. Preview the Playful visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Luxury React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/luxury): Dark premium surfaces, gold accents, and fine-line hierarchy. Preview the Luxury visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Soft UI React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/soft-ui): Low-contrast tactile controls with inset and raised shadows. Preview the Soft UI visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Bauhaus React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/bauhaus): Geometric composition with primary colors and strong graphic contrast. Preview the Bauhaus visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Mono React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/mono): Black-and-white ink system with no decorative color dependency. Preview the Mono visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Dashboard Shell React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/dashboard-shell): Operational dashboard header with metrics, progress, and health status. Copy the Dashboard Shell block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
+- [Settings Form React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/settings-form): Workspace settings form with fields, density selection, and switches. Copy the Settings Form block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
+- [Auth Card React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/auth-card): Focused sign-in card with email, password, remembered device, and SSO action. Copy the Auth Card block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
+- [Pricing Panel React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/pricing-panel): Compact pricing and upgrade panel for billing or plan-selection screens. Copy the Pricing Panel block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
+- [Data Table React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/data-table): Small operational table with status filtering and row badges. Copy the Data Table block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
+- [Command Palette React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/command-palette): Quick-action search panel for navigation, product commands, and agent workflows. Copy the Command Palette block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
+- [Team Activity Feed React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/team-activity-feed): Recent workspace activity feed with team avatars and collaboration status. Copy the Team Activity Feed block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
+- [Theme Showcase Card React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/theme-showcase-card): Theme value card with token swatches, tabs, and a theme CTA. Copy the Theme Showcase Card block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
+
+## Components
+
+- [Button](https://base-themes.bangwu.me/components/button): registry name `button`; group Inputs; An action primitive with semantic variants for primary commands, quiet actions, icons, and destructive-looking accents.
+- [Checkbox](https://base-themes.bangwu.me/components/checkbox): registry name `checkbox`; group Inputs; A labeled boolean control with checked and unchecked visual states.
+- [Switch](https://base-themes.bangwu.me/components/switch): registry name `switch`; group Inputs; A binary setting control for immediate on/off preferences.
+- [Slider](https://base-themes.bangwu.me/components/slider): registry name `slider`; group Inputs; A range input with Base UI keyboard handling and tokenized track styling.
+- [Select](https://base-themes.bangwu.me/components/select): registry name `select`; group Inputs; A popover-backed single choice control with keyboard navigation and positioned content.
+- [Radio Group](https://base-themes.bangwu.me/components/radiogroup): registry name `radio-group`; group Inputs; A grouped set of mutually exclusive choices.
+- [Toggle Group](https://base-themes.bangwu.me/components/togglegroup): registry name `toggle-group`; group Inputs; A compact multi-select control for formatting and segmented actions.
+- [Combobox](https://base-themes.bangwu.me/components/combobox): registry name `combobox`; group Inputs; A searchable listbox for quickly filtering component names.
+- [Input](https://base-themes.bangwu.me/components/input): registry name `input`; group Inputs; A styled Base UI input with optional label and helper text slots.
+- [Autocomplete](https://base-themes.bangwu.me/components/autocomplete): registry name `autocomplete`; group Inputs; A text input with filtered suggestions and inline selection behavior.
+- [Checkbox Group](https://base-themes.bangwu.me/components/checkboxgroup): registry name `checkbox-group`; group Inputs; A shared state container for related checkboxes.
+- [Field](https://base-themes.bangwu.me/components/field): registry name `field`; group Inputs; A form field wrapper that connects label, control, description, and error state.
+- [Fieldset](https://base-themes.bangwu.me/components/fieldset): registry name `fieldset`; group Inputs; A semantic grouping primitive for related form controls.
+- [Form](https://base-themes.bangwu.me/components/form): registry name `form`; group Inputs; A form root that integrates Base UI field validation and native submission.
+- [Number Field](https://base-themes.bangwu.me/components/numberfield): registry name `number-field`; group Inputs; A numeric input with increment and decrement controls.
+- [OTP Field](https://base-themes.bangwu.me/components/otpfield): registry name `otp-field`; group Inputs; A one-time-password input with separate slots and paste handling.
+- [Radio](https://base-themes.bangwu.me/components/radio): registry name `radio`; group Inputs; A single radio primitive for custom radio group compositions.
+- [Separator](https://base-themes.bangwu.me/components/separator): registry name `separator`; group Inputs; A semantic divider for grouping content and toolbar controls.
+- [Toggle](https://base-themes.bangwu.me/components/toggle): registry name `toggle`; group Inputs; A single pressable on/off button for formatting and filters.
+- [Toolbar](https://base-themes.bangwu.me/components/toolbar): registry name `toolbar`; group Inputs; A keyboard-aware toolbar for grouped commands and inputs.
+- [CSP Provider](https://base-themes.bangwu.me/components/cspprovider): registry name `csp-provider`; group Feedback; A provider for passing Content Security Policy nonce settings to Base UI internals.
+- [Direction Provider](https://base-themes.bangwu.me/components/directionprovider): registry name `direction-provider`; group Feedback; A provider that enables RTL or LTR behavior across Base UI components.
+- [Accordion](https://base-themes.bangwu.me/components/accordion): registry name `accordion`; group Disclosure; Stacked disclosure panels for related sections of content.
+- [Collapsible](https://base-themes.bangwu.me/components/collapsible): registry name `collapsible`; group Disclosure; A single expandable region for optional detail.
+- [Dialog](https://base-themes.bangwu.me/components/dialog): registry name `dialog`; group Disclosure; A modal layer with focus management and dismiss behavior.
+- [Alert Dialog](https://base-themes.bangwu.me/components/alertdialog): registry name `alert-dialog`; group Disclosure; A confirmation modal for actions that need explicit acknowledgement.
+- [Drawer](https://base-themes.bangwu.me/components/drawer): registry name `drawer`; group Disclosure; A side panel for settings and secondary workflows.
+- [Popover](https://base-themes.bangwu.me/components/popover): registry name `popover`; group Disclosure; A lightweight positioned layer for contextual content.
+- [Preview Card](https://base-themes.bangwu.me/components/previewcard): registry name `preview-card`; group Disclosure; A hover or focus preview surface for linked resources.
+- [Tooltip](https://base-themes.bangwu.me/components/tooltip): registry name `tooltip`; group Disclosure; A small non-interactive label for controls and dense interfaces.
+- [Tabs](https://base-themes.bangwu.me/components/tabs): registry name `tabs`; group Navigation; A tablist for switching between related panels without navigating away.
+- [Menu](https://base-themes.bangwu.me/components/menu): registry name `menu`; group Navigation; A command menu for grouped actions and disabled items.
+- [Context Menu](https://base-themes.bangwu.me/components/contextmenu): registry name `context-menu`; group Navigation; A menu opened from a contextual right-click or keyboard context action.
+- [Menubar](https://base-themes.bangwu.me/components/menubar): registry name `menubar`; group Navigation; A horizontal application menu composed from Base UI menubar and menu primitives.
+- [Navigation Menu](https://base-themes.bangwu.me/components/navmenu): registry name `navigation-menu`; group Navigation; A top-level navigation primitive with nested flyout items.
+- [Progress](https://base-themes.bangwu.me/components/progress): registry name `progress`; group Feedback; A linear indicator for completion percentage and loading workflows.
+- [Meter](https://base-themes.bangwu.me/components/meter): registry name `meter`; group Feedback; A semantic gauge for bounded measurements like storage or quota usage.
+- [Toast](https://base-themes.bangwu.me/components/toast): registry name `toast`; group Feedback; A transient notification system with provider-managed state.
+- [Scroll Area](https://base-themes.bangwu.me/components/scrollarea): registry name `scroll-area`; group Feedback; A custom scroll container with consistent scrollbar styling across the site.
+- [Avatar](https://base-themes.bangwu.me/components/avatar): registry name `avatar`; group Feedback; A compact identity primitive with fallback initials and grouped presentation.
+
+## Product Blocks
+
+- [Dashboard Shell](https://base-themes.bangwu.me/blocks/dashboard-shell): registry name `dashboard-shell`; export `DashboardShell`; category Application UI; Operational dashboard header with metrics, progress, and health status.
+- [Settings Form](https://base-themes.bangwu.me/blocks/settings-form): registry name `settings-form`; export `SettingsForm`; category Forms; Workspace settings form with fields, density selection, and switches.
+- [Auth Card](https://base-themes.bangwu.me/blocks/auth-card): registry name `auth-card`; export `AuthCard`; category Authentication; Focused sign-in card with email, password, remembered device, and SSO action.
+- [Pricing Panel](https://base-themes.bangwu.me/blocks/pricing-panel): registry name `pricing-panel`; export `PricingPanel`; category Billing; Compact pricing and upgrade panel for billing or plan-selection screens.
+- [Data Table](https://base-themes.bangwu.me/blocks/data-table): registry name `data-table`; export `DataTableBlock`; category Data Display; Small operational table with status filtering and row badges.
+- [Command Palette](https://base-themes.bangwu.me/blocks/command-palette): registry name `command-palette`; export `CommandPaletteBlock`; category Command; Quick-action search panel for navigation, product commands, and agent workflows.
+- [Team Activity Feed](https://base-themes.bangwu.me/blocks/team-activity-feed): registry name `team-activity-feed`; export `TeamActivityFeed`; category Collaboration; Recent workspace activity feed with team avatars and collaboration status.
+- [Theme Showcase Card](https://base-themes.bangwu.me/blocks/theme-showcase-card): registry name `theme-showcase-card`; export `ThemeShowcaseCard`; category Marketing; Theme value card with token swatches, tabs, and a theme CTA.
+
+## Themes
+
+- [Bento](https://base-themes.bangwu.me/themes/bento): style `bento`; Warm modular product cards with soft depth and teal controls.
+- [Shadcn](https://base-themes.bangwu.me/themes/shadcn): style `shadcn`; Neutral zinc interface styling modeled after shadcn/ui.
+- [Neo Brutalism](https://base-themes.bangwu.me/themes/neo-brutalism): style `neo-brutalism`; Hard borders, loud accents, and offset block shadows.
+- [Minimal](https://base-themes.bangwu.me/themes/minimal): style `minimal`; Swiss-inspired whitespace, thin rules, and quiet monochrome controls.
+- [Enterprise](https://base-themes.bangwu.me/themes/enterprise): style `enterprise`; Dense operational UI with blue actions and explicit boundaries.
+- [Linear](https://base-themes.bangwu.me/themes/linear): style `linear`; Developer-tool polish with subtle gradients and refined dark mode.
+- [Glass](https://base-themes.bangwu.me/themes/glass): style `glass`; Translucent surfaces, blur, and luminous focus states.
+- [Terminal](https://base-themes.bangwu.me/themes/terminal): style `terminal`; Monospace command-line interface with phosphor green command surfaces.
+- [Material](https://base-themes.bangwu.me/themes/material): style `material`; Layered Google-style surfaces with blue primary actions and soft elevation.
+- [Fluent](https://base-themes.bangwu.me/themes/fluent): style `fluent`; Microsoft-style acrylic surfaces, soft blue accents, and gentle borders.
+- [Retro](https://base-themes.bangwu.me/themes/retro): style `retro`; Early desktop UI cues with chunky controls and saturated classic colors.
+- [Cyberpunk](https://base-themes.bangwu.me/themes/cyberpunk): style `cyberpunk`; Dark high-energy neon controls for expressive dashboards.
+- [Editorial](https://base-themes.bangwu.me/themes/editorial): style `editorial`; Magazine-like typography, ivory surfaces, and ink-forward contrast.
+- [Calm](https://base-themes.bangwu.me/themes/calm): style `calm`; Low-saturation wellness palette with relaxed controls and readable contrast.
+- [Data Dense](https://base-themes.bangwu.me/themes/data-dense): style `data-dense`; Compact analytics styling for tables, filters, and repeated workflows.
+- [Playful](https://base-themes.bangwu.me/themes/playful): style `playful`; Rounded, bright, friendly components for creative and education tools.
+- [Luxury](https://base-themes.bangwu.me/themes/luxury): style `luxury`; Dark premium surfaces, gold accents, and fine-line hierarchy.
+- [Soft UI](https://base-themes.bangwu.me/themes/soft-ui): style `soft-ui`; Low-contrast tactile controls with inset and raised shadows.
+- [Bauhaus](https://base-themes.bangwu.me/themes/bauhaus): style `bauhaus`; Geometric composition with primary colors and strong graphic contrast.
+- [Mono](https://base-themes.bangwu.me/themes/mono): style `mono`; Black-and-white ink system with no decorative color dependency.
+
+## Registry Item Examples
+
+### Components
+
+- [Accordion](https://base-themes.bangwu.me/registry/items/accordion.json)
+- [Alert Dialog](https://base-themes.bangwu.me/registry/items/alert-dialog.json)
+- [Autocomplete](https://base-themes.bangwu.me/registry/items/autocomplete.json)
+- [Avatar](https://base-themes.bangwu.me/registry/items/avatar.json)
+- [Button](https://base-themes.bangwu.me/registry/items/button.json)
+- [Checkbox](https://base-themes.bangwu.me/registry/items/checkbox.json)
+- [Checkbox Group](https://base-themes.bangwu.me/registry/items/checkbox-group.json)
+- [Collapsible](https://base-themes.bangwu.me/registry/items/collapsible.json)
+- [Combobox](https://base-themes.bangwu.me/registry/items/combobox.json)
+- [Context Menu](https://base-themes.bangwu.me/registry/items/context-menu.json)
+- [CSP Provider](https://base-themes.bangwu.me/registry/items/csp-provider.json)
+- [Dialog](https://base-themes.bangwu.me/registry/items/dialog.json)
+
+### Blocks
+
+- [Dashboard Shell](https://base-themes.bangwu.me/registry/items/block-dashboard-shell.json)
+- [Settings Form](https://base-themes.bangwu.me/registry/items/block-settings-form.json)
+- [Auth Card](https://base-themes.bangwu.me/registry/items/block-auth-card.json)
+- [Pricing Panel](https://base-themes.bangwu.me/registry/items/block-pricing-panel.json)
+- [Data Table](https://base-themes.bangwu.me/registry/items/block-data-table.json)
+- [Command Palette](https://base-themes.bangwu.me/registry/items/block-command-palette.json)
+- [Team Activity Feed](https://base-themes.bangwu.me/registry/items/block-team-activity-feed.json)
+- [Theme Showcase Card](https://base-themes.bangwu.me/registry/items/block-theme-showcase-card.json)
+
+### Themes
+
+- [Bento](https://base-themes.bangwu.me/registry/items/theme-bento.json)
+- [Shadcn](https://base-themes.bangwu.me/registry/items/theme-shadcn.json)
+- [Neo Brutalism](https://base-themes.bangwu.me/registry/items/theme-neo-brutalism.json)
+- [Minimal](https://base-themes.bangwu.me/registry/items/theme-minimal.json)
+- [Enterprise](https://base-themes.bangwu.me/registry/items/theme-enterprise.json)
+- [Linear](https://base-themes.bangwu.me/registry/items/theme-linear.json)
+- [Glass](https://base-themes.bangwu.me/registry/items/theme-glass.json)
+- [Terminal](https://base-themes.bangwu.me/registry/items/theme-terminal.json)
+
+## Agent Guardrails
+
+- Do not scrape JSX when JSON metadata is available.
+- Do not hard-code theme colors when a public `--bt-*` token exists.
+- Do not source-copy a block without copying its registry component dependencies and style files.
+- Do not mark adoption complete from local checks; use the public gate in the adoption dashboard.
+- Prefer focused issues or gallery submissions when a real app exposes install, registry, block, theme, or accessibility friction.
+
+## Feedback And Community Signals
+
+- Repository and stars: https://github.com/markbang/base-themes
+- Fork the repo: https://github.com/markbang/base-themes/fork
+- Show and tell Discussion: https://github.com/markbang/base-themes/discussions/new?category=show-and-tell
+- Feature request: https://github.com/markbang/base-themes/issues/new?template=feature_request.yml
+- Bug report: https://github.com/markbang/base-themes/issues/new?template=bug_report.yml
+- Community gallery submission: https://github.com/markbang/base-themes/issues/new?template=gallery_submission.yml
+- Good first issues: https://github.com/markbang/base-themes/issues?q=is%3Aissue+state%3Aopen+label%3A%22type%3A+good+first+issue%22

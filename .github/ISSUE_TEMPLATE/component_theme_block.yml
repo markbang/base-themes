@@ -1,0 +1,45 @@
+name: Component, theme, or block contribution
+description: Propose a concrete addition to the public library, theme system, or registry.
+title: "[Contribution]: "
+labels: ["type: feature", "help wanted"]
+body:
+  - type: dropdown
+    id: contribution_type
+    attributes:
+      label: Contribution type
+      options:
+        - Component
+        - Theme style
+        - Block
+        - Example app
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: Who would use this and in what kind of product?
+    validations:
+      required: true
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation notes
+      description: List files, Base UI primitives, tokens, registry entries, docs, and tests likely involved.
+      placeholder: |
+        Files:
+        Base UI primitives:
+        Theme tokens:
+        Registry changes:
+        Docs/examples:
+    validations:
+      required: false
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I checked CONTRIBUTING.md.
+        - label: I can add or update registry metadata.
+        - label: I can add docs or screenshots for the visual change.
+        - label: I can run the required local checks.

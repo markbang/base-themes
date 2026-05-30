@@ -1,0 +1,99 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "block-pricing-panel",
+  "type": "registry:block",
+  "title": "Pricing Panel",
+  "description": "Compact pricing and upgrade panel for billing or plan-selection screens.",
+  "dependencies": [
+    "@base-ui/react",
+    "clsx",
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/PricingPanel.tsx",
+      "type": "registry:block",
+      "target": "@/blocks/PricingPanel.tsx"
+    },
+    {
+      "path": "src/blocks/Blocks.css",
+      "type": "registry:file",
+      "target": "@/blocks/Blocks.css"
+    }
+  ],
+  "categories": [
+    "block",
+    "billing",
+    "product-ui"
+  ],
+  "meta": {
+    "baseThemes": {
+      "source": "package-and-source-copy",
+      "registryName": "pricing-panel",
+      "docsRoute": "/blocks/pricing-panel",
+      "components": [
+        "button",
+        "checkbox"
+      ],
+      "supportsStyles": [
+        "bento",
+        "shadcn",
+        "neo-brutalism",
+        "minimal",
+        "enterprise",
+        "linear",
+        "glass",
+        "terminal",
+        "material",
+        "fluent",
+        "retro",
+        "cyberpunk",
+        "editorial",
+        "calm",
+        "data-dense",
+        "playful",
+        "luxury",
+        "soft-ui",
+        "bauhaus",
+        "mono"
+      ]
+    },
+    "agent": {
+      "summary": "Use Pricing Panel as a ready product UI starting point for billing screens.",
+      "whenToUse": [
+        "Billing",
+        "Product screen composition",
+        "Block-level copy plan"
+      ],
+      "registryItems": [
+        "/registry/items/block-pricing-panel.json",
+        "/registry/items/button.json",
+        "/registry/items/checkbox.json"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "import { PricingPanel } from 'base-themes'"
+      ],
+      "sourceCopy": [
+        "npx base-themes plan block:pricing-panel",
+        "fetch /registry/items/block-pricing-panel.json",
+        "copy block files",
+        "copy required component files from registryItems",
+        "copy every registry.style.files entry once"
+      ],
+      "installPlan": [
+        "npx base-themes plan block:pricing-panel",
+        "fetch /registry/items/block-pricing-panel.json",
+        "copy block files and component registryItems",
+        "import base-themes/styles.css once"
+      ],
+      "verify": [
+        "npm run registry:check",
+        "npm run tokens:check",
+        "npm run lint",
+        "npm run build"
+      ]
+    }
+  }
+}

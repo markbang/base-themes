@@ -5,8 +5,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: var(--surface-muted);
-  color: var(--text-strong);
+  background: var(--bt-surface-muted);
+  color: var(--bt-fg);
   font-size: 16px;
   font-weight: 760;
   overflow: hidden;
@@ -36,7 +36,7 @@
 }
 
 .bento-avatar-group .bento-avatar {
-  border: 2px solid #fff;
+  border: 2px solid var(--bt-surface);
   margin-left: -10px;
 }
 

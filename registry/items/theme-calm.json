@@ -1,0 +1,107 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme-calm",
+  "type": "registry:theme",
+  "title": "Calm Theme",
+  "description": "Low-saturation wellness palette with relaxed controls and readable contrast.",
+  "files": [
+    {
+      "path": "src/index.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/index.css"
+    },
+    {
+      "path": "src/styles/tokens.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/tokens.css"
+    },
+    {
+      "path": "src/styles/themes.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/themes.css"
+    },
+    {
+      "path": "src/styles/shadcn.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/shadcn.css"
+    },
+    {
+      "path": "src/styles/neo-brutalism.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/neo-brutalism.css"
+    },
+    {
+      "path": "src/styles/cyberpunk.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/cyberpunk.css"
+    },
+    {
+      "path": "src/styles/terminal.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/terminal.css"
+    },
+    {
+      "path": "src/styles/material.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/material.css"
+    },
+    {
+      "path": "src/styles/glass.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/glass.css"
+    }
+  ],
+  "categories": [
+    "theme",
+    "base-themes"
+  ],
+  "meta": {
+    "preview": {
+      "light": "/previews/base-themes-calm.png"
+    },
+    "baseThemes": {
+      "style": "calm",
+      "label": "Calm",
+      "defaultMode": "light",
+      "supportsModes": [
+        "light",
+        "dark"
+      ],
+      "dataAttributes": {
+        "style": "calm",
+        "theme": "light"
+      }
+    },
+    "agent": {
+      "summary": "Use the Calm theme when the user wants low-saturation wellness palette with relaxed controls and readable contrast.",
+      "whenToUse": [
+        "Calm",
+        "CSS variable theme",
+        "Base Themes visual style"
+      ],
+      "avoidWhen": [
+        "The user needs a fully custom brand system before trying token overrides"
+      ],
+      "packageInstall": [
+        "npm install base-themes @base-ui/react react react-dom",
+        "import base-themes/styles.css once",
+        "set data-style=\"calm\"",
+        "set data-theme=\"light\" or data-theme=\"dark\""
+      ],
+      "sourceCopy": [
+        "fetch /registry/items/theme-calm.json",
+        "copy every files[].path to files[].target",
+        "copy src/styles/tokenContract.json when generating overrides"
+      ],
+      "installPlan": [
+        "import base-themes/styles.css once",
+        "set data-style=\"calm\"",
+        "set data-theme=\"light\" or data-theme=\"dark\"",
+        "or fetch /registry/items/theme-calm.json for source-copy"
+      ],
+      "prompts": [
+        "Create a React settings screen using Base Themes with data-style=\"calm\"."
+      ]
+    }
+  }
+}

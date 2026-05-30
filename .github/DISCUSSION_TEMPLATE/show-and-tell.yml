@@ -1,0 +1,74 @@
+title: "[Show and tell]: "
+labels: ["community"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share something real or experimental that uses Base Themes. A useful post helps other users decide whether the package fits their app, and helps maintainers choose the next components, blocks, themes, or agent workflows.
+  - type: input
+    id: title
+    attributes:
+      label: Project or experiment name
+      placeholder: "Enterprise dashboard prototype"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL or repository
+      description: Link to a deployed page, public repo, screenshot thread, or short demo if available.
+    validations:
+      required: false
+  - type: dropdown
+    id: style
+    attributes:
+      label: Theme style
+      options:
+        - bento
+        - shadcn
+        - neo-brutalism
+        - minimal
+        - enterprise
+        - linear
+        - glass
+        - terminal
+        - material
+        - fluent
+        - retro
+        - cyberpunk
+        - editorial
+        - calm
+        - data-dense
+        - playful
+        - luxury
+        - soft-ui
+        - bauhaus
+        - mono
+        - custom
+    validations:
+      required: true
+  - type: textarea
+    id: surface
+    attributes:
+      label: Components, blocks, or workflows used
+      placeholder: |
+        Components: Button, Select, Dialog, Tabs
+        Blocks: DashboardShell, DataTableBlock
+        Workflow: npx base-themes add ... --dry-run, agent source-copy plan, theme customization
+    validations:
+      required: true
+  - type: textarea
+    id: feedback
+    attributes:
+      label: What worked, what was missing?
+      description: Mention install friction, missing components, rough styling edges, docs gaps, or anything that would make adoption easier.
+    validations:
+      required: true
+  - type: checkboxes
+    id: followup
+    attributes:
+      label: Optional follow-up
+      options:
+        - label: I am open to this becoming a community gallery submission.
+        - label: I would consider opening a PR for a small docs, block, theme, or example improvement.
+        - label: I want maintainer feedback on a source-copy or agent workflow.

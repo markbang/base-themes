@@ -9,34 +9,34 @@
   width: 22px;
   height: 22px;
   place-items: center;
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--bt-border-strong);
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--bt-surface);
   cursor: pointer;
   transition: border-color 140ms ease;
 }
 
 .bento-radio[data-checked] {
-  border-color: var(--teal);
+  border-color: var(--bt-secondary);
 }
 
 .bento-radio-indicator {
   width: 12px;
   height: 12px;
   border-radius: 999px;
-  background: var(--teal);
+  background: var(--bt-secondary);
 }
 
 .bento-radio-label {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  color: var(--text-strong);
+  color: var(--bt-fg);
   font-weight: 680;
   cursor: pointer;
 }
 
 .bento-radio:focus-visible {
-  outline: 3px solid var(--theme-focus, rgba(37, 99, 235, 0.32));
+  outline: 3px solid var(--bt-ring, rgba(37, 99, 235, 0.32));
   outline-offset: 2px;
 }

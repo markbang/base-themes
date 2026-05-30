@@ -1,0 +1,91 @@
+name: Community gallery submission
+description: Share a real Base Themes usage example for future gallery consideration.
+title: "[Gallery]: "
+labels: ["type: gallery", "community"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submit real projects, screenshots, or examples built with Base Themes. Accepted entries may be featured in docs after there is enough external usage to launch a gallery.
+  - type: input
+    id: title
+    attributes:
+      label: Project or screenshot title
+      placeholder: "Ops Dashboard with Enterprise theme"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Public URL
+      description: Link to the deployed UI, public preview, or demo page if available.
+    validations:
+      required: false
+  - type: input
+    id: repo
+    attributes:
+      label: Repository URL
+      description: Link to a public repo if the implementation is open source.
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: Base Themes version
+      placeholder: "0.1.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: style
+    attributes:
+      label: Theme style
+      options:
+        - bento
+        - shadcn
+        - neo-brutalism
+        - minimal
+        - enterprise
+        - linear
+        - glass
+        - terminal
+        - material
+        - fluent
+        - retro
+        - cyberpunk
+        - editorial
+        - calm
+        - data-dense
+        - playful
+        - luxury
+        - soft-ui
+        - bauhaus
+        - mono
+        - custom
+    validations:
+      required: true
+  - type: textarea
+    id: surface
+    attributes:
+      label: Components, blocks, or tokens used
+      placeholder: |
+        Components: Button, Select, Tabs
+        Blocks: DashboardShell, DataTableBlock
+        Custom tokens: --accent, --radius
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Attach a 1280x720 screenshot or a comparable product screenshot.
+    validations:
+      required: true
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Permission
+      options:
+        - label: I have permission to submit this screenshot or project.
+          required: true
+        - label: Base Themes may feature this submission in README, docs, or a future community gallery.
+          required: true

@@ -1,0 +1,415 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "base-themes",
+  "homepage": "https://github.com/markbang/base-themes",
+  "items": [
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Stacked disclosure panels for related sections of content."
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "A confirmation modal for actions that need explicit acknowledgement."
+    },
+    {
+      "name": "autocomplete",
+      "type": "registry:ui",
+      "title": "Autocomplete",
+      "description": "A text input with filtered suggestions and inline selection behavior."
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "A compact identity primitive with fallback initials and grouped presentation."
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "An action primitive with semantic variants for primary commands, quiet actions, icons, and destructive-looking accents."
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A labeled boolean control with checked and unchecked visual states."
+    },
+    {
+      "name": "checkbox-group",
+      "type": "registry:ui",
+      "title": "Checkbox Group",
+      "description": "A shared state container for related checkboxes."
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "A single expandable region for optional detail."
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "A searchable listbox for quickly filtering component names."
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "A menu opened from a contextual right-click or keyboard context action."
+    },
+    {
+      "name": "csp-provider",
+      "type": "registry:ui",
+      "title": "CSP Provider",
+      "description": "A provider for passing Content Security Policy nonce settings to Base UI internals."
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A modal layer with focus management and dismiss behavior."
+    },
+    {
+      "name": "direction-provider",
+      "type": "registry:ui",
+      "title": "Direction Provider",
+      "description": "A provider that enables RTL or LTR behavior across Base UI components."
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A side panel for settings and secondary workflows."
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "A form field wrapper that connects label, control, description, and error state."
+    },
+    {
+      "name": "fieldset",
+      "type": "registry:ui",
+      "title": "Fieldset",
+      "description": "A semantic grouping primitive for related form controls."
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "title": "Form",
+      "description": "A form root that integrates Base UI field validation and native submission."
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A styled Base UI input with optional label and helper text slots."
+    },
+    {
+      "name": "menu",
+      "type": "registry:ui",
+      "title": "Menu",
+      "description": "A command menu for grouped actions and disabled items."
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "A horizontal application menu composed from Base UI menubar and menu primitives."
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "A semantic gauge for bounded measurements like storage or quota usage."
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "A top-level navigation primitive with nested flyout items."
+    },
+    {
+      "name": "number-field",
+      "type": "registry:ui",
+      "title": "Number Field",
+      "description": "A numeric input with increment and decrement controls."
+    },
+    {
+      "name": "otp-field",
+      "type": "registry:ui",
+      "title": "OTP Field",
+      "description": "A one-time-password input with separate slots and paste handling."
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "A lightweight positioned layer for contextual content."
+    },
+    {
+      "name": "preview-card",
+      "type": "registry:ui",
+      "title": "Preview Card",
+      "description": "A hover or focus preview surface for linked resources."
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "A linear indicator for completion percentage and loading workflows."
+    },
+    {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "description": "A single radio primitive for custom radio group compositions."
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "A grouped set of mutually exclusive choices."
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "A custom scroll container with consistent scrollbar styling across the site."
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "A popover-backed single choice control with keyboard navigation and positioned content."
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "A semantic divider for grouping content and toolbar controls."
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A range input with Base UI keyboard handling and tokenized track styling."
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "A binary setting control for immediate on/off preferences."
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "A tablist for switching between related panels without navigating away."
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "A transient notification system with provider-managed state."
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "A single pressable on/off button for formatting and filters."
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "A compact multi-select control for formatting and segmented actions."
+    },
+    {
+      "name": "toolbar",
+      "type": "registry:ui",
+      "title": "Toolbar",
+      "description": "A keyboard-aware toolbar for grouped commands and inputs."
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A small non-interactive label for controls and dense interfaces."
+    },
+    {
+      "name": "block-dashboard-shell",
+      "type": "registry:block",
+      "title": "Dashboard Shell",
+      "description": "Operational dashboard header with metrics, progress, and health status."
+    },
+    {
+      "name": "block-settings-form",
+      "type": "registry:block",
+      "title": "Settings Form",
+      "description": "Workspace settings form with fields, density selection, and switches."
+    },
+    {
+      "name": "block-auth-card",
+      "type": "registry:block",
+      "title": "Auth Card",
+      "description": "Focused sign-in card with email, password, remembered device, and SSO action."
+    },
+    {
+      "name": "block-pricing-panel",
+      "type": "registry:block",
+      "title": "Pricing Panel",
+      "description": "Compact pricing and upgrade panel for billing or plan-selection screens."
+    },
+    {
+      "name": "block-data-table",
+      "type": "registry:block",
+      "title": "Data Table",
+      "description": "Small operational table with status filtering and row badges."
+    },
+    {
+      "name": "block-command-palette",
+      "type": "registry:block",
+      "title": "Command Palette",
+      "description": "Quick-action search panel for navigation, product commands, and agent workflows."
+    },
+    {
+      "name": "block-team-activity-feed",
+      "type": "registry:block",
+      "title": "Team Activity Feed",
+      "description": "Recent workspace activity feed with team avatars and collaboration status."
+    },
+    {
+      "name": "block-theme-showcase-card",
+      "type": "registry:block",
+      "title": "Theme Showcase Card",
+      "description": "Theme value card with token swatches, tabs, and a theme CTA."
+    },
+    {
+      "name": "theme-bento",
+      "type": "registry:theme",
+      "title": "Bento Theme",
+      "description": "Warm modular product cards with soft depth and teal controls."
+    },
+    {
+      "name": "theme-shadcn",
+      "type": "registry:theme",
+      "title": "Shadcn Theme",
+      "description": "Neutral zinc interface styling modeled after shadcn/ui."
+    },
+    {
+      "name": "theme-neo-brutalism",
+      "type": "registry:theme",
+      "title": "Neo Brutalism Theme",
+      "description": "Hard borders, loud accents, and offset block shadows."
+    },
+    {
+      "name": "theme-minimal",
+      "type": "registry:theme",
+      "title": "Minimal Theme",
+      "description": "Swiss-inspired whitespace, thin rules, and quiet monochrome controls."
+    },
+    {
+      "name": "theme-enterprise",
+      "type": "registry:theme",
+      "title": "Enterprise Theme",
+      "description": "Dense operational UI with blue actions and explicit boundaries."
+    },
+    {
+      "name": "theme-linear",
+      "type": "registry:theme",
+      "title": "Linear Theme",
+      "description": "Developer-tool polish with subtle gradients and refined dark mode."
+    },
+    {
+      "name": "theme-glass",
+      "type": "registry:theme",
+      "title": "Glass Theme",
+      "description": "Translucent surfaces, blur, and luminous focus states."
+    },
+    {
+      "name": "theme-terminal",
+      "type": "registry:theme",
+      "title": "Terminal Theme",
+      "description": "Monospace command-line interface with phosphor green command surfaces."
+    },
+    {
+      "name": "theme-material",
+      "type": "registry:theme",
+      "title": "Material Theme",
+      "description": "Layered Google-style surfaces with blue primary actions and soft elevation."
+    },
+    {
+      "name": "theme-fluent",
+      "type": "registry:theme",
+      "title": "Fluent Theme",
+      "description": "Microsoft-style acrylic surfaces, soft blue accents, and gentle borders."
+    },
+    {
+      "name": "theme-retro",
+      "type": "registry:theme",
+      "title": "Retro Theme",
+      "description": "Early desktop UI cues with chunky controls and saturated classic colors."
+    },
+    {
+      "name": "theme-cyberpunk",
+      "type": "registry:theme",
+      "title": "Cyberpunk Theme",
+      "description": "Dark high-energy neon controls for expressive dashboards."
+    },
+    {
+      "name": "theme-editorial",
+      "type": "registry:theme",
+      "title": "Editorial Theme",
+      "description": "Magazine-like typography, ivory surfaces, and ink-forward contrast."
+    },
+    {
+      "name": "theme-calm",
+      "type": "registry:theme",
+      "title": "Calm Theme",
+      "description": "Low-saturation wellness palette with relaxed controls and readable contrast."
+    },
+    {
+      "name": "theme-data-dense",
+      "type": "registry:theme",
+      "title": "Data Dense Theme",
+      "description": "Compact analytics styling for tables, filters, and repeated workflows."
+    },
+    {
+      "name": "theme-playful",
+      "type": "registry:theme",
+      "title": "Playful Theme",
+      "description": "Rounded, bright, friendly components for creative and education tools."
+    },
+    {
+      "name": "theme-luxury",
+      "type": "registry:theme",
+      "title": "Luxury Theme",
+      "description": "Dark premium surfaces, gold accents, and fine-line hierarchy."
+    },
+    {
+      "name": "theme-soft-ui",
+      "type": "registry:theme",
+      "title": "Soft UI Theme",
+      "description": "Low-contrast tactile controls with inset and raised shadows."
+    },
+    {
+      "name": "theme-bauhaus",
+      "type": "registry:theme",
+      "title": "Bauhaus Theme",
+      "description": "Geometric composition with primary colors and strong graphic contrast."
+    },
+    {
+      "name": "theme-mono",
+      "type": "registry:theme",
+      "title": "Mono Theme",
+      "description": "Black-and-white ink system with no decorative color dependency."
+    }
+  ]
+}

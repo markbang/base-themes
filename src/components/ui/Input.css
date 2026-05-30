@@ -3,18 +3,18 @@
   width: 100%;
   min-height: 42px;
   padding: 0 12px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-sm);
-  color: var(--text-strong);
-  background: var(--surface);
+  border: 1px solid var(--bt-border-strong);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-fg);
+  background: var(--bt-surface);
   font-size: 14px;
-  transition: border-color 140ms ease, box-shadow 140ms ease;
+  transition: border-color var(--bt-duration, 140ms) ease, box-shadow var(--bt-duration, 140ms) ease;
 }
 
 .bento-input:focus,
 .bento-textarea:focus {
-  border-color: var(--teal);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent), transparent 82%);
+  border-color: var(--bt-secondary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bt-primary), transparent 82%);
   outline: none;
 }
 
@@ -30,20 +30,20 @@
 }
 
 .bento-field-label {
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   font-size: 13px;
   font-weight: 760;
   text-transform: uppercase;
 }
 
 .bento-field-error {
-  color: var(--theme-danger);
+  color: var(--bt-danger);
   font-size: 13px;
   font-weight: 600;
 }
 
 .field-label {
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   font-size: 13px;
   font-weight: 760;
   text-transform: uppercase;

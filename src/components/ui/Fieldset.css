@@ -3,14 +3,14 @@
   gap: 14px;
   min-width: 0;
   padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
+  background: var(--bt-surface);
 }
 
 .bento-fieldset-legend {
   padding: 0 4px;
-  color: var(--text-strong);
+  color: var(--bt-fg);
   font-size: 14px;
   font-weight: 760;
 }

@@ -1,0 +1,65 @@
+name: Bug report
+description: Report a reproducible problem in Base Themes.
+title: "[Bug]: "
+labels: ["type: bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. For private security issues, use SECURITY.md instead of this public template.
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: Which version of base-themes are you using?
+      placeholder: "0.1.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Components
+        - Theme tokens/styles
+        - Registry
+        - Docs/site
+        - Build/release
+        - Examples/blocks
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide a minimal reproduction, repo, StackBlitz, or exact steps.
+      placeholder: |
+        1. Install ...
+        2. Render ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include React, browser, framework, OS, and package manager versions when relevant.
+      placeholder: |
+        React:
+        Framework:
+        Browser:
+        Package manager:
+    validations:
+      required: false

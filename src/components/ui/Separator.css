@@ -1,6 +1,6 @@
 .bento-separator {
   flex-shrink: 0;
-  background: var(--line);
+  background: var(--bt-border);
 }
 
 .bento-separator[data-orientation='horizontal'] {

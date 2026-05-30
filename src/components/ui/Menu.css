@@ -5,10 +5,10 @@
 .bento-menu-popup {
   min-width: 180px;
   padding: 6px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  border: 1px solid var(--bt-border-strong);
+  border-radius: var(--bt-radius);
+  background: var(--bt-surface);
+  box-shadow: var(--bt-shadow);
 }
 
 .bento-menu-item {
@@ -18,12 +18,12 @@
   min-height: 36px;
   padding: 0 10px;
   border: 0;
-  border-radius: var(--radius-sm);
-  color: var(--text-strong);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-fg);
   background: transparent;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 680;
+  font-weight: var(--bt-font-weight, 680);
   width: 100%;
 }
 
@@ -38,11 +38,11 @@
 }
 
 .bento-menu-item[data-highlighted] {
-  background: var(--surface-muted);
+  background: var(--bt-surface-muted);
 }
 
 .bento-menu-item[data-disabled] {
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   opacity: 0.5;
   cursor: default;
 }
@@ -50,10 +50,10 @@
 .bento-menu-separator {
   height: 1px;
   margin: 4px 8px;
-  background: var(--line);
+  background: var(--bt-border);
 }
 
 [data-theme='dark'] .bento-menu-popup {
-  background: var(--theme-popup-bg, var(--surface));
-  box-shadow: var(--shadow);
+  background: var(--bt-select-popup-bg, var(--bt-surface));
+  box-shadow: var(--bt-shadow);
 }

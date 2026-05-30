@@ -1,7 +1,7 @@
 .bento-scroll-area {
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
 }
 
 .bento-scroll-area-viewport {
@@ -29,7 +29,7 @@
 .bento-scroll-area-thumb {
   flex: 1;
   border-radius: 999px;
-  background: var(--line-strong);
+  background: var(--bt-border-strong);
   transition: background 140ms ease;
 }
 

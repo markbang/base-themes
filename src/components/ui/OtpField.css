@@ -12,10 +12,10 @@
 .bento-otp-input {
   width: 40px;
   height: 44px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  color: var(--text-strong);
-  background: var(--surface);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-fg);
+  background: var(--bt-surface);
   text-align: center;
   font-size: 18px;
   font-weight: 760;
@@ -23,6 +23,6 @@
 }
 
 .bento-otp-input:focus-visible {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent), transparent 82%);
+  border-color: var(--bt-info);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bt-primary), transparent 82%);
 }

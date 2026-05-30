@@ -1,18 +1,18 @@
 .bento-popover-popup {
   width: 250px;
   padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  border: 1px solid var(--bt-border);
+  border-radius: var(--bt-radius);
+  background: var(--bt-surface);
+  box-shadow: var(--bt-shadow);
 }
 
 .bento-popover-arrow {
-  fill: var(--theme-popup-bg, var(--surface));
+  fill: var(--bt-select-popup-bg, var(--bt-surface));
 }
 
 .bento-popover-title {
-  color: var(--text-strong);
+  color: var(--bt-fg);
   font-size: 20px;
   font-weight: 780;
   margin: 0;
@@ -20,6 +20,6 @@
 
 .bento-popover-description {
   margin: 10px 0 0;
-  color: var(--text-muted);
+  color: var(--bt-muted-fg);
   line-height: 1.6;
 }

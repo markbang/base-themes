@@ -20,8 +20,8 @@
   min-height: 36px;
   padding: 0 12px;
   border: 0;
-  border-radius: var(--radius-sm);
-  color: var(--text-strong);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-fg);
   background: transparent;
   cursor: pointer;
   font-weight: 680;
@@ -29,7 +29,7 @@
 }
 
 .bento-nav-menu-trigger:hover {
-  background: var(--surface-muted);
+  background: var(--bt-surface-muted);
 }
 
 [dir='rtl'] .bento-nav-menu-list,
@@ -53,10 +53,10 @@
 .bento-nav-menu-popup {
   min-width: 200px;
   padding: 6px;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+  border: 1px solid var(--bt-border-strong);
+  border-radius: var(--bt-radius);
+  background: var(--bt-surface);
+  box-shadow: var(--bt-shadow);
 }
 
 .bento-nav-menu-item {
@@ -66,8 +66,8 @@
   min-height: 36px;
   padding: 0 10px;
   border: 0;
-  border-radius: var(--radius-sm);
-  color: var(--text-strong);
+  border-radius: var(--bt-radius-sm);
+  color: var(--bt-fg);
   background: transparent;
   cursor: pointer;
   font-size: 14px;
@@ -86,7 +86,7 @@
 }
 
 .bento-nav-menu-item[data-highlighted] {
-  background: var(--surface-muted);
+  background: var(--bt-surface-muted);
 }
 
 .bento-nav-menu-viewport {
@@ -98,6 +98,6 @@
 }
 
 [data-theme='dark'] .bento-nav-menu-popup {
-  background: var(--theme-popup-bg, var(--surface));
-  box-shadow: var(--shadow);
+  background: var(--bt-select-popup-bg, var(--bt-surface));
+  box-shadow: var(--bt-shadow);
 }

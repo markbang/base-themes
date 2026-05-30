@@ -1,0 +1,66 @@
+[
+  {
+    "id": "dashboard-shell",
+    "registryName": "dashboard-shell",
+    "title": "Dashboard Shell",
+    "category": "Application UI",
+    "description": "Operational dashboard header with metrics, progress, and health status.",
+    "exportName": "DashboardShell"
+  },
+  {
+    "id": "settings-form",
+    "registryName": "settings-form",
+    "title": "Settings Form",
+    "category": "Forms",
+    "description": "Workspace settings form with fields, density selection, and switches.",
+    "exportName": "SettingsForm"
+  },
+  {
+    "id": "auth-card",
+    "registryName": "auth-card",
+    "title": "Auth Card",
+    "category": "Authentication",
+    "description": "Focused sign-in card with email, password, remembered device, and SSO action.",
+    "exportName": "AuthCard"
+  },
+  {
+    "id": "pricing-panel",
+    "registryName": "pricing-panel",
+    "title": "Pricing Panel",
+    "category": "Billing",
+    "description": "Compact pricing and upgrade panel for billing or plan-selection screens.",
+    "exportName": "PricingPanel"
+  },
+  {
+    "id": "data-table",
+    "registryName": "data-table",
+    "title": "Data Table",
+    "category": "Data Display",
+    "description": "Small operational table with status filtering and row badges.",
+    "exportName": "DataTableBlock"
+  },
+  {
+    "id": "command-palette",
+    "registryName": "command-palette",
+    "title": "Command Palette",
+    "category": "Command",
+    "description": "Quick-action search panel for navigation, product commands, and agent workflows.",
+    "exportName": "CommandPaletteBlock"
+  },
+  {
+    "id": "team-activity-feed",
+    "registryName": "team-activity-feed",
+    "title": "Team Activity Feed",
+    "category": "Collaboration",
+    "description": "Recent workspace activity feed with team avatars and collaboration status.",
+    "exportName": "TeamActivityFeed"
+  },
+  {
+    "id": "theme-showcase-card",
+    "registryName": "theme-showcase-card",
+    "title": "Theme Showcase Card",
+    "category": "Marketing",
+    "description": "Theme value card with token swatches, tabs, and a theme CTA.",
+    "exportName": "ThemeShowcaseCard"
+  }
+]
