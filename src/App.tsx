@@ -172,6 +172,10 @@ function getBlockIdFromPath(pathname: string) {
   return blockDemos.some((block) => block.id === match?.[1]) ? match?.[1] : undefined
 }
 
+function normalizePathname(pathname: string) {
+  return pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname
+}
+
 function getThemeSeoPage(style: ThemeStyle): SeoPage {
   const label = themeStyleLabels[style]
   const description = themeStyleDescriptions[style]
@@ -200,11 +204,12 @@ function getCurrentId(pathname: string, fallback: string) {
 }
 
 function getPage(pathname: string) {
-  if (getBlockIdFromPath(pathname)) return 'block-detail'
-  if (pathname.startsWith('/blocks/')) return 'blocks'
-  if (getThemeStyleFromPath(pathname)) return 'theme-detail'
-  if (pathname.startsWith('/themes/')) return 'themes'
-  const staticPageId = staticPageIdByPath.get(pathname)
+  const normalizedPathname = normalizePathname(pathname)
+  if (getBlockIdFromPath(normalizedPathname)) return 'block-detail'
+  if (normalizedPathname.startsWith('/blocks/')) return 'blocks'
+  if (getThemeStyleFromPath(normalizedPathname)) return 'theme-detail'
+  if (normalizedPathname.startsWith('/themes/')) return 'themes'
+  const staticPageId = staticPageIdByPath.get(normalizedPathname)
   if (staticPageId) return staticPageId
   return 'components'
 }
