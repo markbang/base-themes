@@ -846,6 +846,114 @@
   white-space: pre;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.install-command-card {
+  margin-bottom: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface), var(--bg) 24%);
+  overflow: hidden;
+}
+
+.install-command-tabs {
+  display: flex;
+  gap: 24px;
+  min-width: 0;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface-muted), transparent 18%);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.install-command-tabs::-webkit-scrollbar,
+.install-command-row code::-webkit-scrollbar {
+  display: none;
+}
+
+.install-command-tabs button {
+  position: relative;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 760;
+  white-space: nowrap;
+}
+
+.install-command-tabs button.active {
+  color: var(--accent-strong);
+}
+
+.install-command-tabs button.active::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  content: "";
+  background: var(--accent-strong);
+}
+
+.install-command-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 22px 24px;
+  background: var(--code-bg);
+}
+
+.install-command-row code {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  color: var(--code-text);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.install-command-row code span {
+  color: var(--code-keyword);
+  font-style: italic;
+}
+
+.install-command-row button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid color-mix(in srgb, var(--code-text), transparent 78%);
+  border-radius: var(--radius-sm);
+  color: var(--code-text);
+  background: color-mix(in srgb, var(--code-text), transparent 92%);
+  cursor: pointer;
+}
+
+.install-command-row button:hover {
+  background: color-mix(in srgb, var(--code-text), transparent 84%);
+}
+
 .tok-keyword { color: var(--code-keyword); }
 .tok-string { color: var(--code-string); }
 .tok-component { color: var(--code-component); }

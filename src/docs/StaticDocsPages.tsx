@@ -1,5 +1,5 @@
 import { useMemo, useState, type CSSProperties } from 'react'
-import { Copy, GitFork, ImagePlus, MessageCircle, MessageSquarePlus, Star } from 'lucide-react'
+import { Check, Copy, GitFork, ImagePlus, MessageCircle, MessageSquarePlus, Star } from 'lucide-react'
 import { ComponentDemo } from '../components/ComponentDemo'
 import { Button, Input, Select, Switch } from '../components/ui'
 import { trackEvent } from '../analytics'
@@ -50,6 +50,15 @@ const featureRequestUrl = `${projectRepoUrl}/issues/new?template=feature_request
 const gallerySubmissionUrl = `${projectRepoUrl}/issues/new?template=gallery_submission.yml`
 const goodFirstIssuesUrl = `${projectRepoUrl}/issues?q=is%3Aissue+state%3Aopen+label%3A%22type%3A+good+first+issue%22`
 
+const packageManagers = [
+  { id: 'npm', label: 'npm', command: 'npm install base-themes @base-ui/react react react-dom' },
+  { id: 'pnpm', label: 'pnpm', command: 'pnpm add base-themes @base-ui/react react react-dom' },
+  { id: 'yarn', label: 'yarn', command: 'yarn add base-themes @base-ui/react react react-dom' },
+  { id: 'bun', label: 'bun', command: 'bun add base-themes @base-ui/react react react-dom' },
+] as const
+
+type PackageManagerId = typeof packageManagers[number]['id']
+
 function trackFeedbackClick(source: string, target: string) {
   trackEvent('github_outbound_click', { source, target })
 }
@@ -81,6 +90,45 @@ function FeedbackCta({ source }: { source: string }) {
         <a href={gallerySubmissionUrl} target="_blank" rel="noreferrer" onClick={() => trackFeedbackClick(source, 'gallery-submission')}>
           <ImagePlus size={17} /> Gallery
         </a>
+      </div>
+    </section>
+  )
+}
+
+function PackageInstallTabs() {
+  const [activeManager, setActiveManager] = useState<PackageManagerId>('npm')
+  const [copied, setCopied] = useState(false)
+  const active = packageManagers.find((manager) => manager.id === activeManager) ?? packageManagers[0]
+
+  const copyCommand = () => {
+    trackEvent('install_command_copy', { source: 'docs-installation', manager: active.id })
+    void navigator.clipboard?.writeText(active.command)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <section className="install-command-card" aria-labelledby="install-command-title">
+      <div className="install-command-tabs" role="tablist" aria-label="Package manager">
+        {packageManagers.map((manager) => (
+          <button
+            aria-selected={manager.id === activeManager}
+            className={manager.id === activeManager ? 'active' : undefined}
+            key={manager.id}
+            onClick={() => setActiveManager(manager.id)}
+            role="tab"
+            type="button"
+          >
+            {manager.label}
+          </button>
+        ))}
+      </div>
+      <div className="install-command-row">
+        <h2 className="sr-only" id="install-command-title">Install command</h2>
+        <code><span>{active.id}</span> {active.command.replace(`${active.id} `, '')}</code>
+        <button type="button" aria-label="Copy install command" onClick={copyCommand}>
+          {copied ? <Check size={16} /> : <Copy size={16} />}
+        </button>
       </div>
     </section>
   )
@@ -425,32 +473,44 @@ function InstallationPage() {
       <div className="page-hero component-hero">
         <div className="doc-kicker">Installation</div>
         <h1>Install Base Themes</h1>
-        <p>Install the npm package, import the bundled CSS once, then use the packaged Base UI wrappers directly.</p>
+        <p>Install with your package manager, import the bundled CSS once, choose a visual style, then import only the components and blocks your screen renders.</p>
       </div>
+      <PackageInstallTabs />
       <ComponentDemo
-        title="Install from npm"
-        preview={<span className="muted">Works with Vite, Next.js, Remix, or any React app.</span>}
-        code={`npm install base-themes @base-ui/react react react-dom`} />
-      <ComponentDemo
-        title="Import styles"
-        preview={<span className="muted">Load the theme tokens and component styles once at app startup.</span>}
-        code={`import 'base-themes/styles.css'`} />
-      <ComponentDemo
-        title="Use a component"
-        preview={<Button>Installed</Button>}
-        code={`import { Button } from 'base-themes'
+        title="Load styles and pick a theme"
+        preview={<span className="muted">Set data-style and data-theme on the app shell, route, or any scoped preview.</span>}
+        code={`import 'base-themes/styles.css'
 
-export function App() {
+export function RootLayout({ children }) {
   return (
-    <main data-style="bento" data-theme="light">
-      <Button>Installed</Button>
+    <main data-style="neo-brutalism" data-theme="dark">
+      {children}
     </main>
   )
 }`} />
       <ComponentDemo
-        title="Use the registry or skill"
-        preview={<span className="muted">The npm package also exposes registry metadata and the bundled agent skill.</span>}
-        code={`import registry from 'base-themes/registry.json'
+        title="Import only what you render"
+        preview={<Button>Installed</Button>}
+        code={`import { Button, DashboardShell, Select, Switch } from 'base-themes'
+
+export function App() {
+  return (
+    <main data-style="enterprise" data-theme="light">
+      <Button>Installed</Button>
+      <Select label="Density" items={{ compact: 'Compact', comfortable: 'Comfortable' }} />
+      <Switch label="Weekly summary" />
+      <DashboardShell />
+    </main>
+  )
+}`} />
+      <ComponentDemo
+        title="Plan source-copy or agent installs"
+        preview={<span className="muted">Use the CLI when you want registry metadata, source-copy plans, theme steps, or install diagnostics.</span>}
+        code={`npx base-themes list
+npx base-themes plan button select block:dashboard-shell theme:enterprise --json
+npx base-themes doctor .
+
+import registry from 'base-themes/registry.json'
 
 // Agent skill markdown is available at:
 // node_modules/base-themes/skills/base-themes/SKILL.md
