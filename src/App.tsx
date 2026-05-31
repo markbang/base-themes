@@ -351,12 +351,17 @@ function BlocksPage({ selectedBlockId }: { selectedBlockId?: string }) {
       </div>
       <div className="blocks-grid">
         {blockDemos.map((block) => (
-          <div className="block-demo-card" key={block.id}>
-            <ComponentDemo
-              code={block.code}
-              preview={block.preview}
-              title={block.title}
-            />
+          <div className="block-gallery-card" key={block.id}>
+            <div className="block-gallery-header">
+              <div>
+                <span>{block.category}</span>
+                <h2>{block.title}</h2>
+              </div>
+            </div>
+            <div className="block-gallery-preview">
+              {block.preview}
+            </div>
+            <p>{block.description}</p>
             <BlockShareActions id={block.id} title="Open" />
           </div>
         ))}
