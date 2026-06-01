@@ -1,7 +1,7 @@
 {
   "name": "base-themes",
   "private": false,
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Accessible Base UI React components with 20 themes, registry metadata, and agent-friendly workflows.",
   "keywords": [
     "base-ui",

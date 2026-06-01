@@ -6,6 +6,8 @@ This project follows semantic versioning before `1.0.0` with extra care: minor v
 
 ## Unreleased
 
+## 0.1.3 - 2026-06-01
+
 - Added release announcement and adoption-measurement kit with GitHub release copy, social drafts, shareable routes, calls to action, telemetry schedule, and external validation thresholds.
 - Added adoption dashboard that separates release readiness from public user-willingness evidence and records the current adoption gate.
 - Added contributor issue seeds for publishing adoption-focused good-first issues around docs, accessibility, theme customization, registry planning, blocks, and gallery submissions.
