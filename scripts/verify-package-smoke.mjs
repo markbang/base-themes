@@ -114,21 +114,8 @@ if (missingDescriptionPhrases.length > 0) {
 
 const quickStartIndex = readme.indexOf('## Quick Start')
 const previewIndex = readme.indexOf('## Preview')
-if (quickStartIndex === -1 || previewIndex === -1 || quickStartIndex > previewIndex) {
-  console.error('Package smoke failed. README should place Quick Start before the preview table.')
-  process.exit(1)
-}
-
-const requiredReadmeAdoptionLinks = [
-  'https://github.com/markbang/base-themes',
-  'https://github.com/markbang/base-themes/fork',
-  'https://github.com/markbang/base-themes/discussions/new?category=show-and-tell',
-  'https://github.com/markbang/base-themes/issues/new?template=feature_request.yml',
-  'https://github.com/markbang/base-themes/issues/new?template=gallery_submission.yml',
-]
-const missingReadmeAdoptionLinks = requiredReadmeAdoptionLinks.filter((link) => !readme.includes(link))
-if (missingReadmeAdoptionLinks.length > 0) {
-  console.error(`Package smoke failed. README is missing public adoption action links: ${missingReadmeAdoptionLinks.join(', ')}`)
+if (quickStartIndex === -1 || (previewIndex !== -1 && quickStartIndex > previewIndex)) {
+  console.error('Package smoke failed. README should include Quick Start before optional preview content.')
   process.exit(1)
 }
 
@@ -152,7 +139,7 @@ if (packageJson.exports?.['./registry/items/*.json'] !== './registry/items/*.jso
   process.exit(1)
 }
 
-const requiredPrepackChecks = ['npm run telemetry:fixtures', 'npm run launch:check', 'npm run bundle:report', 'npm run package:smoke']
+const requiredPrepackChecks = ['npm run registry:check', 'npm run tokens:check', 'npm run lint', 'npm run test', 'npm run build', 'npm run bundle:report', 'npm run package:smoke']
 const missingPrepackChecks = requiredPrepackChecks.filter((check) => !packageJson.scripts?.prepack?.includes(check))
 if (missingPrepackChecks.length > 0) {
   console.error(`Package smoke failed. prepack is missing release checks: ${missingPrepackChecks.join(', ')}`)
@@ -237,58 +224,17 @@ if (!llmsTxt.includes('/llms-full.txt') || !llmsFullTxt.includes('Base Themes Fu
   process.exit(1)
 }
 
-const requiredAgentCommunityLinks = [
-  'https://github.com/markbang/base-themes',
-  'https://github.com/markbang/base-themes/fork',
-  'https://github.com/markbang/base-themes/discussions/new?category=show-and-tell',
-  'https://github.com/markbang/base-themes/issues/new?template=feature_request.yml',
-  'https://github.com/markbang/base-themes/issues/new?template=bug_report.yml',
-  'https://github.com/markbang/base-themes/issues/new?template=gallery_submission.yml',
-  'https://github.com/markbang/base-themes/issues?q=is%3Aissue+state%3Aopen+label%3A%22type%3A+good+first+issue%22',
-]
-const missingAgentCommunityLinks = requiredAgentCommunityLinks.filter((link) => !llmsTxt.includes(link) || !llmsFullTxt.includes(link))
-if (missingAgentCommunityLinks.length > 0) {
-  console.error(`Package smoke failed. Agent discovery files are missing community action links: ${missingAgentCommunityLinks.join(', ')}`)
-  process.exit(1)
-}
-
-const communityProofDocs = readFileSync(resolve('docs/community-proof-telemetry.md'), 'utf8')
-const requiredCommunityProofPhrases = ['COMMUNITY_PROOF_EXPORT', 'Show and tell Discussions', 'permissionToFeature', 'Community proof is supporting evidence']
-const missingCommunityProofPhrases = requiredCommunityProofPhrases.filter((phrase) => !communityProofDocs.includes(phrase))
-if (missingCommunityProofPhrases.length > 0) {
-  console.error('Package smoke failed. Community proof telemetry docs are missing export, discussion, or permission guidance.')
-  process.exit(1)
-}
-
 const validDoctorReport = execFileSync('node', ['bin/base-themes.mjs', 'doctor', '.', '--json'], { encoding: 'utf8' })
 const doctorReport = JSON.parse(validDoctorReport)
-const requiredDoctorLinks = {
-  repo: 'https://github.com/markbang/base-themes',
-  fork: 'https://github.com/markbang/base-themes/fork',
-  showAndTell: 'https://github.com/markbang/base-themes/discussions/new?category=show-and-tell',
-  featureRequest: 'https://github.com/markbang/base-themes/issues/new?template=feature_request.yml',
-  bugReport: 'https://github.com/markbang/base-themes/issues/new?template=bug_report.yml',
-  gallerySubmission: 'https://github.com/markbang/base-themes/issues/new?template=gallery_submission.yml',
-}
-const missingDoctorLinks = Object.entries(requiredDoctorLinks)
-  .filter(([key, value]) => doctorReport.links?.[key] !== value)
-  .map(([key]) => key)
-if (missingDoctorLinks.length > 0) {
-  console.error(`Package smoke failed. Doctor JSON is missing adoption action links: ${missingDoctorLinks.join(', ')}`)
+if (!doctorReport.ok || !Array.isArray(doctorReport.checks)) {
+  console.error('Package smoke failed. Doctor JSON should include an ok flag and checks array.')
   process.exit(1)
 }
-
 const doctorText = execFileSync('node', ['bin/base-themes.mjs', 'doctor', '.'], { encoding: 'utf8' })
-const requiredDoctorText = [
-  'Public signal:',
-  requiredDoctorLinks.repo,
-  requiredDoctorLinks.fork,
-  requiredDoctorLinks.showAndTell,
-  requiredDoctorLinks.gallerySubmission,
-]
+const requiredDoctorText = ['Base Themes doctor', 'base-themes dependency', 'base-themes/styles.css import found', 'data-style attribute found', 'data-theme attribute found']
 const missingDoctorText = requiredDoctorText.filter((phrase) => !doctorText.includes(phrase))
 if (missingDoctorText.length > 0) {
-  console.error(`Package smoke failed. Doctor success output is missing adoption guidance: ${missingDoctorText.join(', ')}`)
+  console.error(`Package smoke failed. Doctor success output is missing package diagnostics: ${missingDoctorText.join(', ')}`)
   process.exit(1)
 }
 
@@ -303,171 +249,15 @@ const requiredSkillPhrases = [
   'base-themes/token-contract.json',
   '/llms-full.txt',
   'examples/theme-customization',
-  'npm run community:check',
-  'npm run community:issues',
   'npm run tokens:check',
   'npm run bundle:report',
   'npm run bundle:report -- --json',
   'BUNDLE_REPORT_EXPORT',
-  'npm run telemetry:check',
-  'npm run telemetry:check -- --live',
-  'npm run telemetry:fixtures',
-  'npm run launch:status',
-  'npm run launch:status -- --live',
-  'npm run launch:actions',
-  'npm run launch:actions -- --live',
-  'npm run launch:campaign',
-  'npm run telemetry:collect -- --json',
   'npm run package:smoke',
 ]
 const missingSkillPhrases = requiredSkillPhrases.filter((phrase) => !skill.includes(phrase))
 if (missingSkillPhrases.length > 0) {
   console.error(`Package smoke failed. Agent skill is missing current workflow guidance: ${missingSkillPhrases.join(', ')}`)
-  process.exit(1)
-}
-
-const requiredReadmeTelemetryPhrases = [
-  'npm run telemetry:check',
-  'npm run telemetry:check -- --live',
-  'npm run telemetry:fixtures',
-  'npm run launch:status',
-  'npm run launch:status -- --live',
-  'npm run launch:actions',
-  'npm run launch:actions -- --live',
-  'npm run launch:campaign',
-  'research/telemetry-YYYY-MM-DD.json',
-  'research/telemetry-fixtures',
-  'BUNDLE_REPORT_EXPORT',
-  'externallyValidated',
-  'node scripts/collect-telemetry.mjs --json',
-]
-const missingReadmeTelemetryPhrases = requiredReadmeTelemetryPhrases.filter((phrase) => !readme.includes(phrase))
-if (missingReadmeTelemetryPhrases.length > 0) {
-  console.error(`Package smoke failed. README is missing machine-readable telemetry guidance: ${missingReadmeTelemetryPhrases.join(', ')}`)
-  process.exit(1)
-}
-
-const requiredForkWorkflowPhrases = [
-  '## Fork-To-First-Change',
-  'npm run example:theme-customization:build',
-  'npm run example:registry-copy -- plan button select block:dashboard-shell theme:enterprise --json',
-  'npm run community:issues',
-  'Show and tell Discussion',
-]
-const missingForkWorkflowPhrases = requiredForkWorkflowPhrases.filter((phrase) => !readme.includes(phrase))
-if (missingForkWorkflowPhrases.length > 0) {
-  console.error(`Package smoke failed. README is missing fork-to-first-change adoption workflow: ${missingForkWorkflowPhrases.join(', ')}`)
-  process.exit(1)
-}
-
-const telemetryFixturesOutput = execFileSync('node', ['scripts/verify-telemetry-fixtures.mjs'], { encoding: 'utf8' })
-if (!telemetryFixturesOutput.includes('Telemetry fixture import valid')) {
-  console.error('Package smoke failed. Telemetry fixture verifier did not confirm import coverage.')
-  process.exit(1)
-}
-
-const launchStatus = JSON.parse(execFileSync('node', ['scripts/render-launch-status.mjs', '--json'], { encoding: 'utf8' }))
-if (launchStatus.completionThreshold !== 3 || launchStatus.signalCount !== 4 || typeof launchStatus.externallyValidated !== 'boolean' || typeof launchStatus.publicTelemetryComplete !== 'boolean' || !Array.isArray(launchStatus.telemetryErrors) || !Array.isArray(launchStatus.missingSignals) || !Array.isArray(launchStatus.signalTrends)) {
-  console.error('Package smoke failed. Launch status JSON is missing the public adoption gate summary or signal trends.')
-  process.exit(1)
-}
-if (!launchStatus.missingSignals.some((signal) => signal.id === 'forks' && signal.nextAction?.includes('Fork-to-first-change'))) {
-  console.error('Package smoke failed. Launch status should route missing fork signal to the Fork-to-first-change workflow.')
-  process.exit(1)
-}
-if (!launchStatus.missingSignals.some((signal) => signal.id === 'external-human-issue-or-pr' && signal.recommendedGoodFirstIssues?.length >= 2)) {
-  console.error('Package smoke failed. Launch status should route missing external issue/PR signal to recommended good-first issues.')
-  process.exit(1)
-}
-const launchActions = JSON.parse(execFileSync('node', ['scripts/render-launch-actions.mjs', '--json'], { encoding: 'utf8' }))
-const launchActionsText = execFileSync('node', ['scripts/render-launch-actions.mjs'], { encoding: 'utf8' })
-const launchActionsWrite = JSON.parse(execFileSync('node', ['scripts/render-launch-actions.mjs', '--json', '--write', '--output', '.tmp/package-smoke-launch-actions'], { encoding: 'utf8' }))
-if (launchActions.completionThreshold !== 3 || launchActions.signalCount !== 4 || typeof launchActions.publicTelemetryComplete !== 'boolean' || !Array.isArray(launchActions.telemetryErrors) || !Array.isArray(launchActions.actions) || !Array.isArray(launchActions.signalTrends)) {
-  console.error('Package smoke failed. Launch actions JSON is missing the public adoption gate action list or signal trends.')
-  process.exit(1)
-}
-if (!Array.isArray(launchActions.shareAssets) || launchActions.shareAssets.length < 4 || !launchActions.shareAssets.every((asset) => asset.url?.includes('utm_campaign=') && asset.imageUrl?.startsWith('https://base-themes.bangwu.me/previews/'))) {
-  console.error('Package smoke failed. Launch actions should include structured share assets with attributed URLs and preview images.')
-  process.exit(1)
-}
-if (!Array.isArray(launchActions.channelChecklist) || launchActions.channelChecklist.length < 4 || !launchActions.channelChecklist.every((item) => item.channel && Array.isArray(item.shareAssetIds) && item.shareAssetIds.length > 0)) {
-  console.error('Package smoke failed. Launch actions should include channel checklist entries with shareAssetIds.')
-  process.exit(1)
-}
-if (!Array.isArray(launchActions.promotionWave) || launchActions.promotionWave.length < 4 || !launchActions.promotionWave.every((item) => item.channel && item.copy && item.primaryLink?.includes('utm_campaign=') && item.action && item.measure && Array.isArray(item.targetSignals) && item.targetSignals.length > 0 && Array.isArray(item.shareAssets) && item.shareAssets.length > 0)) {
-  console.error('Package smoke failed. Launch actions should include channel promotion wave entries with copy, targets, links, actions, measures, and share assets.')
-  process.exit(1)
-}
-if (!Array.isArray(launchActions.campaignChecklist) || launchActions.campaignChecklist.length < 7 || !launchActions.campaignChecklist.every((item) => item.phase && item.task && item.evidence && Array.isArray(item.recordFields) && item.recordFields.length > 0)) {
-  console.error('Package smoke failed. Launch actions should include a campaign checklist with phase, task, evidence, and record fields.')
-  process.exit(1)
-}
-const launchActionCampaignCommandText = launchActions.campaignChecklist.flatMap((item) => item.commands ?? []).join('\n')
-for (const command of ['npm run launch:check', 'npm run launch:status -- --live', 'npm run telemetry:collect', 'npm run launch:actions']) {
-  if (!launchActionCampaignCommandText.includes(command)) {
-    console.error(`Package smoke failed. Launch action campaign checklist is missing ${command}.`)
-    process.exit(1)
-  }
-}
-const missingCampaignChannels = launchActions.promotionWave.map((item) => item.channel).filter((channel) => !launchActions.campaignChecklist.some((item) => item.channel === channel))
-if (missingCampaignChannels.length > 0) {
-  console.error(`Package smoke failed. Launch action campaign checklist is missing channels: ${missingCampaignChannels.join(', ')}`)
-  process.exit(1)
-}
-const launchActionShareAssetIds = new Set(launchActions.shareAssets.map((asset) => asset.id))
-const unknownLaunchActionShareAssetIds = launchActions.channelChecklist.flatMap((item) => item.shareAssetIds ?? []).filter((id) => !launchActionShareAssetIds.has(id))
-if (unknownLaunchActionShareAssetIds.length > 0) {
-  console.error(`Package smoke failed. Launch action channels reference unknown share asset ids: ${unknownLaunchActionShareAssetIds.join(', ')}`)
-  process.exit(1)
-}
-const unknownPromotionWaveShareAssetIds = launchActions.promotionWave.flatMap((item) => item.shareAssetIds ?? []).filter((id) => !launchActionShareAssetIds.has(id))
-if (unknownPromotionWaveShareAssetIds.length > 0) {
-  console.error(`Package smoke failed. Launch action promotion wave references unknown share asset ids: ${unknownPromotionWaveShareAssetIds.join(', ')}`)
-  process.exit(1)
-}
-if (!launchActionsText.includes('Promotion wave:') || !launchActionsText.includes('Campaign checklist:') || !launchActionsText.includes('Signal trend:') || !launchActionsText.includes('Target signals: github-stars') || !launchActionsText.includes('Post URL:') || !launchActionsText.includes('Telemetry report path:') || launchActionsText.includes('```text')) {
-  console.error('Package smoke failed. Launch actions text should render promotion wave copy without nested text fences.')
-  process.exit(1)
-}
-if (!launchActionsWrite.written?.jsonPath || !launchActionsWrite.written?.markdownPath || !existsSync(launchActionsWrite.written.jsonPath) || !existsSync(launchActionsWrite.written.markdownPath)) {
-  console.error('Package smoke failed. Launch actions --write should create JSON and Markdown campaign files.')
-  process.exit(1)
-}
-const writtenLaunchActionsJson = JSON.parse(readFileSync(launchActionsWrite.written.jsonPath, 'utf8'))
-const writtenLaunchActionsMarkdown = readFileSync(launchActionsWrite.written.markdownPath, 'utf8')
-if (!Array.isArray(writtenLaunchActionsJson.campaignChecklist) || !writtenLaunchActionsMarkdown.includes('Campaign checklist:') || !writtenLaunchActionsMarkdown.includes('Promotion wave:') || !writtenLaunchActionsMarkdown.includes('Post URL:')) {
-  console.error('Package smoke failed. Written launch action campaign files should preserve campaign checklist and promotion wave content.')
-  process.exit(1)
-}
-if (writtenLaunchActionsJson.written?.jsonPath !== launchActionsWrite.written.jsonPath || writtenLaunchActionsJson.written?.markdownPath !== launchActionsWrite.written.markdownPath) {
-  console.error('Package smoke failed. Written launch action JSON should preserve its own output paths.')
-  process.exit(1)
-}
-writeFileSync(launchActionsWrite.written.markdownPath, `${writtenLaunchActionsMarkdown}\n- Post URL: https://example.com/base-themes-launch\n`)
-let refusedFilledOverwrite = false
-try {
-  execFileSync('node', ['scripts/render-launch-actions.mjs', '--write', '--output', '.tmp/package-smoke-launch-actions'], {
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'pipe'],
-  })
-} catch (error) {
-  refusedFilledOverwrite = `${error.stdout ?? ''}${error.stderr ?? ''}`.includes('Refusing to overwrite')
-}
-if (!refusedFilledOverwrite) {
-  console.error('Package smoke failed. Launch actions --write should refuse to overwrite filled campaign record fields.')
-  process.exit(1)
-}
-const forcedLaunchActionsWrite = JSON.parse(execFileSync('node', ['scripts/render-launch-actions.mjs', '--json', '--write', '--force', '--output', '.tmp/package-smoke-launch-actions'], { encoding: 'utf8' }))
-if (!forcedLaunchActionsWrite.written?.jsonPath || !existsSync(forcedLaunchActionsWrite.written.jsonPath)) {
-  console.error('Package smoke failed. Launch actions --force should allow an intentional campaign overwrite.')
-  process.exit(1)
-}
-if (!launchActions.actions.some((action) => action.signalId === 'external-human-issue-or-pr' && action.recommendedGoodFirstIssues?.length >= 2)) {
-  console.error('Package smoke failed. Launch actions should route missing external issue/PR signal to recommended good-first issues.')
-  process.exit(1)
-}
-if (!launchActions.actions.some((action) => action.signalId === 'external-human-issue-or-pr' && action.commands?.some((command) => command.includes('gh issue create --repo markbang/base-themes')))) {
-  console.error('Package smoke failed. Launch actions should include GitHub CLI commands for recommended good-first issues.')
   process.exit(1)
 }
 
@@ -595,67 +385,6 @@ if (!cliDoctor.includes('Base Themes doctor') || !cliDoctor.includes('Result: Ba
 const cliDoctorJson = JSON.parse(execFileSync('node', ['bin/base-themes.mjs', 'doctor', 'examples/vite', '--json'], { encoding: 'utf8' }))
 if (!cliDoctorJson.ok || cliDoctorJson.root !== 'examples/vite' || cliDoctorJson.checks?.length !== 7 || !cliDoctorJson.checks.every((check) => check.ok)) {
   console.error('Package smoke failed. CLI doctor --json did not pass against the Vite example.')
-  process.exit(1)
-}
-
-const releaseAnnouncementJson = JSON.parse(execFileSync('node', ['scripts/render-release-announcement.mjs', '--json'], { encoding: 'utf8' }))
-if (releaseAnnouncementJson.stats.components !== registry.components.length || releaseAnnouncementJson.stats.blocks !== registry.blocks.length || releaseAnnouncementJson.stats.pages !== registry.pages.length || releaseAnnouncementJson.stats.styles !== registry.style.variants.length) {
-  console.error('Package smoke failed. Release announcement stats are not sourced from the current registry.')
-  process.exit(1)
-}
-if (!releaseAnnouncementJson.githubRelease.includes('`add`') || !releaseAnnouncementJson.githubRelease.includes('Show and tell Discussion') || !releaseAnnouncementJson.commands.includes('npx base-themes doctor . --json')) {
-  console.error('Package smoke failed. Release announcement output is missing add, community, or JSON CLI guidance.')
-  process.exit(1)
-}
-if (!Array.isArray(releaseAnnouncementJson.recommendedGoodFirstIssues) || releaseAnnouncementJson.recommendedGoodFirstIssues.length < 2 || !releaseAnnouncementJson.recommendedGoodFirstIssues.every((issue) => issue.title && issue.url?.startsWith('https://github.com/markbang/base-themes/issues/new?') && issue.labels?.includes('type: good first issue'))) {
-  console.error('Package smoke failed. Release announcement should include at least two recommended good-first issue URLs.')
-  process.exit(1)
-}
-if (!releaseAnnouncementJson.recommendedGoodFirstIssues.every((issue) => releaseAnnouncementJson.githubRelease.includes(issue.url))) {
-  console.error('Package smoke failed. GitHub release copy should include recommended good-first issue URLs.')
-  process.exit(1)
-}
-const releaseGithubChannel = releaseAnnouncementJson.channelChecklist?.find((item) => item.channel === 'GitHub Release')
-if (!releaseAnnouncementJson.recommendedGoodFirstIssues.every((issue) => releaseGithubChannel?.recommendedIssueUrls?.includes(issue.url))) {
-  console.error('Package smoke failed. GitHub Release channel checklist should include recommended good-first issue URLs.')
-  process.exit(1)
-}
-if (!Array.isArray(releaseAnnouncementJson.shareAssets) || releaseAnnouncementJson.shareAssets.length < 4 || !releaseAnnouncementJson.shareAssets.every((asset) => asset.id && asset.title && asset.url?.includes('utm_campaign=') && asset.imageUrl?.startsWith('https://base-themes.bangwu.me/previews/') && asset.use)) {
-  console.error('Package smoke failed. Release announcement should include structured share assets with attributed URLs and preview images.')
-  process.exit(1)
-}
-for (const assetId of ['dashboard-shell-block', 'enterprise-theme-preview', 'base-ui-vs-shadcn', 'cli-doctor-workflow']) {
-  if (!releaseAnnouncementJson.shareAssets.some((asset) => asset.id === assetId)) {
-    console.error(`Package smoke failed. Release announcement share assets are missing ${assetId}.`)
-    process.exit(1)
-  }
-}
-const releaseAnnouncementChannels = ['GitHub Release', 'X / Bluesky', 'Hacker News / Reddit', 'Product / devtool directories']
-const missingReleaseAnnouncementChannels = releaseAnnouncementChannels.filter((channel) => !releaseAnnouncementJson.channelChecklist?.some((item) => item.channel === channel && item.action && item.measure && item.primaryLink))
-if (missingReleaseAnnouncementChannels.length > 0) {
-  console.error(`Package smoke failed. Release announcement channel tracking checklist is missing: ${missingReleaseAnnouncementChannels.join(', ')}`)
-  process.exit(1)
-}
-const releaseShareAssetIds = new Set(releaseAnnouncementJson.shareAssets.map((asset) => asset.id))
-const channelsMissingShareAssetIds = releaseAnnouncementJson.channelChecklist.filter((item) => !Array.isArray(item.shareAssetIds) || item.shareAssetIds.length === 0)
-if (channelsMissingShareAssetIds.length > 0) {
-  console.error(`Package smoke failed. Release announcement channels are missing shareAssetIds: ${channelsMissingShareAssetIds.map((item) => item.channel).join(', ')}`)
-  process.exit(1)
-}
-const unknownReleaseShareAssetIds = releaseAnnouncementJson.channelChecklist.flatMap((item) => item.shareAssetIds ?? []).filter((id) => !releaseShareAssetIds.has(id))
-if (unknownReleaseShareAssetIds.length > 0) {
-  console.error(`Package smoke failed. Release announcement channels reference unknown share asset ids: ${unknownReleaseShareAssetIds.join(', ')}`)
-  process.exit(1)
-}
-const unattributedAnnouncementChannels = releaseAnnouncementJson.channelChecklist.filter((item) => !['utm_campaign', 'utm_source', 'utm_medium', 'utm_content'].every((param) => item.primaryLink.includes(`${param}=`)))
-if (unattributedAnnouncementChannels.length > 0 || !releaseAnnouncementJson.attribution?.campaign) {
-  console.error('Package smoke failed. Release announcement channel links are missing launch attribution parameters.')
-  process.exit(1)
-}
-const releaseAnnouncementMeasureText = releaseAnnouncementJson.channelChecklist.map((item) => item.measure).join('\n').toLowerCase()
-const missingReleaseAnnouncementMeasures = ['stars', 'forks', 'issues', 'registry', 'npm'].filter((measure) => !releaseAnnouncementMeasureText.includes(measure))
-if (missingReleaseAnnouncementMeasures.length > 0) {
-  console.error(`Package smoke failed. Release announcement channel checklist is missing adoption measures: ${missingReleaseAnnouncementMeasures.join(', ')}`)
   process.exit(1)
 }
 

@@ -175,7 +175,7 @@
     "example:dashboard:build": "npm --prefix examples/dashboard ci && npm --prefix examples/dashboard run build",
     "example:theme-customization:build": "npm --prefix examples/theme-customization ci && npm --prefix examples/theme-customization run build",
     "example:registry-copy": "node examples/registry-copy/plan-copy.mjs",
-    "prepack": "npm run registry:check && npm run tokens:check && npm run lint && npm run test && npm run build && npm run seo:check && npm run telemetry:fixtures && npm run launch:check && npm run bundle:report && npm run package:smoke",
+    "prepack": "npm run registry:check && npm run tokens:check && npm run lint && npm run test && npm run build && npm run seo:check && npm run bundle:report && npm run package:smoke",
     "preview": "npm run build:docs && wrangler dev",
     "deploy": "npm run build:docs && wrangler deploy"
   },

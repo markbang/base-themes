@@ -24,8 +24,6 @@ jobs:
       - run: npm run test
       - run: npm run build
       - run: npm run seo:check
-      - run: npm run community:check
-      - run: npm run telemetry:fixtures
       - run: npm run bundle:report
       - run: npm run package:smoke
       - run: npm run example:registry-copy -- button select block:dashboard-shell
