@@ -1,7 +1,7 @@
 .bento-preview-card {
   width: 280px;
   padding: 16px;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius);
   background: var(--bt-surface);
   box-shadow: var(--bt-shadow);

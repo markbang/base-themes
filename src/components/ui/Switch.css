@@ -5,7 +5,7 @@
   height: 26px;
   align-items: center;
   padding: 3px;
-  border: 1px solid var(--bt-border-strong);
+  border: var(--bt-border-width, 1px) solid var(--bt-border-strong);
   border-radius: 999px;
   background: var(--track-bg);
   cursor: pointer;

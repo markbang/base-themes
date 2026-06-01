@@ -50,6 +50,13 @@
   box-shadow: var(--glass-highlight-strong), 0 0 14px color-mix(in srgb, var(--accent), transparent 62%);
 }
 
+[data-style='glass'] .bento-number-field-group:focus-within,
+[data-style='glass'] .bento-number-field-input:focus-visible,
+[data-style='glass'] .bento-otp-input:focus-visible {
+  border-color: var(--accent);
+  box-shadow: var(--glass-highlight-strong), 0 0 14px color-mix(in srgb, var(--accent), transparent 62%);
+}
+
 /* buttons — frosted */
 [data-style='glass'] .bento-button:not(.outline):not(.ghost):not(.icon) {
   backdrop-filter: var(--glass-blur);
@@ -60,6 +67,11 @@
 [data-style='glass'] .bento-button:not(.outline):not(.ghost):not(.icon):hover {
   box-shadow: var(--glass-highlight-strong), 0 6px 20px color-mix(in srgb, var(--accent), transparent 72%);
   transform: translateY(-1px);
+}
+
+[data-style='glass'] .bento-button:not(.outline):not(.ghost):not(.icon):active {
+  transform: translateY(0);
+  box-shadow: var(--glass-highlight), 0 2px 10px color-mix(in srgb, var(--accent), transparent 78%);
 }
 
 [data-style='glass'] .bento-button.outline,
@@ -109,11 +121,31 @@
 /* cards — glass */
 [data-style='glass'] .demo-card,
 [data-style='glass'] .block-preview,
-[data-style='glass'] .theme-swatch {
+[data-style='glass'] .theme-swatch,
+[data-style='glass'] .bento-accordion-item,
+[data-style='glass'] .bento-collapsible,
+[data-style='glass'] .bento-tabs-panel,
+[data-style='glass'] .bento-toggle-group,
+[data-style='glass'] .bento-menubar,
+[data-style='glass'] .bento-scroll-area,
+[data-style='glass'] .bento-context-menu-trigger,
+[data-style='glass'] .bento-otp-input,
+[data-style='glass'] .base-block,
+[data-style='glass'] .base-block-table,
+[data-style='glass'] .base-block-pill {
   background: var(--surface);
   backdrop-filter: var(--glass-blur);
   border-color: var(--glass-border);
   box-shadow: var(--glass-highlight), var(--shadow);
+}
+
+[data-style='glass'] .base-block-stat,
+[data-style='glass'] .base-block-panel,
+[data-style='glass'] .base-block-list-item {
+  background: var(--surface-muted);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight);
 }
 
 [data-style='glass'] .demo-card:hover,
@@ -190,4 +222,16 @@
 [data-style='glass'] .topbar-brand-mark {
   backdrop-filter: var(--glass-blur);
   box-shadow: var(--glass-highlight);
+}
+
+[data-style='glass'] .topbar,
+[data-style='glass'] .sidebar {
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight);
+}
+
+[data-style='glass'] .bento-popover-arrow,
+[data-style='glass'] .bento-preview-card-arrow,
+[data-style='glass'] .bento-tooltip-arrow {
+  fill: var(--surface);
 }

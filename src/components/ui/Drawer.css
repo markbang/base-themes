@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   background: var(--bt-surface);
   box-shadow: var(--bt-shadow);
 }
@@ -54,7 +54,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--bt-border);
+  border-bottom: var(--bt-border-width, 1px) solid var(--bt-border);
 }
 
 .bento-drawer-title {

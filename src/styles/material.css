@@ -54,7 +54,7 @@
 
 [data-style='material'] .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal) {
   background: var(--blue);
-  color: #ffffff;
+  color: var(--theme-primary-foreground);
   box-shadow: var(--md-elevation-1);
 }
 

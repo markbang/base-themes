@@ -2,7 +2,7 @@
   display: inline-flex;
   gap: 4px;
   padding: 4px;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius);
   background: var(--group-bg);
 }

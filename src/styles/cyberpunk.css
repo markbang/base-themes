@@ -6,6 +6,8 @@
   --cyber-glow-strong: 0 0 18px var(--accent), 0 0 48px color-mix(in srgb, var(--accent), transparent 40%);
   --cyber-border-glow: 0 0 0 1px color-mix(in srgb, var(--accent), transparent 60%),
     0 0 18px color-mix(in srgb, var(--accent), transparent 55%);
+  --cyber-highlight-bg: color-mix(in srgb, var(--accent), var(--bg) 70%);
+  --cyber-highlight-fg: #ffffff;
 }
 
 [data-style='cyberpunk'][data-theme='light'] {
@@ -13,6 +15,8 @@
   --cyber-glow-strong: 0 0 12px var(--accent), 0 0 36px color-mix(in srgb, var(--accent), transparent 45%);
   --cyber-border-glow: 0 0 0 1px color-mix(in srgb, var(--accent), transparent 68%),
     0 0 12px color-mix(in srgb, var(--accent), transparent 60%);
+  --cyber-highlight-bg: color-mix(in srgb, var(--accent), #ffffff 76%);
+  --cyber-highlight-fg: var(--text-strong);
 }
 
 /* focus ring — neon electric */
@@ -90,7 +94,8 @@
 [data-style='cyberpunk'] .bento-combobox-item[data-highlighted],
 [data-style='cyberpunk'] .bento-select-item[data-highlighted],
 [data-style='cyberpunk'] .bento-nav-menu-item[data-highlighted] {
-  background: color-mix(in srgb, var(--accent), transparent 82%);
+  color: var(--cyber-highlight-fg);
+  background: var(--cyber-highlight-bg);
   text-shadow: 0 0 8px color-mix(in srgb, var(--accent), transparent 70%);
 }
 
@@ -156,4 +161,23 @@
 [data-style='cyberpunk'] .bento-field-error,
 [data-style='cyberpunk'] .bento-meter-low {
   text-shadow: 0 0 6px color-mix(in srgb, var(--theme-danger, #ff2bd6), transparent 60%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-style='cyberpunk'] .bento-button,
+  [data-style='cyberpunk'] .bento-slider-thumb,
+  [data-style='cyberpunk'] .bento-tabs-indicator,
+  [data-style='cyberpunk'] .bento-toggle,
+  [data-style='cyberpunk'] .bento-toolbar-button {
+    transition-duration: 1ms;
+  }
+
+  [data-style='cyberpunk'] .bento-button:not(.outline):not(.ghost):not(.icon):hover,
+  [data-style='cyberpunk'] .bento-button:not(.outline):not(.ghost):not(.icon):active {
+    transform: none;
+  }
+
+  [data-style='cyberpunk'] :where(.bento-button, .bento-slider-thumb, .bento-progress-indicator, .bento-meter-indicator) {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent), transparent 58%);
+  }
 }

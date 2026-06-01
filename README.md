@@ -120,7 +120,7 @@ import { Button, Select } from 'base-themes'
 
 export function Example() {
   return (
-    <div data-style="shadcn" data-theme="light">
+    <main data-style="shadcn" data-theme="light">
       <Button>Save changes</Button>
       <Select
         id="density"
@@ -128,10 +128,12 @@ export function Example() {
         defaultValue="comfortable"
         items={{ compact: 'Compact', comfortable: 'Comfortable', spacious: 'Spacious' }}
       />
-    </div>
+    </main>
   )
 }
 ```
+
+Portaled components such as `Select`, `Combobox`, `Dialog`, `Popover`, and `Tooltip` render outside nested wrappers. Apply `data-style` and `data-theme` on `html`, `body`, your app shell, or the portal container so overlays inherit the same theme.
 
 ## Themes
 

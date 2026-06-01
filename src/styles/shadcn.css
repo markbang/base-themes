@@ -124,9 +124,21 @@
   color: var(--text-strong);
 }
 
-[data-style='shadcn'] .bento-select-item[data-selected][data-highlighted] {
+[data-style='shadcn'] .bento-select-item[data-selected][data-highlighted],
+[data-style='shadcn'] .bento-combobox-item[data-selected][data-highlighted] {
   background: var(--shadcn-accent);
   color: var(--shadcn-accent-foreground);
+}
+
+[data-style='shadcn'] .bento-field[data-invalid] .bento-input,
+[data-style='shadcn'] .bento-field[data-invalid] .bento-textarea,
+[data-style='shadcn'] .bento-field[data-invalid] .bento-combobox-input,
+[data-style='shadcn'] .bento-field[data-invalid] .bento-select-trigger,
+[data-style='shadcn'] .bento-input[aria-invalid='true'],
+[data-style='shadcn'] .bento-textarea[aria-invalid='true'],
+[data-style='shadcn'] .bento-combobox-input[aria-invalid='true'] {
+  border-color: var(--shadcn-destructive);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--shadcn-destructive), transparent 84%);
 }
 
 [data-style='shadcn'] .bento-tabs-tab[data-selected],

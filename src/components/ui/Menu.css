@@ -5,7 +5,7 @@
 .bento-menu-popup {
   min-width: 180px;
   padding: 6px;
-  border: 1px solid var(--bt-border-strong);
+  border: var(--bt-border-width, 1px) solid var(--bt-border-strong);
   border-radius: var(--bt-radius);
   background: var(--bt-surface);
   box-shadow: var(--bt-shadow);

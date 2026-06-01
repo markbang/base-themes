@@ -4,7 +4,7 @@
   align-items: center;
   gap: 10px;
   padding: 8px;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius);
   background: var(--bt-surface);
 }
@@ -46,7 +46,7 @@
   gap: 7px;
   height: 32px;
   padding: 0 9px;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius-sm);
   color: var(--bt-muted-fg);
 }

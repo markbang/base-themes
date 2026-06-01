@@ -13,7 +13,7 @@
   z-index: 51;
   width: min(420px, calc(100vw - 32px));
   padding: 22px;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius);
   background: var(--bt-surface);
   box-shadow: var(--bt-shadow);

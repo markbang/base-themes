@@ -2,7 +2,7 @@
   display: grid;
   gap: 16px;
   padding: 18px;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius);
   color: var(--bt-text);
   background: var(--bt-surface);
@@ -46,7 +46,7 @@
 .base-block-panel,
 .base-block-list-item {
   padding: 12px;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius-sm);
   background: var(--bt-surface-muted);
 }
@@ -101,7 +101,7 @@
   width: 100%;
   border-collapse: collapse;
   overflow: hidden;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius-sm);
   font-size: 13px;
 }
@@ -109,7 +109,7 @@
 .base-block-table th,
 .base-block-table td {
   padding: 10px 12px;
-  border-bottom: 1px solid var(--bt-border);
+  border-bottom: var(--bt-border-width, 1px) solid var(--bt-border);
   text-align: left;
 }
 
@@ -133,7 +133,7 @@
   align-items: center;
   min-height: 22px;
   padding: 0 8px;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: 999px;
   color: var(--bt-fg);
   background: var(--bt-surface);

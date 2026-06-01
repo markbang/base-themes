@@ -9,7 +9,7 @@
   grid-template-columns: 36px 1fr 36px;
   height: 40px;
   overflow: hidden;
-  border: 1px solid var(--bt-border);
+  border: var(--bt-border-width, 1px) solid var(--bt-border);
   border-radius: var(--bt-radius-sm);
   background: var(--bt-surface);
 }

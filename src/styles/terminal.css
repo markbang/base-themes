@@ -3,6 +3,7 @@
 
 [data-style='terminal'] {
   --term-accent: var(--green);
+  --term-amber: #fbbf24;
   --term-glow: 0 0 0 1px color-mix(in srgb, var(--green), transparent 64%),
     0 0 12px color-mix(in srgb, var(--green), transparent 60%);
   --term-block: color-mix(in srgb, var(--green), transparent 88%);
@@ -118,6 +119,14 @@
 
 [data-style='terminal'] .bento-select-item[data-selected] {
   color: var(--green);
+  border-left: 2px solid var(--term-amber);
+  padding-left: 8px;
+}
+
+[data-style='terminal'] .bento-menu-item[data-highlighted],
+[data-style='terminal'] .bento-combobox-item[data-highlighted],
+[data-style='terminal'] .bento-select-item[data-highlighted] {
+  box-shadow: inset 2px 0 0 var(--term-amber);
 }
 
 /* tabs / toggle — green indicator */

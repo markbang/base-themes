@@ -15,7 +15,7 @@
   align-items: flex-start;
   gap: 14px;
   padding: 16px 44px 16px 16px;
-  border: 1px solid var(--bt-border-strong);
+  border: var(--bt-border-width, 1px) solid var(--bt-border-strong);
   border-radius: var(--bt-radius);
   color: var(--bt-fg);
   background: color-mix(in srgb, var(--bt-surface), var(--bt-bg) 4%);

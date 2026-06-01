@@ -6,7 +6,7 @@
   justify-content: space-between;
   gap: 12px;
   padding: 0 12px 0 14px;
-  border: 1px solid var(--bt-border-strong);
+  border: var(--bt-border-width, 1px) solid var(--bt-border-strong);
   border-radius: var(--bt-radius-sm);
   color: var(--bt-fg);
   background: var(--bt-surface);
@@ -33,7 +33,7 @@
 .bento-select-popup {
   min-width: 220px;
   padding: 6px;
-  border: 1px solid var(--bt-border-strong);
+  border: var(--bt-border-width, 1px) solid var(--bt-border-strong);
   border-radius: var(--bt-radius);
   background: var(--bt-surface);
   box-shadow: var(--bt-shadow);
