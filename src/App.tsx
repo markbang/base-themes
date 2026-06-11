@@ -1,4 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import {
   Blocks,
   Code2,
@@ -32,6 +34,8 @@ import type { StaticDocsPageId } from './docs/StaticDocsPages'
 import { docsRoot, navigateTo, routeChangeEvent, toComponentPath } from './docs/routing'
 import { themeStyleDescriptions, themeStyleLabels, themeStyles, type ThemeStyle } from './styles/themeList'
 import './App.css'
+
+gsap.registerPlugin(useGSAP)
 
 const StaticDocsPages = lazy(() => import('./docs/StaticDocsPages'))
 const ComponentDocsPage = lazy(() => import('./docs/ComponentDocsPage'))
@@ -470,66 +474,42 @@ function CopySnippetButton({ value, label, source, detail }: { value: string; la
 function LandingPage() {
   const landingRef = useRef<HTMLElement>(null)
 
-  useEffect(() => {
+  useGSAP(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion || !landingRef.current) return
 
-    let context: { revert: () => void } | undefined
-    let disposed = false
+    const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+    timeline
+      .from('.landing-eyebrow, .landing-title, .landing-copy, .landing-actions, .landing-install', {
+        y: 18,
+        opacity: 0,
+        duration: 0.72,
+        stagger: 0.08,
+      })
+      .from('.landing-preview-card', {
+        y: 38,
+        rotate: -2,
+        opacity: 0,
+        duration: 0.84,
+        stagger: 0.08,
+      }, '-=0.42')
+      .from('.landing-stat', {
+        y: 14,
+        opacity: 0,
+        duration: 0.48,
+        stagger: 0.05,
+      }, '-=0.32')
 
-    void import('gsap').then(({ default: gsap }) => {
-      if (disposed || !landingRef.current) return
-
-      context = gsap.context(() => {
-        const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
-        timeline
-          .from('.landing-eyebrow, .landing-title, .landing-copy, .landing-actions, .landing-install', {
-            y: 18,
-            opacity: 0,
-            duration: 0.72,
-            stagger: 0.08,
-          })
-          .from('.landing-preview-card', {
-            y: 38,
-            rotate: -2,
-            opacity: 0,
-            duration: 0.84,
-            stagger: 0.08,
-          }, '-=0.42')
-          .from('.landing-stat', {
-            y: 14,
-            opacity: 0,
-            duration: 0.48,
-            stagger: 0.05,
-          }, '-=0.32')
-
-        gsap.to('.landing-preview-card', {
-          y: (index) => (index % 2 === 0 ? -10 : 10),
-          rotate: (index) => (index % 2 === 0 ? 1.4 : -1.4),
-          duration: 3.8,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          stagger: 0.2,
-        })
-
-        gsap.to('.landing-orbit-dot', {
-          x: (index) => (index % 2 === 0 ? 18 : -18),
-          y: (index) => (index % 2 === 0 ? -14 : 14),
-          duration: 4.5,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          stagger: 0.25,
-        })
-      }, landingRef)
+    gsap.to('.landing-preview-card', {
+      y: (index) => (index % 2 === 0 ? -10 : 10),
+      rotate: (index) => (index % 2 === 0 ? 1.4 : -1.4),
+      duration: 3.8,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      stagger: 0.2,
     })
-
-    return () => {
-      disposed = true
-      context?.revert()
-    }
-  }, [])
+  }, { scope: landingRef })
 
   const copyInstallCommand = () => {
     trackEvent('install_command_copy', { source: 'landing' })
@@ -555,16 +535,8 @@ function LandingPage() {
             <code>npm install base-themes @base-ui/react</code>
             <button type="button" aria-label="Copy install command" onClick={copyInstallCommand}><Copy size={15} /></button>
           </div>
-          <div className="landing-stats" aria-label="Project stats">
-            <div className="landing-stat"><strong>40</strong><span>components</span></div>
-            <div className="landing-stat"><strong>20</strong><span>themes</span></div>
-            <div className="landing-stat"><strong>8</strong><span>blocks</span></div>
-          </div>
         </div>
         <div className="landing-stage" aria-label="Theme preview gallery">
-          <span className="landing-orbit-dot dot-a" />
-          <span className="landing-orbit-dot dot-b" />
-          <span className="landing-orbit-dot dot-c" />
           {landingPreviews.map((preview) => (
             <figure className={`landing-preview-card ${preview.style}`} key={preview.style}>
               <img src={preview.src} alt={`${preview.label} theme preview`} width="1280" height="720" loading="eager" decoding="async" />
@@ -572,6 +544,11 @@ function LandingPage() {
             </figure>
           ))}
         </div>
+      </section>
+      <section className="landing-stats" aria-label="Project stats">
+        <div className="landing-stat"><strong>40</strong><span>components</span></div>
+        <div className="landing-stat"><strong>20</strong><span>themes</span></div>
+        <div className="landing-stat"><strong>8</strong><span>blocks</span></div>
       </section>
       <section className="landing-quickstart" aria-labelledby="quickstart-title">
         <div className="landing-quickstart-copy">
