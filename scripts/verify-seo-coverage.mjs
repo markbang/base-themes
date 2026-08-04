@@ -95,11 +95,13 @@ const hostedComponentMetaPath = resolve(outDir, 'registry/component-meta.json')
 const hostedStaticPageMetaPath = resolve(outDir, 'registry/static-page-meta.json')
 const hostedThemeMetaPath = resolve(outDir, 'registry/theme-meta.json')
 const staticDocsSourcePath = resolve('src/docs/StaticDocsPages.tsx')
+const appSourcePath = resolve('src/App.tsx')
 const sitemap = await readRequired(sitemapPath, 'sitemap')
 const robots = await readRequired(robotsPath, 'robots.txt')
 const llms = await readRequired(llmsPath, 'llms.txt')
 const llmsFull = await readRequired(llmsFullPath, 'llms-full.txt')
 const staticDocsSource = await readRequired(staticDocsSourcePath, 'static docs source')
+const appSource = await readRequired(appSourcePath, 'app source')
 const hostedRegistry = await readJsonRequired(hostedRegistryPath, 'hosted registry')
 const hostedBlockMeta = await readJsonRequired(hostedBlockMetaPath, 'hosted block metadata')
 const hostedComponentMeta = await readJsonRequired(hostedComponentMetaPath, 'hosted component metadata')
@@ -272,6 +274,18 @@ const requiredContributingActionText = [
 for (const text of requiredContributingActionText) {
   if (staticDocsSource && !staticDocsSource.includes(text)) {
     fail(`Contributing docs page is missing public adoption action: ${text}`)
+  }
+}
+
+if (appSource) {
+  if (!appSource.includes("return 'not-found'")) {
+    fail('App source is missing the not-found fallback in getPage.')
+  }
+  if (!appSource.includes('Page Not Found')) {
+    fail('App source is missing the not-found page view.')
+  }
+  if (!appSource.includes("'noindex'")) {
+    fail('App source is missing noindex robots handling for not-found pages.')
   }
 }
 

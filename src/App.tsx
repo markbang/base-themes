@@ -55,6 +55,7 @@ type SeoPage = {
   image?: string
   type?: 'website' | 'article'
   keywords?: string[]
+  notFound?: boolean
 }
 
 const siteUrl = import.meta.env.VITE_SITE_URL ?? 'https://base-themes.bangwu.me'
@@ -75,6 +76,14 @@ const staticSeoPages = Object.fromEntries(staticPageMeta.map((meta) => {
   return [id, { title, description, path, image, type, keywords }]
 })) as Record<string, SeoPage>
 const staticPageIdByPath = new Map(staticPageMeta.map((page) => [page.path, page.id]))
+
+const notFoundSeoPage: SeoPage = {
+  title: 'Page Not Found — Base Themes',
+  description: 'The page you requested could not be found, or it may have moved. Check the URL and try again.',
+  path: '/404',
+  type: 'website',
+  notFound: true,
+}
 
 function absoluteUrl(path: string) {
   return new URL(path, siteUrl).toString()
@@ -98,13 +107,23 @@ function setMetaAttribute(selector: string, attr: 'content' | 'href', value: str
 
 function useSeo(page: SeoPage) {
   useEffect(() => {
+    document.title = page.title
+    setMetaAttribute('meta[name="description"]', 'content', page.description)
+
+    if (page.notFound) {
+      // Unknown routes must not be indexed: noindex, no canonical, no JSON-LD.
+      setMetaAttribute('meta[name="robots"]', 'content', 'noindex')
+      document.head.querySelector('link[rel="canonical"]')?.remove()
+      document.head.querySelector('script#structured-data')?.remove()
+      return
+    }
+
     const canonical = absoluteUrl(page.path)
     const image = absoluteUrl(page.image ?? defaultSeoImage)
     const keywords = [...defaultKeywords, ...(page.keywords ?? [])].join(', ')
 
-    document.title = page.title
-    setMetaAttribute('meta[name="description"]', 'content', page.description)
     setMetaAttribute('meta[name="keywords"]', 'content', keywords)
+    setMetaAttribute('meta[name="robots"]', 'content', 'index, follow, max-image-preview:large')
     setMetaAttribute('link[rel="canonical"]', 'href', canonical)
     setMetaAttribute('meta[property="og:site_name"]', 'content', siteName)
     setMetaAttribute('meta[property="og:type"]', 'content', page.type ?? 'website')
@@ -120,6 +139,7 @@ function useSeo(page: SeoPage) {
 }
 
 function getSeoPage(page: string, componentId: string, themeStyle?: ThemeStyle): SeoPage {
+  if (page === 'not-found') return notFoundSeoPage
   const meta = componentMeta.find((component) => component.id === componentId) ?? componentMeta[0]
   const seoPage = page === 'components'
     ? {
@@ -216,7 +236,8 @@ function getPage(pathname: string) {
   if (normalizedPathname.startsWith('/themes/')) return 'themes'
   const staticPageId = staticPageIdByPath.get(normalizedPathname)
   if (staticPageId) return staticPageId
-  return 'components'
+  if (normalizedPathname === '/components' || normalizedPathname.startsWith('/components/')) return 'components'
+  return 'not-found'
 }
 
 function Topbar({ activeId, page }: { activeId: string; page: string }) {
@@ -752,6 +773,22 @@ function StaticDocsFallback() {
   )
 }
 
+function NotFoundPage({ activeId }: { activeId: string }) {
+  return (
+    <article className="component-page not-found-page">
+      <div className="page-hero component-hero">
+        <div className="doc-kicker">404</div>
+        <h1>Page Not Found</h1>
+        <p>The page you are looking for does not exist or has moved. Check the URL, or head back to a page that does.</p>
+      </div>
+      <div className="not-found-actions">
+        <Button onClick={() => handleInternalNavigation('/', 'not-found-home')}><Blocks size={16} /> Back to home</Button>
+        <Button variant="outline" onClick={() => handleInternalNavigation(toComponentPath(activeId), 'not-found-components')}><Package size={16} /> Browse components</Button>
+      </div>
+    </article>
+  )
+}
+
 export default function App() {
   const pathname = usePathname()
   const page = getPage(pathname)
@@ -772,6 +809,7 @@ export default function App() {
       <Topbar activeId={activeComponent.id} page={page} />
       <main className={`main-content${page !== 'components' ? ' no-sidebar' : ''}${page === 'landing' ? ' landing-main' : ''}`}>
         {page === 'landing' && <LandingPage />}
+        {page === 'not-found' && <NotFoundPage activeId={firstId} />}
         {(page === 'blocks' || page === 'block-detail') && <BlocksPage selectedBlockId={blockIdFromPath} />}
         {(page === 'themes' || page === 'theme-detail') && <ThemesPage selectedStyle={themeStyleFromPath} />}
         {isStaticDocsPage(page) && (

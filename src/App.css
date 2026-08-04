@@ -778,6 +778,21 @@
   margin-bottom: 24px;
 }
 
+/* ---- Not found page ---- */
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100dvh - var(--topbar-h) - 144px);
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
 .doc-kicker {
   margin-bottom: 12px;
   color: var(--accent-strong);
