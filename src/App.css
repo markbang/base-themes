@@ -214,6 +214,7 @@
 
 /* ---- Landing page ---- */
 .landing-page {
+  position: relative;
   min-height: calc(100dvh - var(--topbar-h));
   overflow: hidden;
   background:
@@ -222,15 +223,37 @@
 }
 
 .landing-hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
   align-items: center;
   gap: 48px;
   min-height: calc(100dvh - var(--topbar-h));
   padding: 56px clamp(28px, 6vw, 84px) 40px;
+  overflow: hidden;
+}
+
+/* Ambient accent glows that give the hero depth without competing with the copy */
+.landing-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(620px 420px at 84% 4%, color-mix(in srgb, var(--accent), transparent 90%) 0%, transparent 68%),
+    radial-gradient(480px 340px at 8% 98%, color-mix(in srgb, var(--teal), transparent 93%) 0%, transparent 62%);
+}
+
+[data-theme='dark'] .landing-hero::before {
+  background:
+    radial-gradient(640px 440px at 84% 4%, color-mix(in srgb, var(--accent), transparent 82%) 0%, transparent 70%),
+    radial-gradient(500px 360px at 8% 98%, color-mix(in srgb, var(--teal), transparent 86%) 0%, transparent 64%);
 }
 
 .landing-copy-wrap {
+  position: relative;
+  z-index: 1;
   max-width: 620px;
 }
 
@@ -238,27 +261,34 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 18px;
+  width: fit-content;
+  margin-bottom: 22px;
+  padding: 7px 13px;
+  border: 1px solid color-mix(in srgb, var(--accent), transparent 70%);
+  border-radius: 999px;
   color: var(--accent-strong);
-  font-size: 13px;
-  font-weight: 780;
+  background: color-mix(in srgb, var(--accent), transparent 92%);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .landing-title {
   margin: 0 0 18px;
   color: var(--hero-text);
-  font-size: clamp(54px, 8vw, 118px);
-  line-height: 0.9;
-  letter-spacing: 0;
+  font-size: clamp(52px, 7.6vw, 110px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .landing-copy {
-  max-width: 590px;
+  max-width: 600px;
   margin: 0;
-  color: var(--text);
+  color: var(--text-muted);
   font-size: 18px;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
 .landing-actions {
@@ -266,6 +296,23 @@
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 30px;
+}
+
+.landing-actions .bento-button {
+  transition:
+    transform 180ms cubic-bezier(0.32, 0.72, 0, 1),
+    background var(--bt-duration, 160ms) ease,
+    box-shadow var(--bt-duration, 160ms) ease,
+    border-color var(--bt-duration, 160ms) ease;
+}
+
+.landing-actions .bento-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-strong);
+}
+
+.landing-actions .bento-button:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .landing-actions.compact {
@@ -286,6 +333,12 @@
   color: var(--code-text);
   background: var(--code-bg);
   box-shadow: var(--shadow-strong);
+  transition: border-color 200ms, box-shadow 200ms;
+}
+
+.landing-install:hover {
+  border-color: color-mix(in srgb, var(--accent), var(--line) 45%);
+  box-shadow: var(--shadow);
 }
 
 .landing-install code {
@@ -308,6 +361,17 @@
   color: var(--code-text);
   background: color-mix(in srgb, var(--code-text), transparent 92%);
   cursor: pointer;
+  transition: color 160ms, background 160ms, border-color 160ms, transform 160ms;
+}
+
+.landing-install button:hover {
+  color: var(--accent-strong);
+  border-color: color-mix(in srgb, var(--accent), transparent 55%);
+  background: color-mix(in srgb, var(--accent), transparent 88%);
+}
+
+.landing-install button:active {
+  transform: scale(0.92);
 }
 
 .landing-stats {
@@ -326,6 +390,13 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
+  transition: border-color 180ms, box-shadow 180ms, background 180ms;
+}
+
+.landing-stat:hover {
+  border-color: color-mix(in srgb, var(--accent), var(--line) 45%);
+  box-shadow: var(--shadow-strong);
+  background: color-mix(in srgb, var(--surface), var(--accent) 2%);
 }
 
 .landing-stat strong {
@@ -342,6 +413,7 @@
 
 .landing-stage {
   position: relative;
+  z-index: 1;
   width: min(100%, 760px);
   min-height: clamp(500px, 42vw, 620px);
   margin-inline: auto;
@@ -358,6 +430,12 @@
   background: var(--surface);
   box-shadow: var(--shadow);
   transform-origin: center;
+  transition: border-color 200ms, box-shadow 200ms;
+}
+
+.landing-preview-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-strong);
 }
 
 .landing-preview-card img {
@@ -367,11 +445,17 @@
   aspect-ratio: 16 / 9;
   object-fit: contain;
   background: var(--surface-muted);
+  transition: transform 900ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.landing-preview-card:hover img {
+  transform: scale(1.045);
 }
 
 .landing-preview-card figcaption {
   display: flex;
   align-items: center;
+  gap: 8px;
   min-height: 38px;
   padding: 0 14px;
   border-top: 1px solid var(--line);
@@ -379,6 +463,16 @@
   font-size: 13px;
   font-weight: 780;
   background: var(--surface);
+}
+
+.landing-preview-card figcaption::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.85;
 }
 
 .landing-preview-card.bento {
@@ -418,6 +512,12 @@
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: var(--shadow);
+  transition: border-color 220ms, box-shadow 220ms;
+}
+
+.landing-quickstart:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-strong);
 }
 
 .landing-quickstart h2 {
@@ -425,7 +525,7 @@
   color: var(--text-strong);
   font-size: clamp(28px, 4vw, 42px);
   line-height: 1.05;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
 }
 
 .landing-quickstart p {
@@ -516,6 +616,12 @@
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: var(--shadow);
+  transition: border-color 220ms, box-shadow 220ms;
+}
+
+.landing-community:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-strong);
 }
 
 .landing-community-copy h2 {
@@ -523,7 +629,7 @@
   color: var(--text-strong);
   font-size: clamp(28px, 4vw, 42px);
   line-height: 1.08;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
 }
 
 .landing-community-copy p {
@@ -551,13 +657,24 @@
   color: var(--text);
   background: var(--bg);
   text-decoration: none;
-  transition: border-color 140ms, background 140ms, transform 140ms;
+  transition:
+    border-color 160ms,
+    background 160ms,
+    transform 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 200ms;
 }
 
 .landing-community-actions a:hover {
   border-color: var(--line-strong);
   background: var(--surface-muted);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-strong);
+}
+
+.landing-community-actions a:hover svg {
+  color: var(--theme-primary-foreground, var(--bg));
+  background: var(--accent);
+  border-color: color-mix(in srgb, var(--accent), transparent 40%);
 }
 
 .landing-community-actions svg {
@@ -598,13 +715,25 @@
   .sidebar-link.active,
   .topbar-nav a,
   .topbar-nav a:hover,
-  .topbar-nav a.active {
+  .topbar-nav a.active,
+  .landing-install,
+  .landing-install button,
+  .landing-actions .bento-button,
+  .landing-stat,
+  .landing-quickstart,
+  .landing-community {
     transition: none;
   }
 
   .landing-preview-card,
-  .landing-community-actions a:hover {
+  .landing-community-actions a:hover,
+  .landing-actions .bento-button:hover,
+  .landing-actions .bento-button:active {
     transform: none;
+  }
+
+  .landing-preview-card img {
+    transition: none;
   }
 }
 
