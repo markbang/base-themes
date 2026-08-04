@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   Blocks,
   Code2,
@@ -35,7 +36,7 @@ import { docsRoot, navigateTo, routeChangeEvent, toComponentPath } from './docs/
 import { themeStyleDescriptions, themeStyleLabels, themeStyles, type ThemeStyle } from './styles/themeList'
 import './App.css'
 
-gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 const StaticDocsPages = lazy(() => import('./docs/StaticDocsPages'))
 const ComponentDocsPage = lazy(() => import('./docs/ComponentDocsPage'))
@@ -493,12 +494,6 @@ function LandingPage() {
         duration: 0.84,
         stagger: 0.08,
       }, '-=0.42')
-      .from('.landing-stat', {
-        y: 14,
-        opacity: 0,
-        duration: 0.48,
-        stagger: 0.05,
-      }, '-=0.32')
 
     gsap.to('.landing-preview-card', {
       y: (index) => (index % 2 === 0 ? -10 : 10),
@@ -508,6 +503,32 @@ function LandingPage() {
       yoyo: true,
       ease: 'sine.inOut',
       stagger: 0.2,
+    })
+
+    // Reveal below-the-fold sections once as they enter the viewport.
+    landingRef.current.querySelectorAll<HTMLElement>(
+      '.landing-stats, .landing-quickstart, .landing-band, .landing-community',
+    ).forEach((section) => {
+      gsap.from(section, {
+        y: 28,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: section, start: 'top 88%', once: true },
+      })
+    })
+
+    // Hero preview cards drift at slightly different rates while scrolling
+    // past the hero, adding depth without layout-affecting properties.
+    gsap.to('.landing-preview-card', {
+      yPercent: (index) => (index % 2 === 0 ? -4 : 4),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.landing-hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
     })
   }, { scope: landingRef })
 
