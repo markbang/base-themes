@@ -3,7 +3,10 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
+  Activity,
+  ArrowUpRight,
   Blocks,
+  CheckCircle2,
   Code2,
   Copy,
   Eye,
@@ -15,6 +18,7 @@ import {
   MessageSquarePlus,
   Moon,
   Package,
+  Plus,
   Sparkles,
   Star,
   Sun,
@@ -493,6 +497,123 @@ function CopySnippetButton({ value, label, source, detail }: { value: string; la
   return <Button variant="outline" onClick={handleCopy}><Copy size={16} /> {copied ? 'Copied' : label}</Button>
 }
 
+const themePreviewBars = [38, 52, 44, 66, 58, 76, 70, 88, 74, 92, 84, 100]
+
+function ThemePreview({ activeLabel, activeMode }: { activeLabel: string; activeMode: 'light' | 'dark' }) {
+  const [view, setView] = useState<'overview' | 'activity'>('overview')
+  const [draftCreated, setDraftCreated] = useState(false)
+  const viewTitle = view === 'overview' ? 'Project overview' : 'Activity stream'
+  const viewSummary = view === 'overview'
+    ? 'A compact operating view for teams shipping product work.'
+    : 'Recent changes across projects, people, and release checks.'
+
+  return (
+    <section className="theme-preview" aria-label={`${activeLabel} ${activeMode} product interface preview`}>
+      <div className="theme-preview-header">
+        <div className="theme-preview-heading">
+          <div className="theme-preview-kicker">Live product surface</div>
+          <div className="theme-preview-title-row">
+            <h2>{viewTitle}</h2>
+            <span className="theme-preview-mode">{activeLabel} / {activeMode}</span>
+          </div>
+          <p>{viewSummary}</p>
+        </div>
+        <div className="theme-preview-header-actions">
+          <span className="theme-preview-sync"><CheckCircle2 size={14} /> {draftCreated ? 'Draft saved' : 'Synced just now'}</span>
+          <Button variant="accent" type="button" onClick={() => setDraftCreated(true)}><Plus size={15} /> New project</Button>
+        </div>
+      </div>
+      <div className="theme-preview-toolbar">
+        <div className="theme-preview-tabs" role="tablist" aria-label="Workspace views">
+          <button
+            className={view === 'overview' ? 'active' : ''}
+            type="button"
+            role="tab"
+            aria-selected={view === 'overview'}
+            onClick={() => setView('overview')}
+          >
+            <Eye size={14} /> Overview
+          </button>
+          <button
+            className={view === 'activity' ? 'active' : ''}
+            type="button"
+            role="tab"
+            aria-selected={view === 'activity'}
+            onClick={() => setView('activity')}
+          >
+            <Activity size={14} /> Activity
+          </button>
+        </div>
+        <div className="theme-preview-toolbar-actions">
+          <Input aria-label="Filter projects" placeholder="Filter projects" type="search" />
+          <span className="theme-preview-filter-note">Last 30 days</span>
+        </div>
+      </div>
+      <div className="theme-preview-body">
+        <div className="theme-preview-main">
+          <div className="theme-preview-metrics">
+            <div className="theme-preview-metric">
+              <span>Active projects</span>
+              <strong>24</strong>
+              <small><b className="theme-preview-positive">+3</b> this month</small>
+            </div>
+            <div className="theme-preview-metric">
+              <span>Cycle time</span>
+              <strong>4.8d</strong>
+              <small><b className="theme-preview-positive">-16%</b> vs average</small>
+            </div>
+            <div className="theme-preview-metric">
+              <span>Team capacity</span>
+              <strong>86%</strong>
+              <small><b className="theme-preview-warning">3 seats</b> available</small>
+            </div>
+          </div>
+          <section className="theme-preview-panel theme-preview-chart-panel">
+            <div className="theme-preview-panel-header">
+              <div>
+                <span className="theme-preview-panel-kicker">Performance</span>
+                <h3>Throughput by week</h3>
+              </div>
+              <span className="theme-preview-panel-note">Apr 01 - Apr 30</span>
+            </div>
+            <div className="theme-preview-chart" role="img" aria-label="Throughput increasing across four weeks">
+              {themePreviewBars.map((height, index) => <span className="theme-preview-bar" key={index} style={{ height: `${height}%` }} />)}
+            </div>
+            <div className="theme-preview-chart-axis"><span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span></div>
+          </section>
+        </div>
+        <aside className="theme-preview-aside">
+          <section className="theme-preview-panel">
+            <div className="theme-preview-panel-header">
+              <div>
+                <span className="theme-preview-panel-kicker">Release readiness</span>
+                <h3>Spring launch</h3>
+              </div>
+              <ArrowUpRight size={16} />
+            </div>
+            <strong className="theme-preview-readiness">82%</strong>
+            <div className="theme-preview-progress" aria-label="Release readiness 82%"><span /></div>
+            <p className="theme-preview-panel-copy">12 of 15 checks complete</p>
+            <div className="theme-preview-status"><span><i /> On track</span><small>Review in 2d</small></div>
+          </section>
+          <section className="theme-preview-panel">
+            <div className="theme-preview-panel-header">
+              <div>
+                <span className="theme-preview-panel-kicker">Next up</span>
+                <h3>Ship checklist</h3>
+              </div>
+            </div>
+            <ul className="theme-preview-tasks">
+              <li><CheckCircle2 size={15} /><span><b>Update design tokens</b><small>Product system</small></span></li>
+              <li><CheckCircle2 size={15} /><span><b>Review onboarding</b><small>Growth team</small></span></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </section>
+  )
+}
+
 function LandingPage() {
   const landingRef = useRef<HTMLElement>(null)
 
@@ -696,6 +817,7 @@ function ThemesPage({ selectedStyle }: { selectedStyle?: ThemeStyle }) {
         <h1>{selectedStyle ? `${activeLabel} Theme` : 'Theme System'}</h1>
         <p>{selectedStyle ? getThemeSeoPage(selectedStyle).description : 'Theme tokens are centralized CSS variables. Choose from practical product styles, expressive visual systems, and dense operational modes.'}</p>
       </div>
+      <ThemePreview activeLabel={activeLabel} activeMode={activeMode} />
       <div className="theme-actions">
         <Button variant="outline" onClick={toggleMode}>{resolved === 'light' ? <Moon size={16} /> : <Sun size={16} />} {resolved === 'light' ? 'Dark preview' : 'Light preview'}</Button>
         <Button onClick={() => handleInternalNavigation('/docs/theme-customization', 'theme-detail-customize')}><Code2 size={16} /> Customize tokens</Button>
