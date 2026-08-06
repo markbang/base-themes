@@ -105,7 +105,7 @@ if (missingKeywords.length > 0) {
   process.exit(1)
 }
 
-const requiredDescriptionPhrases = ['Accessible Base UI React components', '21 themes', 'registry metadata', 'agent-friendly workflows']
+const requiredDescriptionPhrases = ['Accessible Base UI React components', '22 themes', 'registry metadata', 'agent-friendly workflows']
 const missingDescriptionPhrases = requiredDescriptionPhrases.filter((phrase) => !packageJson.description?.includes(phrase))
 if (missingDescriptionPhrases.length > 0) {
   console.error(`Package smoke failed. npm description is missing strategic positioning: ${missingDescriptionPhrases.join(', ')}`)

@@ -15,7 +15,7 @@ export function ThemeShowcaseCard() {
           <h2 className="base-block-title">Theme Showcase</h2>
           <p className="base-block-copy">A compact block for explaining theme value on landing or docs pages.</p>
         </div>
-        <span className="base-block-pill">20 styles</span>
+        <span className="base-block-pill">22 styles</span>
       </div>
       <div className="base-block-grid" aria-label="Theme swatches">
         {['--bt-bg', '--bt-surface', '--bt-primary', '--bt-secondary'].map((token) => (

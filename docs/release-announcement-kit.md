@@ -12,17 +12,17 @@ The current completion gate for the strategy is external evidence that enough us
 
 Short version:
 
-> Accessible Base UI components. 20 themes. Registry-ready. Agent-friendly.
+> Accessible Base UI components. 22 themes. Registry-ready. Agent-friendly.
 
 Long version:
 
-> Base Themes is a type-safe React component system built on Base UI. It ships accessible component wrappers, CSS-token themes, 20 curated visual styles, source-copyable registry metadata, blocks, examples, and an agent-friendly workflow for customizing product UI.
+> Base Themes is a type-safe React component system built on Base UI. It ships accessible component wrappers, CSS-token themes, 22 curated visual styles, source-copyable registry metadata, blocks, examples, and an agent-friendly workflow for customizing product UI.
 
 Use these points consistently:
 
 - Built on `@base-ui/react` accessible primitives.
 - Supports React 18.2+ and React 19.
-- Includes 20 visual styles through `data-style` and `data-theme`.
+- Includes 22 visual styles through `data-style` and `data-theme`.
 - Ships 40 components, 8 blocks, 18 pages, and registry metadata.
 - Includes `npx base-themes list`, `plan`, `add`, and `doctor`.
 - Provides Vite, dashboard, theme-customization, Next.js, and registry-copy examples.
@@ -110,7 +110,7 @@ npm run launch:campaign
 Base Themes now ships as a Base UI-first React theme component system with:
 
 - 40 typed React components built on `@base-ui/react`
-- 20 CSS-token visual styles with light and dark modes
+- 22 CSS-token visual styles with light and dark modes
 - 8 source-copyable product blocks
 - shadcn-style registry metadata for components, blocks, pages, and themes
 - CLI helpers: `list`, `plan`, `add`, and `doctor`
@@ -144,7 +144,7 @@ If you try it, please star or fork the repo, open an issue for missing component
 I shipped a stronger Base Themes release:
 
 - Base UI-first React components
-- 20 CSS-token visual styles
+- 22 CSS-token visual styles
 - 8 product blocks
 - shadcn-style registry metadata
 - CLI: list, plan, add, doctor, and JSON output for agents
@@ -159,9 +159,9 @@ https://github.com/markbang/base-themes
 ### Hacker News / Reddit
 
 ```text
-Show HN: Base Themes - accessible Base UI React components with 20 themes
+Show HN: Base Themes - accessible Base UI React components with 22 themes
 
-Base Themes is an open-source React component system built on @base-ui/react. It provides typed wrappers, CSS-variable themes, 20 curated visual styles, source-copyable registry metadata, product blocks, and CLI helpers for checking integration.
+Base Themes is an open-source React component system built on @base-ui/react. It provides typed wrappers, CSS-variable themes, 22 curated visual styles, source-copyable registry metadata, product blocks, and CLI helpers for checking integration.
 
 The project is package-first rather than template-first: install from npm, import one CSS file, set data-style/data-theme, and use the components or blocks. It also ships registry metadata for tools that prefer source-copy workflows.
 
@@ -174,7 +174,7 @@ Docs: https://base-themes.bangwu.me
 ### Product Hunt / Directory Submission
 
 ```text
-Base Themes is a React component system built on Base UI. It ships accessible typed components, 20 CSS-token visual styles, source-copyable registry metadata, product blocks, and CLI checks for integrating the package into Vite or Next.js apps.
+Base Themes is a React component system built on Base UI. It ships accessible typed components, 22 CSS-token visual styles, source-copyable registry metadata, product blocks, and CLI checks for integrating the package into Vite or Next.js apps.
 ```
 
 ## Calls To Action
