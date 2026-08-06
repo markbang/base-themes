@@ -1,6 +1,6 @@
 # Base Themes Full Agent Context
 
-Base Themes is a package-first React component system built on Base UI primitives. It provides typed component wrappers, CSS token themes, 21 visual styles, source-copy registry metadata, product blocks, runnable examples, and agent-oriented verification workflows.
+Base Themes is a package-first React component system built on Base UI primitives. It provides typed component wrappers, CSS token themes, 22 visual styles, source-copy registry metadata, product blocks, runnable examples, and agent-oriented verification workflows.
 
 ## Primary Goals
 
@@ -66,7 +66,7 @@ import 'base-themes/styles.css'
 
 ## Docs Routes
 
-- [Base Themes — Themeable Base UI React Components](https://base-themes.bangwu.me/): Typed Base UI React component wrappers with production CSS tokens, 20 visual themes, registry metadata, and ready-to-use product UI blocks.
+- [Base Themes — Themeable Base UI React Components](https://base-themes.bangwu.me/): Typed Base UI React component wrappers with production CSS tokens, 22 visual themes, registry metadata, and ready-to-use product UI blocks.
 - [Application Blocks — Base Themes](https://base-themes.bangwu.me/blocks): Composable dashboard and settings blocks built from accessible Base UI React primitives and themeable product UI tokens.
 - [Theme System — Base Themes](https://base-themes.bangwu.me/themes): Explore Bento, shadcn, neo brutalism, minimal, enterprise, glass, terminal, and other token-based React UI themes.
 - [Install Base Themes for React](https://base-themes.bangwu.me/docs/installation): Install base-themes from npm, import the bundled styles, and use typed Base UI React wrappers in Vite, Next.js, Remix, or any React app.

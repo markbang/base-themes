@@ -1,7 +1,7 @@
 {
   "name": "Base Themes",
   "short_name": "Base Themes",
-  "description": "Themeable Base UI React components with production tokens and 20 visual styles.",
+  "description": "Themeable Base UI React components with production tokens and 22 visual styles.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
