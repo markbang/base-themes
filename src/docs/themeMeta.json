@@ -19,5 +19,6 @@
   { "style": "soft-ui", "label": "Soft UI", "description": "Low-contrast tactile controls with inset and raised shadows." },
   { "style": "bauhaus", "label": "Bauhaus", "description": "Geometric composition with primary colors and strong graphic contrast." },
   { "style": "mono", "label": "Mono", "description": "Black-and-white ink system with no decorative color dependency." },
-  { "style": "studio", "label": "Studio", "description": "Neta Studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents." }
+  { "style": "studio", "label": "Studio", "description": "Neta Studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents." },
+  { "style": "cohub", "label": "Cohub", "description": "Cohub 官方默认风格：暖白与冷石墨中性色配橙色品牌强调，清晰温暖且具有技术产品感。" }
 ]

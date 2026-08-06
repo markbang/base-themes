@@ -416,6 +416,12 @@
       "type": "registry:theme",
       "title": "Studio Theme",
       "description": "Neta Studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents."
+    },
+    {
+      "name": "theme-cohub",
+      "type": "registry:theme",
+      "title": "Cohub Theme",
+      "description": "Cohub 官方默认风格：暖白与冷石墨中性色配橙色品牌强调，清晰温暖且具有技术产品感。"
     }
   ]
 }

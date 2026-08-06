@@ -1906,3 +1906,126 @@
 [data-style='mono'] {
   --theme-letter-spacing: -0.01em;
 }
+
+/* cohub — official Cohub palette: warm neutrals (light) / cool graphite (dark) with orange brand accent */
+
+[data-style='cohub'],
+[data-style='cohub'][data-theme='dark'] {
+  --bg: oklch(14% 0.003 250);
+  --surface: oklch(18% 0.004 250);
+  --surface-strong: oklch(94% 0.004 250);
+  --surface-muted: oklch(22% 0.005 250);
+  --text: oklch(82% 0.006 250);
+  --text-strong: oklch(94% 0.004 250);
+  --text-muted: oklch(58% 0.01 250);
+  --line: oklch(54% 0.012 250 / 0.24);
+  --line-strong: oklch(54% 0.012 250 / 0.4);
+  --accent: oklch(60% 0.2 30);
+  --accent-strong: oklch(55% 0.22 30);
+  --teal: oklch(72% 0.1 230);
+  --blue: oklch(72% 0.1 230);
+  --green: oklch(78% 0.12 160);
+  --cohub-brand: var(--accent);
+  --cohub-brand-400-rgb: oklch(60% 0.2 30);
+  --cohub-brand-500-rgb: oklch(55% 0.22 30);
+  --cohub-brand-600-rgb: oklch(45% 0.2 30);
+  --cohub-brand-muted: oklch(22% 0.06 30);
+  --cohub-brand-ring: color-mix(in srgb, var(--cohub-brand) 30%, transparent);
+  --cohub-brand-border: color-mix(in srgb, var(--cohub-brand) 42%, transparent);
+  --cohub-neutral-100-rgb: oklch(14% 0.003 250);
+  --cohub-neutral-40-rgb: oklch(54% 0.012 250);
+  --cohub-text-placeholder: oklch(54% 0.012 250);
+  --cohub-bg-content: oklch(18% 0.004 250);
+  --cohub-bg-input: oklch(100% 0 0 / 0.06);
+  --cohub-bg-hover: oklch(100% 0 0 / 0.06);
+  --cohub-success-400-rgb: oklch(78% 0.12 160);
+  --cohub-success-500-rgb: oklch(70% 0.13 160);
+  --cohub-warning-400-rgb: oklch(82% 0.12 80);
+  --cohub-error-400-rgb: oklch(68% 0.18 25);
+  --cohub-error-500-rgb: oklch(62% 0.2 25);
+  --cohub-info-400-rgb: oklch(72% 0.1 230);
+  --shadow: 0 18px 42px oklch(0% 0 0 / 0.34);
+  --shadow-strong: 0 24px 56px oklch(0% 0 0 / 0.4);
+  --radius: 8px;
+  --radius-sm: 6px;
+  --topbar-bg: oklch(14% 0.003 250 / 0.94);
+  --topbar-border: oklch(100% 0 0 / 0.08);
+  --card-bg: oklch(18% 0.004 250);
+  --chip-bg: oklch(100% 0 0 / 0.06);
+  --group-bg: oklch(22% 0.005 250);
+  --nav-bg: oklch(18% 0.004 250);
+  --track-bg: oklch(32% 0.007 250);
+  --switch-off-bg: oklch(32% 0.007 250);
+  --hero-text: oklch(94% 0.004 250);
+  --backdrop: oklch(0% 0 0 / 0.6);
+  --code-bg: oklch(18% 0.004 250);
+  --code-text: oklch(90% 0.005 250);
+  --code-keyword: oklch(65% 0.16 30);
+  --code-string: oklch(70% 0.13 160);
+  --code-component: oklch(72% 0.1 230);
+  --code-tag: oklch(68% 0.18 25);
+  --code-number: oklch(82% 0.12 80);
+  --code-comment: oklch(58% 0.01 250 / 0.7);
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: oklch(100% 0 0 / 0.14);
+  --scrollbar-thumb-hover: oklch(100% 0 0 / 0.24);
+  --selection-bg: color-mix(in srgb, var(--accent) 32%, transparent);
+  --selection-text: oklch(94% 0.004 250);
+}
+
+[data-style='cohub'][data-theme='light'] {
+  --bg: oklch(100% 0 0);
+  --surface: oklch(99% 0.001 250);
+  --surface-strong: oklch(8% 0.003 250);
+  --surface-muted: oklch(96% 0.003 250);
+  --text: oklch(35% 0.008 250);
+  --text-strong: oklch(8% 0.003 250);
+  --text-muted: oklch(65% 0.012 250);
+  --line: oklch(50% 0.01 250 / 0.2);
+  --line-strong: oklch(50% 0.01 250 / 0.36);
+  --accent: oklch(58% 0.18 30);
+  --accent-strong: oklch(52% 0.2 30);
+  --teal: oklch(45% 0.12 230);
+  --blue: oklch(45% 0.12 230);
+  --green: oklch(45% 0.12 160);
+  --cohub-brand-400-rgb: oklch(58% 0.18 30);
+  --cohub-brand-500-rgb: oklch(52% 0.2 30);
+  --cohub-brand-600-rgb: oklch(45% 0.18 30);
+  --cohub-brand-muted: oklch(94% 0.03 30);
+  --cohub-neutral-100-rgb: oklch(100% 0 0);
+  --cohub-neutral-40-rgb: oklch(78% 0.01 250);
+  --cohub-text-placeholder: oklch(78% 0.01 250);
+  --cohub-bg-content: oklch(99% 0.001 250);
+  --cohub-bg-input: oklch(0% 0 0 / 0.04);
+  --cohub-bg-hover: oklch(0% 0 0 / 0.04);
+  --cohub-success-400-rgb: oklch(45% 0.12 160);
+  --cohub-success-500-rgb: oklch(38% 0.14 160);
+  --cohub-warning-400-rgb: oklch(50% 0.12 80);
+  --cohub-error-400-rgb: oklch(45% 0.16 25);
+  --cohub-error-500-rgb: oklch(38% 0.18 25);
+  --cohub-info-400-rgb: oklch(45% 0.12 230);
+  --shadow: 0 12px 28px oklch(0% 0 0 / 0.12);
+  --shadow-strong: 0 20px 48px oklch(0% 0 0 / 0.16);
+  --topbar-bg: oklch(100% 0 0 / 0.9);
+  --topbar-border: oklch(50% 0.01 250 / 0.12);
+  --card-bg: oklch(99% 0.001 250);
+  --chip-bg: oklch(0% 0 0 / 0.05);
+  --group-bg: oklch(96% 0.003 250);
+  --nav-bg: oklch(99% 0.001 250);
+  --track-bg: oklch(90% 0.006 250);
+  --switch-off-bg: oklch(90% 0.006 250);
+  --hero-text: oklch(8% 0.003 250);
+  --backdrop: oklch(0% 0 0 / 0.4);
+  --code-bg: oklch(96% 0.003 250);
+  --code-text: oklch(18% 0.005 250);
+  --code-keyword: oklch(52% 0.2 30);
+  --code-string: oklch(38% 0.14 160);
+  --code-component: oklch(38% 0.14 230);
+  --code-tag: oklch(38% 0.18 25);
+  --code-number: oklch(42% 0.14 80);
+  --code-comment: oklch(50% 0.01 250 / 0.7);
+  --scrollbar-thumb: oklch(0% 0 0 / 0.16);
+  --scrollbar-thumb-hover: oklch(0% 0 0 / 0.28);
+  --selection-bg: color-mix(in srgb, var(--accent) 28%, transparent);
+  --selection-text: oklch(8% 0.003 250);
+}

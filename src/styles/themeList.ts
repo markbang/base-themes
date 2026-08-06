@@ -22,6 +22,7 @@ export const themeStyles = [
   'bauhaus',
   'mono',
   'studio',
+  'cohub',
 ] as const
 
 export type ThemeStyle = (typeof themeStyles)[number]

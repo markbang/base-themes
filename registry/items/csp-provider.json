@@ -46,7 +46,8 @@
         "soft-ui",
         "bauhaus",
         "mono",
-        "studio"
+        "studio",
+        "cohub"
       ],
       "styleContract": [
         "data-style",
