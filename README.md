@@ -11,7 +11,7 @@ Docs: <https://base-themes.bangwu.me/>
 ## Highlights
 
 - **Base UI behavior:** focus management, keyboard interaction, portals, and overlay primitives come from `@base-ui/react`.
-- **20 visual styles:** Bento, shadcn, Neo Brutalism, Enterprise, Linear, Glass, Terminal, Material, Fluent, Cyberpunk, Mono, and more.
+- **21 visual styles:** Bento, shadcn, Neo Brutalism, Enterprise, Linear, Glass, Terminal, Material, Fluent, Cyberpunk, Mono, Studio, and more.
 - **CSS-token theming:** switch style and color mode with `data-style` and `data-theme`; customize stable `--bt-*` tokens without a JavaScript theme runtime.
 - **Registry-first distribution:** components, blocks, theme files, dependencies, metadata, and source-copy plans are available from package exports and shadcn-style registry JSON.
 - **Useful blocks included:** dashboard shell, auth card, pricing panel, data table, command palette, team activity feed, settings form, and theme showcase card.
@@ -58,7 +58,7 @@ declare module 'base-themes/styles.css'
 
 Available styles:
 
-`bento`, `shadcn`, `neo-brutalism`, `minimal`, `enterprise`, `linear`, `glass`, `terminal`, `material`, `fluent`, `retro`, `cyberpunk`, `editorial`, `calm`, `data-dense`, `playful`, `luxury`, `soft-ui`, `bauhaus`, `mono`.
+`bento`, `shadcn`, `neo-brutalism`, `minimal`, `enterprise`, `linear`, `glass`, `terminal`, `material`, `fluent`, `retro`, `cyberpunk`, `editorial`, `calm`, `data-dense`, `playful`, `luxury`, `soft-ui`, `bauhaus`, `mono`, `studio`.
 
 Theme previews are generated from the same docs app and live under [public/previews](./public/previews).
 

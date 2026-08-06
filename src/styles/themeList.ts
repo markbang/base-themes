@@ -21,6 +21,7 @@ export const themeStyles = [
   'soft-ui',
   'bauhaus',
   'mono',
+  'studio',
 ] as const
 
 export type ThemeStyle = (typeof themeStyles)[number]

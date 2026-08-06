@@ -49,6 +49,30 @@
   --theme-primary-hover: color-mix(in srgb, var(--teal), #000000 18%);
 }
 
+[data-style='studio'] {
+  --theme-primary: var(--accent);
+  --theme-primary-hover: var(--accent-strong);
+  --theme-primary-foreground: var(--studio-contrast);
+  --theme-teal-foreground: var(--studio-contrast);
+  --theme-control-bg: var(--surface);
+  --theme-control-hover: var(--studio-hover);
+  --theme-control-active: var(--studio-active);
+  --theme-control-active-text: var(--text-strong);
+  --theme-popup-bg: var(--surface);
+  --theme-popup-text: var(--text-strong);
+  --theme-focus: color-mix(in srgb, var(--accent), transparent 62%);
+  --theme-danger: #c45d55;
+  --theme-danger-foreground: var(--studio-contrast);
+}
+
+[data-style='studio'][data-theme='dark'] {
+  --theme-danger: oklch(70% 0.15 30);
+}
+
+[data-style='studio'][data-theme='light'] {
+  --theme-danger: #b74940;
+}
+
 [data-style='luxury'][data-theme='light'] {
   --accent: #77551d;
   --accent-strong: #5d4319;

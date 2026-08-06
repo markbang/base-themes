@@ -410,6 +410,12 @@
       "type": "registry:theme",
       "title": "Mono Theme",
       "description": "Black-and-white ink system with no decorative color dependency."
+    },
+    {
+      "name": "theme-studio",
+      "type": "registry:theme",
+      "title": "Studio Theme",
+      "description": "Neta Studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents."
     }
   ]
 }

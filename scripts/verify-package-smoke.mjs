@@ -105,7 +105,7 @@ if (missingKeywords.length > 0) {
   process.exit(1)
 }
 
-const requiredDescriptionPhrases = ['Accessible Base UI React components', '20 themes', 'registry metadata', 'agent-friendly workflows']
+const requiredDescriptionPhrases = ['Accessible Base UI React components', '21 themes', 'registry metadata', 'agent-friendly workflows']
 const missingDescriptionPhrases = requiredDescriptionPhrases.filter((phrase) => !packageJson.description?.includes(phrase))
 if (missingDescriptionPhrases.length > 0) {
   console.error(`Package smoke failed. npm description is missing strategic positioning: ${missingDescriptionPhrases.join(', ')}`)
@@ -146,7 +146,7 @@ if (missingPrepackChecks.length > 0) {
   process.exit(1)
 }
 
-if (registry.components.length < 40 || registry.style.variants.length !== 20) {
+if (registry.components.length < 40 || registry.style.variants.length !== 21) {
   console.error('Package smoke failed. Registry shape does not match expected component/theme coverage.')
   process.exit(1)
 }
@@ -274,12 +274,12 @@ if (!html.includes('Save changes') || !html.includes('bento-button')) {
 }
 
 const cliList = execFileSync('node', ['bin/base-themes.mjs', 'list'], { encoding: 'utf8' })
-if (!cliList.includes('Components (40)') || !cliList.includes('Blocks (8)') || !cliList.includes('Styles (20)')) {
+if (!cliList.includes('Components (40)') || !cliList.includes('Blocks (8)') || !cliList.includes('Styles (21)')) {
   console.error('Package smoke failed. CLI list output does not include expected registry coverage.')
   process.exit(1)
 }
 const cliListJson = JSON.parse(execFileSync('node', ['bin/base-themes.mjs', 'list', '--json'], { encoding: 'utf8' }))
-if (cliListJson.components?.length !== 40 || cliListJson.blocks?.length !== 8 || cliListJson.style?.variants?.length !== 20) {
+if (cliListJson.components?.length !== 40 || cliListJson.blocks?.length !== 8 || cliListJson.style?.variants?.length !== 21) {
   console.error('Package smoke failed. CLI list --json output does not include expected registry coverage.')
   process.exit(1)
 }

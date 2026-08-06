@@ -1,6 +1,6 @@
 # Base Themes Full Agent Context
 
-Base Themes is a package-first React component system built on Base UI primitives. It provides typed component wrappers, CSS token themes, 20 visual styles, source-copy registry metadata, product blocks, runnable examples, and agent-oriented verification workflows.
+Base Themes is a package-first React component system built on Base UI primitives. It provides typed component wrappers, CSS token themes, 21 visual styles, source-copy registry metadata, product blocks, runnable examples, and agent-oriented verification workflows.
 
 ## Primary Goals
 
@@ -144,6 +144,7 @@ import 'base-themes/styles.css'
 - [Soft UI React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/soft-ui): Low-contrast tactile controls with inset and raised shadows. Preview the Soft UI visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
 - [Bauhaus React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/bauhaus): Geometric composition with primary colors and strong graphic contrast. Preview the Bauhaus visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
 - [Mono React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/mono): Black-and-white ink system with no decorative color dependency. Preview the Mono visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
+- [Studio React UI Theme — Base Themes](https://base-themes.bangwu.me/themes/studio): Neta Studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents. Preview the Studio visual style for typed Base UI React components, CSS tokens, and registry-ready product UI workflows.
 - [Dashboard Shell React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/dashboard-shell): Operational dashboard header with metrics, progress, and health status. Copy the Dashboard Shell block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
 - [Settings Form React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/settings-form): Workspace settings form with fields, density selection, and switches. Copy the Settings Form block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
 - [Auth Card React UI Block — Base Themes](https://base-themes.bangwu.me/blocks/auth-card): Focused sign-in card with email, password, remembered device, and SSO action. Copy the Auth Card block from Base Themes with accessible Base UI components, CSS tokens, and registry metadata.
@@ -229,6 +230,7 @@ import 'base-themes/styles.css'
 - [Soft UI](https://base-themes.bangwu.me/themes/soft-ui): style `soft-ui`; Low-contrast tactile controls with inset and raised shadows.
 - [Bauhaus](https://base-themes.bangwu.me/themes/bauhaus): style `bauhaus`; Geometric composition with primary colors and strong graphic contrast.
 - [Mono](https://base-themes.bangwu.me/themes/mono): style `mono`; Black-and-white ink system with no decorative color dependency.
+- [Studio](https://base-themes.bangwu.me/themes/studio): style `studio`; Neta Studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents.
 
 ## Registry Item Examples
 

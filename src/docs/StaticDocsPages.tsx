@@ -700,7 +700,7 @@ npx base-themes list --json
 # Output includes:
 # Components (40)
 # Blocks (8)
-# Styles (20)
+# Styles (21)
 # Pages (15)`} />
 
       <ComponentDemo

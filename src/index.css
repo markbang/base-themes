@@ -6,6 +6,7 @@
 @import './styles/terminal.css';
 @import './styles/material.css';
 @import './styles/glass.css';
+@import './styles/studio.css';
 
 :root {
   color: var(--bt-text);

@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "theme-neo-brutalism",
+  "name": "theme-studio",
   "type": "registry:theme",
-  "title": "Neo Brutalism Theme",
-  "description": "Hard borders, loud accents, and offset block shadows.",
+  "title": "Studio Theme",
+  "description": "Neta Studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents.",
   "files": [
     {
       "path": "src/index.css",
@@ -62,25 +62,25 @@
   ],
   "meta": {
     "preview": {
-      "light": "/previews/base-themes-neo-brutalism.png"
+      "light": "/previews/base-themes-studio.png"
     },
     "baseThemes": {
-      "style": "neo-brutalism",
-      "label": "Neo Brutalism",
+      "style": "studio",
+      "label": "Studio",
       "defaultMode": "light",
       "supportsModes": [
         "light",
         "dark"
       ],
       "dataAttributes": {
-        "style": "neo-brutalism",
+        "style": "studio",
         "theme": "light"
       }
     },
     "agent": {
-      "summary": "Use the Neo Brutalism theme when the user wants hard borders, loud accents, and offset block shadows.",
+      "summary": "Use the Studio theme when the user wants neta studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents.",
       "whenToUse": [
-        "Neo Brutalism",
+        "Studio",
         "CSS variable theme",
         "Base Themes visual style"
       ],
@@ -90,22 +90,22 @@
       "packageInstall": [
         "npm install base-themes @base-ui/react react react-dom",
         "import base-themes/styles.css once",
-        "set data-style=\"neo-brutalism\"",
+        "set data-style=\"studio\"",
         "set data-theme=\"light\" or data-theme=\"dark\""
       ],
       "sourceCopy": [
-        "fetch /registry/items/theme-neo-brutalism.json",
+        "fetch /registry/items/theme-studio.json",
         "copy every files[].path to files[].target",
         "copy src/styles/tokenContract.json when generating overrides"
       ],
       "installPlan": [
         "import base-themes/styles.css once",
-        "set data-style=\"neo-brutalism\"",
+        "set data-style=\"studio\"",
         "set data-theme=\"light\" or data-theme=\"dark\"",
-        "or fetch /registry/items/theme-neo-brutalism.json for source-copy"
+        "or fetch /registry/items/theme-studio.json for source-copy"
       ],
       "prompts": [
-        "Create a React settings screen using Base Themes with data-style=\"neo-brutalism\"."
+        "Create a React settings screen using Base Themes with data-style=\"studio\"."
       ]
     }
   }

@@ -589,7 +589,7 @@ function LandingPage() {
       </section>
       <section className="landing-stats" aria-label="Project stats">
         <div className="landing-stat"><strong>40</strong><span>components</span></div>
-        <div className="landing-stat"><strong>20</strong><span>themes</span></div>
+        <div className="landing-stat"><strong>21</strong><span>themes</span></div>
         <div className="landing-stat"><strong>8</strong><span>blocks</span></div>
       </section>
       <section className="landing-quickstart" aria-labelledby="quickstart-title">
