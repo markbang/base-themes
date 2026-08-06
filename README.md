@@ -11,7 +11,7 @@ Docs: <https://base-themes.bangwu.me/>
 ## Highlights
 
 - **Base UI behavior:** focus management, keyboard interaction, portals, and overlay primitives come from `@base-ui/react`.
-- **21 visual styles:** Bento, shadcn, Neo Brutalism, Enterprise, Linear, Glass, Terminal, Material, Fluent, Cyberpunk, Mono, Studio, and more.
+- **22 visual styles:** Bento, shadcn, Neo Brutalism, Enterprise, Linear, Glass, Terminal, Material, Fluent, Cyberpunk, Mono, Studio, Cohub, and more.
 - **CSS-token theming:** switch style and color mode with `data-style` and `data-theme`; customize stable `--bt-*` tokens without a JavaScript theme runtime.
 - **Registry-first distribution:** components, blocks, theme files, dependencies, metadata, and source-copy plans are available from package exports and shadcn-style registry JSON.
 - **Useful blocks included:** dashboard shell, auth card, pricing panel, data table, command palette, team activity feed, settings form, and theme showcase card.
@@ -24,8 +24,8 @@ npm install base-themes @base-ui/react react react-dom
 ```
 
 ```tsx
-import 'base-themes/styles.css'
-import { Button, Select } from 'base-themes'
+import "base-themes/styles.css";
+import { Button, Select } from "base-themes";
 
 export function App() {
   return (
@@ -35,10 +35,14 @@ export function App() {
         id="density"
         label="Density"
         defaultValue="comfortable"
-        items={{ compact: 'Compact', comfortable: 'Comfortable', spacious: 'Spacious' }}
+        items={{
+          compact: "Compact",
+          comfortable: "Comfortable",
+          spacious: "Spacious",
+        }}
       />
     </main>
-  )
+  );
 }
 ```
 
@@ -47,18 +51,18 @@ Portaled components such as `Select`, `Combobox`, `Dialog`, `Popover`, and `Tool
 Strict TypeScript projects may also need:
 
 ```ts
-declare module 'base-themes/styles.css'
+declare module "base-themes/styles.css";
 ```
 
 ## Themes
 
 ```html
-<html data-style="shadcn" data-theme="dark">
+<html data-style="shadcn" data-theme="dark"></html>
 ```
 
 Available styles:
 
-`bento`, `shadcn`, `neo-brutalism`, `minimal`, `enterprise`, `linear`, `glass`, `terminal`, `material`, `fluent`, `retro`, `cyberpunk`, `editorial`, `calm`, `data-dense`, `playful`, `luxury`, `soft-ui`, `bauhaus`, `mono`, `studio`.
+`bento`, `shadcn`, `neo-brutalism`, `minimal`, `enterprise`, `linear`, `glass`, `terminal`, `material`, `fluent`, `retro`, `cyberpunk`, `editorial`, `calm`, `data-dense`, `playful`, `luxury`, `soft-ui`, `bauhaus`, `mono`, `studio`, `cohub`.
 
 Theme previews are generated from the same docs app and live under [public/previews](./public/previews).
 
@@ -71,7 +75,7 @@ Base Themes wraps the common Base UI surface with shared styles and typed React 
 ## Blocks
 
 ```tsx
-import { DashboardShell, SettingsForm } from 'base-themes'
+import { DashboardShell, SettingsForm } from "base-themes";
 ```
 
 Blocks are source-copyable and exported from the package:
@@ -92,11 +96,11 @@ See `/blocks` in the docs app for previews and detail routes.
 The package exposes registry artifacts for copy-based workflows:
 
 ```ts
-import registry from 'base-themes/registry.json'
-import shadcnRegistry from 'base-themes/shadcn-registry.json'
-import buttonItem from 'base-themes/registry/items/button.json'
-import themeMeta from 'base-themes/theme-meta.json'
-import tokenContract from 'base-themes/token-contract.json'
+import registry from "base-themes/registry.json";
+import shadcnRegistry from "base-themes/shadcn-registry.json";
+import buttonItem from "base-themes/registry/items/button.json";
+import themeMeta from "base-themes/theme-meta.json";
+import tokenContract from "base-themes/token-contract.json";
 ```
 
 CLI commands:

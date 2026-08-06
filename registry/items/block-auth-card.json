@@ -59,7 +59,8 @@
         "soft-ui",
         "bauhaus",
         "mono",
-        "studio"
+        "studio",
+        "cohub"
       ]
     },
     "agent": {

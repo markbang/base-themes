@@ -54,6 +54,11 @@
       "path": "src/styles/studio.css",
       "type": "registry:file",
       "target": "@/styles/base-themes/studio.css"
+    },
+    {
+      "path": "src/styles/cohub.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/cohub.css"
     }
   ],
   "categories": [

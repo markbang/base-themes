@@ -1,0 +1,425 @@
+/* cohub - official Cohub product palette and component treatment */
+/* Base palette and legacy token mappings live in tokens.css. */
+
+[data-style="cohub"] {
+  --theme-primary: var(--cohub-brand-400-rgb);
+  --theme-primary-hover: var(--cohub-brand-500-rgb);
+  --theme-primary-foreground: var(--cohub-neutral-100-rgb);
+  --theme-teal-foreground: var(--cohub-neutral-100-rgb);
+  --theme-control-bg: var(--surface);
+  --theme-control-hover: var(--cohub-bg-hover);
+  --theme-control-active: var(--cohub-brand-muted);
+  --theme-control-active-text: var(--text-strong);
+  --theme-popup-bg: var(--surface);
+  --theme-popup-text: var(--text-strong);
+  --theme-focus: var(--cohub-brand-ring);
+  --theme-danger: var(--cohub-error-500-rgb);
+  --theme-danger-foreground: var(--cohub-neutral-100-rgb);
+  --theme-border-width: 1px;
+  --theme-font-weight: 650;
+  --theme-transition-duration: 160ms;
+  --theme-letter-spacing: 0;
+  --theme-control-height: 40px;
+
+  --cohub-control-shadow: 0 1px 2px oklch(0% 0 0 / 0.06);
+  --cohub-focus-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--cohub-brand) 24%, transparent);
+  --cohub-popup-shadow: 0 12px 28px oklch(0% 0 0 / 0.12);
+}
+
+[data-style="cohub"][data-theme="dark"] {
+  --theme-primary-foreground: var(--cohub-neutral-100-rgb);
+  --theme-teal-foreground: var(--cohub-neutral-100-rgb);
+  --theme-danger-foreground: var(--cohub-neutral-100-rgb);
+  --cohub-control-shadow: 0 1px 2px oklch(0% 0 0 / 0.28);
+  --cohub-popup-shadow: 0 18px 42px oklch(0% 0 0 / 0.34);
+}
+
+/* Focus ring */
+[data-style="cohub"]
+  :where(button, a, [role="button"], [tabindex]):focus-visible,
+[data-style="cohub"] [data-base-ui-trigger]:focus-visible,
+[data-style="cohub"] [data-base-ui-item]:focus-visible {
+  outline: 2px solid var(--cohub-brand-400-rgb);
+  outline-offset: 2px;
+}
+
+[data-style="cohub"] .bento-input:focus,
+[data-style="cohub"] .bento-textarea:focus,
+[data-style="cohub"] .bento-combobox-input:focus,
+[data-style="cohub"] .bento-number-field-group:focus-within,
+[data-style="cohub"] .bento-number-field-input:focus-visible,
+[data-style="cohub"] .bento-otp-input:focus-visible {
+  outline: none;
+  border-color: var(--cohub-brand-400-rgb);
+  box-shadow: var(--cohub-focus-shadow);
+  caret-color: var(--cohub-brand-400-rgb);
+}
+
+/* Buttons */
+[data-style="cohub"] .bento-button {
+  min-height: var(--theme-control-height);
+  border-radius: var(--radius-sm);
+  font-weight: var(--theme-font-weight);
+  letter-spacing: var(--theme-letter-spacing);
+  transition:
+    background var(--theme-transition-duration) ease,
+    border-color var(--theme-transition-duration) ease,
+    box-shadow var(--theme-transition-duration) ease,
+    transform var(--theme-transition-duration) ease;
+}
+
+[data-style="cohub"]
+  .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(.teal),
+[data-style="cohub"] .bento-button.accent {
+  color: var(--theme-primary-foreground);
+  background: var(--theme-primary);
+  box-shadow: var(--cohub-control-shadow);
+}
+
+[data-style="cohub"]
+  .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(
+    .teal
+  ):hover,
+[data-style="cohub"] .bento-button.accent:hover {
+  color: var(--theme-primary-foreground);
+  background: var(--theme-primary-hover);
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-1px);
+}
+
+[data-style="cohub"]
+  .bento-button:not(.outline):not(.ghost):not(.icon):not(.accent):not(
+    .teal
+  ):active,
+[data-style="cohub"] .bento-button.accent:active {
+  transform: translateY(0);
+}
+
+[data-style="cohub"] .bento-button.outline,
+[data-style="cohub"] .bento-button.icon {
+  border-color: var(--line);
+  color: var(--text-strong);
+  background: var(--theme-control-bg);
+  box-shadow: none;
+}
+
+[data-style="cohub"] .bento-button.outline:hover,
+[data-style="cohub"] .bento-button.icon:hover {
+  border-color: var(--line-strong);
+  color: var(--text-strong);
+  background: var(--theme-control-hover);
+  box-shadow: var(--cohub-control-shadow);
+}
+
+[data-style="cohub"] .bento-button.ghost {
+  color: var(--text-strong);
+  background: transparent;
+  box-shadow: none;
+}
+
+[data-style="cohub"] .bento-button.ghost:hover {
+  color: var(--text-strong);
+  background: var(--theme-control-hover);
+}
+
+[data-style="cohub"] .bento-button.teal {
+  color: var(--theme-teal-foreground);
+  background: var(--cohub-success-500-rgb);
+  box-shadow: var(--cohub-control-shadow);
+}
+
+[data-style="cohub"] .bento-button.teal:hover {
+  color: var(--theme-teal-foreground);
+  background: var(--cohub-success-400-rgb);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Inputs and select triggers */
+[data-style="cohub"] .bento-input,
+[data-style="cohub"] .bento-textarea,
+[data-style="cohub"] .bento-combobox-input,
+[data-style="cohub"] .bento-select-trigger,
+[data-style="cohub"] .bento-number-field-group,
+[data-style="cohub"] .bento-otp-input {
+  border-color: var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-strong);
+  background: var(--cohub-bg-input);
+  box-shadow: none;
+  transition:
+    background var(--theme-transition-duration) ease,
+    border-color var(--theme-transition-duration) ease,
+    box-shadow var(--theme-transition-duration) ease;
+}
+
+[data-style="cohub"] .bento-input::placeholder,
+[data-style="cohub"] .bento-textarea::placeholder,
+[data-style="cohub"] .bento-combobox-input::placeholder {
+  color: var(--cohub-text-placeholder);
+}
+
+[data-style="cohub"] .bento-select-trigger:hover,
+[data-style="cohub"] .bento-input:hover,
+[data-style="cohub"] .bento-textarea:hover,
+[data-style="cohub"] .bento-combobox-input:hover {
+  border-color: var(--cohub-neutral-40-rgb);
+}
+
+[data-style="cohub"] .bento-select-trigger:focus-visible {
+  outline: 2px solid var(--cohub-brand-400-rgb);
+  outline-offset: 2px;
+  border-color: var(--cohub-brand-400-rgb);
+  box-shadow: var(--cohub-focus-shadow);
+}
+
+[data-style="cohub"] .bento-select-trigger[data-open],
+[data-style="cohub"] .bento-combobox-input[data-open] {
+  border-color: var(--cohub-brand-400-rgb);
+  box-shadow: var(--cohub-focus-shadow);
+}
+
+[data-style="cohub"] .bento-field-label,
+[data-style="cohub"] .field-label {
+  color: var(--text-muted);
+}
+
+[data-style="cohub"] .bento-field-error,
+[data-style="cohub"] .bento-input + .bento-field-error {
+  color: var(--cohub-error-500-rgb);
+}
+
+[data-style="cohub"] .bento-field[data-invalid] .bento-input,
+[data-style="cohub"] .bento-field[data-invalid] .bento-textarea,
+[data-style="cohub"] .bento-field[data-invalid] .bento-combobox-input,
+[data-style="cohub"] .bento-field[data-invalid] .bento-select-trigger,
+[data-style="cohub"] .bento-input[aria-invalid="true"],
+[data-style="cohub"] .bento-textarea[aria-invalid="true"],
+[data-style="cohub"] .bento-combobox-input[aria-invalid="true"] {
+  border-color: var(--cohub-error-500-rgb);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--cohub-error-500-rgb) 18%, transparent);
+}
+
+/* Menus, popovers, dialogs, and other overlays */
+[data-style="cohub"] .bento-menu-popup,
+[data-style="cohub"] .bento-select-popup,
+[data-style="cohub"] .bento-combobox-popup,
+[data-style="cohub"] .bento-nav-menu-popup,
+[data-style="cohub"] .bento-popover-popup,
+[data-style="cohub"] .bento-preview-card,
+[data-style="cohub"] .bento-tooltip-popup,
+[data-style="cohub"] .bento-toast,
+[data-style="cohub"] .bento-dialog-popup,
+[data-style="cohub"] .bento-alert-popup,
+[data-style="cohub"] .bento-drawer-popup {
+  border-color: var(--line);
+  border-radius: 8px;
+  color: var(--theme-popup-text);
+  background: var(--theme-popup-bg);
+  box-shadow: var(--cohub-popup-shadow);
+}
+
+[data-style="cohub"] .bento-popover-arrow,
+[data-style="cohub"] .bento-preview-card-arrow,
+[data-style="cohub"] .bento-tooltip-arrow {
+  fill: var(--theme-popup-bg);
+}
+
+[data-style="cohub"] .bento-menu-item[data-highlighted],
+[data-style="cohub"] .bento-combobox-item[data-highlighted],
+[data-style="cohub"] .bento-select-item[data-highlighted],
+[data-style="cohub"] .bento-nav-menu-item[data-highlighted],
+[data-style="cohub"] .bento-toolbar-button:hover,
+[data-style="cohub"] .bento-number-field-button:hover,
+[data-style="cohub"] .bento-toast-close:hover {
+  color: var(--theme-control-active-text);
+  background: var(--theme-control-hover);
+}
+
+[data-style="cohub"] .bento-select-item[data-selected],
+[data-style="cohub"] .bento-combobox-item[data-selected] {
+  color: var(--cohub-brand-600-rgb);
+  font-weight: 700;
+}
+
+[data-style="cohub"] .bento-select-item[data-selected][data-highlighted],
+[data-style="cohub"] .bento-combobox-item[data-selected][data-highlighted] {
+  color: var(--theme-control-active-text);
+  background: var(--theme-control-active);
+}
+
+/* Tabs, toggles, and navigation active states */
+[data-style="cohub"] .bento-tabs-list {
+  border-color: var(--line);
+  border-radius: var(--radius);
+  background: var(--cohub-bg-content);
+}
+
+[data-style="cohub"] .bento-tabs-tab {
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  transition:
+    color var(--theme-transition-duration) ease,
+    background var(--theme-transition-duration) ease;
+}
+
+[data-style="cohub"] .bento-tabs-tab:hover {
+  color: var(--text-strong);
+  background: var(--cohub-brand-muted);
+}
+
+[data-style="cohub"] .bento-tabs-tab[data-selected],
+[data-style="cohub"] .bento-tabs-tab[data-active],
+[data-style="cohub"] .bento-tabs-tab[aria-selected="true"] {
+  color: var(--cohub-brand-600-rgb);
+}
+
+[data-style="cohub"] .bento-tabs-indicator,
+[data-style="cohub"] .bento-toggle[data-pressed],
+[data-style="cohub"] .bento-toolbar-button[data-pressed],
+[data-style="cohub"] .bento-menubar-trigger[data-open],
+[data-style="cohub"] .style-switcher button.active,
+[data-style="cohub"] .style-switcher a.active {
+  color: var(--theme-control-active-text);
+  background: var(--theme-control-active);
+  box-shadow: inset 0 0 0 1px var(--cohub-brand-border);
+}
+
+[data-style="cohub"] .topbar-nav a:hover,
+[data-style="cohub"] .topbar-nav a.active,
+[data-style="cohub"] .sidebar-link:hover,
+[data-style="cohub"] .sidebar-link.active {
+  color: var(--text-strong);
+  background: var(--theme-control-hover);
+}
+
+/* Switches and form indicators */
+[data-style="cohub"] .bento-checkbox[data-checked],
+[data-style="cohub"] .bento-radio[data-checked],
+[data-style="cohub"] .bento-switch[data-checked] {
+  border-color: var(--cohub-brand-400-rgb);
+  background: var(--cohub-brand-400-rgb);
+}
+
+[data-style="cohub"] .bento-checkbox,
+[data-style="cohub"] .bento-radio,
+[data-style="cohub"] .bento-switch {
+  border-radius: var(--radius-sm);
+}
+
+[data-style="cohub"] .bento-switch {
+  border-radius: 999px;
+  background: var(--track-bg);
+}
+
+[data-style="cohub"] .bento-switch-thumb {
+  background: var(--surface);
+  box-shadow: var(--cohub-control-shadow);
+}
+
+[data-style="cohub"] .bento-checkbox[data-checked],
+[data-style="cohub"] .bento-checkbox[data-checked] svg,
+[data-style="cohub"] .bento-radio-indicator {
+  color: var(--theme-primary-foreground);
+}
+
+[data-style="cohub"] .bento-radio-indicator,
+[data-style="cohub"] .bento-slider-indicator,
+[data-style="cohub"] .bento-slider-thumb,
+[data-style="cohub"] .bento-progress-indicator,
+[data-style="cohub"] .bento-meter-mid {
+  background: var(--cohub-brand-400-rgb);
+}
+
+[data-style="cohub"] .bento-slider-thumb {
+  border-color: var(--surface);
+  box-shadow: var(--cohub-control-shadow);
+}
+
+[data-style="cohub"] .bento-progress-indicator {
+  background: var(--cohub-brand-400-rgb);
+}
+
+[data-style="cohub"] .bento-meter-high {
+  background: var(--cohub-success-500-rgb);
+}
+
+[data-style="cohub"] .bento-meter-low {
+  color: var(--cohub-error-500-rgb);
+  background: var(--cohub-error-500-rgb);
+}
+
+/* Status points */
+[data-style="cohub"] :where(.component-status-dot, .status-dot) {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--cohub-neutral-40-rgb);
+}
+
+[data-style="cohub"] .component-status-dot.ready,
+[data-style="cohub"] .component-status-dot.success,
+[data-style="cohub"] .status-dot.success,
+[data-style="cohub"] .status-dot[data-status="success"] {
+  background: var(--cohub-success-400-rgb);
+}
+
+[data-style="cohub"] .component-status-dot.warning,
+[data-style="cohub"] .status-dot.warning,
+[data-style="cohub"] .status-dot[data-status="warning"] {
+  background: var(--cohub-warning-400-rgb);
+}
+
+[data-style="cohub"] .component-status-dot.error,
+[data-style="cohub"] .status-dot.error,
+[data-style="cohub"] .status-dot[data-status="error"] {
+  background: var(--cohub-error-400-rgb);
+}
+
+[data-style="cohub"] .component-status-dot.info,
+[data-style="cohub"] .status-dot.info,
+[data-style="cohub"] .status-dot[data-status="info"] {
+  background: var(--cohub-info-400-rgb);
+}
+
+/* Docs chrome and repeated surfaces */
+[data-style="cohub"] .topbar-brand-mark {
+  color: var(--theme-primary-foreground);
+  background: var(--cohub-brand-400-rgb);
+}
+
+[data-style="cohub"] .topbar,
+[data-style="cohub"] .sidebar {
+  border-color: var(--line);
+}
+
+[data-style="cohub"] .bento-menu-separator {
+  background: var(--line);
+}
+
+[data-style="cohub"] .demo-card,
+[data-style="cohub"] .block-preview,
+[data-style="cohub"] .theme-swatch,
+[data-style="cohub"] .base-block {
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-style="cohub"] .bento-button,
+  [data-style="cohub"] .bento-input,
+  [data-style="cohub"] .bento-textarea,
+  [data-style="cohub"] .bento-combobox-input,
+  [data-style="cohub"] .bento-select-trigger,
+  [data-style="cohub"] .bento-switch-thumb,
+  [data-style="cohub"] .bento-tabs-indicator {
+    transition-duration: 1ms;
+  }
+
+  [data-style="cohub"] .bento-button:hover,
+  [data-style="cohub"] .bento-button:active {
+    transform: none;
+  }
+}

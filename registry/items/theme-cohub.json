@@ -1,9 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "theme-editorial",
+  "name": "theme-cohub",
   "type": "registry:theme",
-  "title": "Editorial Theme",
-  "description": "Magazine-like typography, ivory surfaces, and ink-forward contrast.",
+  "title": "Cohub Theme",
+  "description": "Cohub 官方默认风格：暖白与冷石墨中性色配橙色品牌强调，清晰温暖且具有技术产品感。",
   "files": [
     {
       "path": "src/index.css",
@@ -67,25 +67,25 @@
   ],
   "meta": {
     "preview": {
-      "light": "/previews/base-themes-editorial.png"
+      "light": "/previews/base-themes-cohub.png"
     },
     "baseThemes": {
-      "style": "editorial",
-      "label": "Editorial",
+      "style": "cohub",
+      "label": "Cohub",
       "defaultMode": "light",
       "supportsModes": [
         "light",
         "dark"
       ],
       "dataAttributes": {
-        "style": "editorial",
+        "style": "cohub",
         "theme": "light"
       }
     },
     "agent": {
-      "summary": "Use the Editorial theme when the user wants magazine-like typography, ivory surfaces, and ink-forward contrast.",
+      "summary": "Use the Cohub theme when the user wants cohub 官方默认风格：暖白与冷石墨中性色配橙色品牌强调，清晰温暖且具有技术产品感。.",
       "whenToUse": [
-        "Editorial",
+        "Cohub",
         "CSS variable theme",
         "Base Themes visual style"
       ],
@@ -95,22 +95,22 @@
       "packageInstall": [
         "npm install base-themes @base-ui/react react react-dom",
         "import base-themes/styles.css once",
-        "set data-style=\"editorial\"",
+        "set data-style=\"cohub\"",
         "set data-theme=\"light\" or data-theme=\"dark\""
       ],
       "sourceCopy": [
-        "fetch /registry/items/theme-editorial.json",
+        "fetch /registry/items/theme-cohub.json",
         "copy every files[].path to files[].target",
         "copy src/styles/tokenContract.json when generating overrides"
       ],
       "installPlan": [
         "import base-themes/styles.css once",
-        "set data-style=\"editorial\"",
+        "set data-style=\"cohub\"",
         "set data-theme=\"light\" or data-theme=\"dark\"",
-        "or fetch /registry/items/theme-editorial.json for source-copy"
+        "or fetch /registry/items/theme-cohub.json for source-copy"
       ],
       "prompts": [
-        "Create a React settings screen using Base Themes with data-style=\"editorial\"."
+        "Create a React settings screen using Base Themes with data-style=\"cohub\"."
       ]
     }
   }

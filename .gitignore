@@ -11,7 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
-.ref-neta-studio.css
+.ref-*.css
+.preview-bin/
+.cohub-browser-test.png
 
 # Editor directories and files
 .vscode/*
@@ -30,3 +32,4 @@ dist-ssr
 !.dev.vars.example
 .env*
 !.env.example
+.cohub-browser-test.png
