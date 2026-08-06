@@ -51,7 +51,8 @@
         "luxury",
         "soft-ui",
         "bauhaus",
-        "mono"
+        "mono",
+        "studio"
       ],
       "styleContract": [
         "data-style",
@@ -64,7 +65,8 @@
         "src/styles/cyberpunk.css",
         "src/styles/terminal.css",
         "src/styles/material.css",
-        "src/styles/glass.css"
+        "src/styles/glass.css",
+        "src/styles/studio.css"
       ]
     },
     "agent": {

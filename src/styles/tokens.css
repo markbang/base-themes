@@ -1738,6 +1738,107 @@
   --selection-text: #000000;
 }
 
+[data-style='studio'],
+[data-style='studio'][data-theme='dark'] {
+  --bg: #050605;
+  --surface: #131216;
+  --surface-strong: #ece1d2;
+  --surface-muted: #1f1d20;
+  --text: rgba(242, 237, 228, 0.8);
+  --text-strong: #f2ede4;
+  --text-muted: rgba(242, 237, 228, 0.62);
+  --line: rgba(236, 225, 210, 0.18);
+  --line-strong: rgba(236, 225, 210, 0.3);
+  --accent: #ece1d2;
+  --accent-strong: #f8f1e5;
+  --teal: #6ee1d8;
+  --blue: #6ee1d8;
+  --green: oklch(76% 0.11 150);
+  --studio-contrast: #050605;
+  --studio-input-bg: rgba(242, 237, 228, 0.065);
+  --studio-hover: rgba(236, 225, 210, 0.1);
+  --studio-active: rgba(236, 225, 210, 0.16);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.38);
+  --shadow-strong: 0 12px 36px rgba(0, 0, 0, 0.34);
+  --radius: 8px;
+  --radius-sm: 6px;
+  --topbar-bg: rgba(5, 6, 5, 0.94);
+  --topbar-border: rgba(236, 225, 210, 0.12);
+  --card-bg: #131216;
+  --chip-bg: rgba(236, 225, 210, 0.08);
+  --group-bg: #1f1d20;
+  --nav-bg: #1a191a;
+  --track-bg: #2e2b34;
+  --switch-off-bg: #2e2b34;
+  --hero-text: #f2ede4;
+  --backdrop: rgba(0, 0, 0, 0.62);
+  --code-bg: #050605;
+  --code-text: #f2ede4;
+  --code-keyword: #ece1d2;
+  --code-string: #6ee1d8;
+  --code-component: #8ceae2;
+  --code-tag: #e6a39a;
+  --code-number: #e8c98a;
+  --code-comment: rgba(242, 237, 228, 0.48);
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(236, 225, 210, 0.085);
+  --scrollbar-thumb-hover: rgba(236, 225, 210, 0.105);
+  --selection-bg: color-mix(in srgb, var(--accent) 30%, transparent);
+  --selection-text: #050605;
+}
+
+[data-style='studio'][data-theme='light'] {
+  --bg: #f4efe7;
+  --surface: #fffaf2;
+  --surface-strong: #131216;
+  --surface-muted: #ebe3d7;
+  --text: #4d4945;
+  --text-strong: #171518;
+  --text-muted: #756f67;
+  --line: rgba(19, 18, 22, 0.14);
+  --line-strong: rgba(19, 18, 22, 0.3);
+  --accent: #ece1d2;
+  --accent-strong: #f4ecd9;
+  --teal: #2f8f89;
+  --blue: #2f8f89;
+  --green: #287a57;
+  --studio-contrast: #131216;
+  --studio-input-bg: rgba(19, 18, 22, 0.035);
+  --studio-hover: rgba(19, 18, 22, 0.06);
+  --studio-active: rgba(19, 18, 22, 0.1);
+  --shadow: 0 20px 54px rgba(42, 35, 29, 0.1);
+  --shadow-strong: 0 14px 36px rgba(42, 35, 29, 0.14);
+  --topbar-bg: rgba(244, 239, 231, 0.94);
+  --topbar-border: rgba(19, 18, 22, 0.12);
+  --card-bg: #fffaf2;
+  --chip-bg: rgba(19, 18, 22, 0.04);
+  --group-bg: #eee7de;
+  --nav-bg: #eee7de;
+  --track-bg: #d8d0c5;
+  --switch-off-bg: #d8d0c5;
+  --hero-text: #171518;
+  --backdrop: rgba(19, 18, 22, 0.46);
+  --code-bg: #131216;
+  --code-text: #fffaf2;
+  --code-keyword: #ece1d2;
+  --code-string: #6ee1d8;
+  --code-component: #8ceae2;
+  --code-tag: #b85d56;
+  --code-number: #a8782f;
+  --code-comment: #a69c90;
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(19, 18, 22, 0.2);
+  --scrollbar-thumb-hover: rgba(19, 18, 22, 0.34);
+  --selection-bg: #131216;
+  --selection-text: #f4efe7;
+}
+
+[data-style='studio'] {
+  --theme-font-weight: 680;
+  --theme-transition-duration: 180ms;
+  --theme-letter-spacing: 0.01em;
+}
+
 /* ── behavior token overrides per style ── */
 
 [data-style='neo-brutalism'],

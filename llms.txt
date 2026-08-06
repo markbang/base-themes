@@ -1,6 +1,6 @@
 # Base Themes
 
-Base Themes is a type-safe React component system built on Base UI. It ships accessible component wrappers, CSS-token themes, 20 curated visual styles, source-copyable registry metadata, blocks, examples, and agent-friendly customization workflows.
+Base Themes is a type-safe React component system built on Base UI. It ships accessible component wrappers, CSS-token themes, 21 curated visual styles, source-copyable registry metadata, blocks, examples, and agent-friendly customization workflows.
 
 ## Start Here
 

@@ -49,6 +49,11 @@
       "path": "src/styles/glass.css",
       "type": "registry:file",
       "target": "@/styles/base-themes/glass.css"
+    },
+    {
+      "path": "src/styles/studio.css",
+      "type": "registry:file",
+      "target": "@/styles/base-themes/studio.css"
     }
   ],
   "categories": [

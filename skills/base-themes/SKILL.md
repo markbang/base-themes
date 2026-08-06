@@ -5,7 +5,7 @@ description: Install, inspect, customize, and verify the Base Themes React compo
 
 # Base Themes
 
-Base Themes is a package-first React component system built on `@base-ui/react`. It ships typed component wrappers, CSS token themes, 20 visual styles, product blocks, registry metadata, CLI helpers, and agent-readable docs.
+Base Themes is a package-first React component system built on `@base-ui/react`. It ships typed component wrappers, CSS token themes, 21 visual styles, product blocks, registry metadata, CLI helpers, and agent-readable docs.
 
 ## Prefer Package Installs
 

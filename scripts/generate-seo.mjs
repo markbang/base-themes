@@ -72,7 +72,7 @@ function renderLlmsTxt() {
 
   return `# Base Themes
 
-Base Themes is a type-safe React component system built on Base UI. It ships accessible component wrappers, CSS-token themes, 20 curated visual styles, source-copyable registry metadata, blocks, examples, and agent-friendly customization workflows.
+Base Themes is a type-safe React component system built on Base UI. It ships accessible component wrappers, CSS-token themes, 21 curated visual styles, source-copyable registry metadata, blocks, examples, and agent-friendly customization workflows.
 
 ## Start Here
 
@@ -157,7 +157,7 @@ function renderLlmsFullTxt(pages) {
 
   return `# Base Themes Full Agent Context
 
-Base Themes is a package-first React component system built on Base UI primitives. It provides typed component wrappers, CSS token themes, 20 visual styles, source-copy registry metadata, product blocks, runnable examples, and agent-oriented verification workflows.
+Base Themes is a package-first React component system built on Base UI primitives. It provides typed component wrappers, CSS token themes, 21 visual styles, source-copy registry metadata, product blocks, runnable examples, and agent-oriented verification workflows.
 
 ## Primary Goals
 

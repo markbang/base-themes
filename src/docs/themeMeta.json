@@ -18,5 +18,6 @@
   { "style": "luxury", "label": "Luxury", "description": "Dark premium surfaces, gold accents, and fine-line hierarchy." },
   { "style": "soft-ui", "label": "Soft UI", "description": "Low-contrast tactile controls with inset and raised shadows." },
   { "style": "bauhaus", "label": "Bauhaus", "description": "Geometric composition with primary colors and strong graphic contrast." },
-  { "style": "mono", "label": "Mono", "description": "Black-and-white ink system with no decorative color dependency." }
+  { "style": "mono", "label": "Mono", "description": "Black-and-white ink system with no decorative color dependency." },
+  { "style": "studio", "label": "Studio", "description": "Neta Studio style with graphite panels, cream controls, fine-line borders, and restrained teal status accents." }
 ]
