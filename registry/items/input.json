@@ -67,7 +67,8 @@
         "src/styles/terminal.css",
         "src/styles/material.css",
         "src/styles/glass.css",
-        "src/styles/studio.css"
+        "src/styles/studio.css",
+        "src/styles/cohub.css"
       ]
     },
     "agent": {
